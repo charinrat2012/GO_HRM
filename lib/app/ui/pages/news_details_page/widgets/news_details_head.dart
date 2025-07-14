@@ -8,7 +8,7 @@ class NewsDetailsHead extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       titleSpacing: -10,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       floating: false,
       pinned: false,
       expandedHeight: kToolbarHeight,

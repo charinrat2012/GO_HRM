@@ -6,7 +6,7 @@ class Themes {
   final lightTheme = ThemeData.light().copyWith(
     primaryColor: MyColors.blue,
     cardColor: Colors.white,
-    appBarTheme: AppBarTheme(backgroundColor: Colors.grey[100]),
+    appBarTheme: AppBarTheme(backgroundColor: Colors.white),
     scaffoldBackgroundColor: Colors.grey[100],
     shadowColor: Colors.grey,
   );

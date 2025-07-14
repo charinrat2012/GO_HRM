@@ -18,7 +18,7 @@ class HomeHead extends StatelessWidget {
             ),
             pinned: false,
             floating: false,
-            backgroundColor: Colors.grey[100],
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             actions: [
               IconButton(
                 onPressed: () => Get.toNamed(AppRoutes.NOTIFICATION),

@@ -14,13 +14,12 @@ class MenuHead extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.black,
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       elevation: 0,
       centerTitle: false,
     );
   }
 
   @override
-  // TODO: 
   Size get preferredSize => const Size.fromHeight(56);
 }

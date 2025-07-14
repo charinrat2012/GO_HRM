@@ -35,7 +35,7 @@ class LeavePage extends GetView<LeavePageController> {
                 'ขอลางาน',
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
-              backgroundColor: Colors.grey[100],
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               elevation: 1.0,
               centerTitle: true,
               floating: false, // ทำให้ AppBar เลื่อนกลับมาแสดงผลได้เร็วขึ้น
