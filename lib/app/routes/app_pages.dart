@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../bindings/chats_binding.dart';
 import '../bindings/home_binding.dart';
+import '../bindings/leave_binding.dart';
 import '../bindings/login_binging.dart';
 import '../bindings/menu_binding.dart';
 import '../bindings/navigation_binding.dart';
@@ -13,6 +14,7 @@ import '../bindings/splash_binding.dart';
 import '../data/models/news_card_model.dart';
 import '../ui/pages/chats_page/chats_page.dart';
 import '../ui/pages/home_page/home_page.dart';
+import '../ui/pages/leave_page.dart/leave_page.dart';
 import '../ui/pages/login_page/login_page.dart';
 import '../ui/pages/menu_page/menu_page.dart';
 import '../ui/pages/navigation_page/navigation_page.dart';
@@ -110,6 +112,12 @@ class AppPages {
         return NewsDetailsPage(news: news);
       },
       binding: NewsDetailsBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.LEAVE,
+      page: () => LeavePage(),
+      binding: LeavePageBinding(),
       transition: _defaultTransition,
     ),
   ];

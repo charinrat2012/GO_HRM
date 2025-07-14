@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'favourite_menu.dart';
+import 'home_menu.dart';
 import 'quota_detail.dart';
 import 'status_detail.dart';
 
@@ -20,7 +20,7 @@ class HomeBody extends StatelessWidget {
               children: [
                 StatusDetail(), // เอา parameter วันที่ออก
                 SizedBox(height: 24),
-                FavouriteMenu(),
+                HomeMenu(),
                 SizedBox(height: 24),
                 QuotaDetail(),
               ],

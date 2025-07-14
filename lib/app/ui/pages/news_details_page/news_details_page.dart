@@ -54,7 +54,7 @@ class NewsDetailsPage extends GetView<NewsDetailsController> {
                               news.date,
                               style: const TextStyle(
                                 color: Colors.black,
-                                // fontSize: 14.0,
+                                // ,
                               ),
                             ),
                             const SizedBox(width: 20),
@@ -71,7 +71,7 @@ class NewsDetailsPage extends GetView<NewsDetailsController> {
                               'ณัฐดนย์ ธวัชผ่องศรี',
                               style: TextStyle(
                                 color: Colors.black,
-                                // fontSize: 14.0,
+                                // ,
                               ),
                             ),
                           ],
@@ -82,7 +82,7 @@ class NewsDetailsPage extends GetView<NewsDetailsController> {
                           news.deiailstitle,
                           style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 14.0,
+                            
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -90,7 +90,7 @@ class NewsDetailsPage extends GetView<NewsDetailsController> {
                         // ใช้ news.deiails[0] สำหรับเนื้อหาส่วนแรก
                         Text(
                           news.deiails[0],
-                          style: TextStyle(color: Colors.grey), //fontSize: 14.0
+                          style: TextStyle(color: Colors.grey), //
                         ),
                       ],
                     ),
@@ -112,7 +112,7 @@ class NewsDetailsPage extends GetView<NewsDetailsController> {
                     child: Text(
                       // ใช้ news.deiails[1] สำหรับเนื้อหาที่เกี่ยวข้องกับรูปภาพที่ 2
                       news.deiails.length > 1 ? news.deiails[1] : '',
-                      style: TextStyle(color: Colors.grey), //fontSize: 14.0
+                      style: TextStyle(color: Colors.grey), //
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -133,7 +133,7 @@ class NewsDetailsPage extends GetView<NewsDetailsController> {
                       news.deiails.length > 2
                           ? news.deiails[2]
                           : '', // ตรวจสอบความยาวของ List
-                      style: TextStyle(color: Colors.grey), //fontSize: 14.0
+                      style: TextStyle(color: Colors.grey), //
                     ),
                   ),
                   const SizedBox(height: 50),

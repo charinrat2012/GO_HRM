@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../routes/app_routes.dart';
+
 class DataList {
   static final List<Map<String, String>> picData = [
     {'imageUrl': 'assets/imgs/pic1.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
@@ -430,7 +432,7 @@ class DataList {
 
 
 static final List<Map<String, dynamic>> favouriteData =  [
-    {'icon': Icons.description_outlined, 'title': 'ขอใบลา', 'onPressed': () {}},
+    {'icon': Icons.description_outlined, 'title': 'ขอใบลา', 'onPressed': () => Get.toNamed(AppRoutes.LEAVE)},
     {'icon': Icons.note_add_outlined, 'title': 'ขอเอกสาร', 'onPressed': () {}},
     {'icon': Icons.access_time, 'title': 'ตารางเวลา', 'onPressed': () {}},
     {

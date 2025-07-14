@@ -10,12 +10,14 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          HomeHead(),
-          HomeBody()
-        ],
+    return SafeArea(
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            HomeHead(),
+            HomeBody()
+          ],
+        ),
       ),
     );
   }

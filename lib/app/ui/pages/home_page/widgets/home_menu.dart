@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import '../../../../config/my_colors.dart';
 import '../home_controller.dart';
 
-class FavouriteMenu extends GetView<HomeController> {
-  const FavouriteMenu({super.key});
+class HomeMenu extends GetView<HomeController> {
+  const HomeMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class FavouriteMenu extends GetView<HomeController> {
                 dense: true,
                 contentPadding: EdgeInsets.zero,
                 leading: const Text(
-                  'รายการโปรด',
+                  'Menu',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 trailing: IconButton(

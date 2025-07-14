@@ -11,4 +11,5 @@ class AppRoutes {
   static const MENU = '/menu';
   static const PROFILE = '/profile';
   static const NOTIFICATION = '/notification';
+  static const LEAVE = '/leave';
 }

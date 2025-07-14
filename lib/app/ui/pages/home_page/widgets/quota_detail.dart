@@ -54,27 +54,44 @@ class QuotaDetail extends GetView<HomeController> {
                               quota.type,
                               style: const TextStyle(fontSize: 14),
                             ),
-                            Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: '${quota.remaining} วัน',
-                                    style: TextStyle(
-                                      color: MyColors.blue2,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' / ${quota.total} วัน',
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
+                            RichText(text: TextSpan(
+                              text: '${quota.remaining} วัน',
+                              style: TextStyle(
+                                color: MyColors.blue2,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
                               ),
-                            ),
+                              children: [
+                                TextSpan(
+                                  text: ' / ${quota.total} วัน',
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ))
+                            // Text.rich(
+                            //   TextSpan(
+                            //     children: [
+                            //       TextSpan(
+                            //         text: '${quota.remaining} วัน',
+                            //         style: TextStyle(
+                            //           color: MyColors.blue2,
+                            //           fontWeight: FontWeight.bold,
+                                      
+                            //         ),
+                            //       ),
+                            //       TextSpan(
+                            //         text: ' / ${quota.total} วัน',
+                            //         style: const TextStyle(
+                            //           color: Colors.grey,
+                                      
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         ),
                         const SizedBox(height: 8),

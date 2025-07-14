@@ -16,26 +16,29 @@ class NewsPage extends GetView<NewsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          NewsHead(),
-          SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                SlideImage(),
-                const SizedBox(height: 24),
-                ImageDots(),
-                const SizedBox(height: 16),
-                ActivityBar(),
-              ],
+    return SafeArea(
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            NewsHead(),
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                   Divider(color: Colors.grey, thickness: 1),
+                  const SizedBox(height: 16),
+                  SlideImage(),
+                  const SizedBox(height: 24),
+                  ImageDots(),
+                  const SizedBox(height: 16),
+                  ActivityBar(),
+                ],
+              ),
             ),
-          ),
-
-          NewsFeed(),
-        ],
+      
+            NewsFeed(),
+          ],
+        ),
       ),
     );
   }
