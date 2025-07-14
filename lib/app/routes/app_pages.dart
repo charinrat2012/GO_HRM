@@ -7,6 +7,7 @@ import '../bindings/menu_binding.dart';
 import '../bindings/navigation_binding.dart';
 import '../bindings/news_binding.dart';
 import '../bindings/news_details_binding.dart';
+import '../bindings/notification_binding.dart';
 import '../bindings/profile_binding.dart';
 import '../bindings/splash_binding.dart';
 import '../data/models/news_card_model.dart';
@@ -17,6 +18,7 @@ import '../ui/pages/menu_page/menu_page.dart';
 import '../ui/pages/navigation_page/navigation_page.dart';
 import '../ui/pages/news_details_page/news_details_page.dart';
 import '../ui/pages/news_page/news_page.dart';
+import '../ui/pages/notification_page/notification_page.dart';
 import '../ui/pages/profile_page/profile_page.dart';
 import '../ui/pages/splash_page/splash_page.dart';
 import '../ui/pages/unknown_route_page/unknown_route_page.dart';
@@ -85,6 +87,12 @@ class AppPages {
       name: AppRoutes.PROFILE,
       page: () => ProfilePage(),
       binding: ProfileBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.NOTIFICATION,
+      page: () => NotificationPage(),
+      binding: NotificationBinding(),
       transition: _defaultTransition,
     ),
 

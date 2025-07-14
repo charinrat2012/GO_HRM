@@ -10,4 +10,5 @@ class AppRoutes {
   static const CALENDER = '/calender';
   static const MENU = '/menu';
   static const PROFILE = '/profile';
+  static const NOTIFICATION = '/notification';
 }
