@@ -7,7 +7,7 @@ class ProfileHead extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
 
       floating: false,
       pinned: false,

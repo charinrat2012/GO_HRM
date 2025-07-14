@@ -7,7 +7,7 @@ class Themes {
     primaryColor: MyColors.blue,
     cardColor: Colors.white,
     appBarTheme: AppBarTheme(backgroundColor: Colors.white),
-    scaffoldBackgroundColor: Colors.grey[100],
+    scaffoldBackgroundColor: Colors.grey[200],
     shadowColor: Colors.grey,
   );
   // final darkTheme = ThemeData.dark().copyWith(

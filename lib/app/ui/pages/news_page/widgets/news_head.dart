@@ -6,7 +6,7 @@ class NewsHead extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       title: const Text(
         'ข่าวสาร',
         style: TextStyle(

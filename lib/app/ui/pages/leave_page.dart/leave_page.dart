@@ -1,12 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_hrm/app/ui/pages/leave_page.dart/widgets/segmented_control.dart';
 
-import 'package:intl/intl.dart';
-
-import '../../../config/my_colors.dart';
-import '../../../data/models/leave_status_model.dart';
 import 'leave_controller.dart';
 import 'widgets/card_title.dart';
 import 'widgets/filter_section.dart';
@@ -35,7 +30,7 @@ class LeavePage extends GetView<LeavePageController> {
                 'ขอลางาน',
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
               elevation: 1.0,
               centerTitle: true,
               floating: false, // ทำให้ AppBar เลื่อนกลับมาแสดงผลได้เร็วขึ้น
@@ -44,9 +39,9 @@ class LeavePage extends GetView<LeavePageController> {
             ),
 
            
-            const SliverToBoxAdapter(
-              child: Divider(color: Colors.grey, thickness: 1),
-            ),
+            // const SliverToBoxAdapter(
+            //   child: Divider(color: Colors.grey, thickness: 1),
+            // ),
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),

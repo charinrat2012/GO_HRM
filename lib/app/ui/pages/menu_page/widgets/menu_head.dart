@@ -14,7 +14,7 @@ class MenuHead extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.black,
         ),
       ),
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       elevation: 0,
       centerTitle: false,
     );

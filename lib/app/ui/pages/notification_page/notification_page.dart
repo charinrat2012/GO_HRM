@@ -14,7 +14,7 @@ class NotificationPage extends GetView<NotificationController> {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
               floating: false,
               pinned: false,
               expandedHeight: kToolbarHeight, //กำหนดความสูงAppbar

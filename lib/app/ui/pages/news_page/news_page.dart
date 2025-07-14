@@ -25,7 +25,7 @@ class NewsPage extends GetView<NewsController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   Divider(color: Colors.grey, thickness: 1),
+                  //  Divider(color: Colors.grey, thickness: 1),
                   const SizedBox(height: 16),
                   SlideImage(),
                   const SizedBox(height: 24),

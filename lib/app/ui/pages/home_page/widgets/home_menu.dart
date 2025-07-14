@@ -36,7 +36,7 @@ class HomeMenu extends GetView<HomeController> {
                   icon: Icon(Icons.navigate_next, color: Colors.grey[700]),
                 ),
               ),
-              Divider(color: Colors.grey[400]),
+              // Divider(color: Colors.grey[400]),
 
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,

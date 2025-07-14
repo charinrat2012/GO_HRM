@@ -13,7 +13,7 @@ class HomeBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(color: Colors.grey[400], thickness: 1),
+          // Divider(color: Colors.grey[400], thickness: 1),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
