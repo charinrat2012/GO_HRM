@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/ui/pages/home_page/widgets/home_body.dart';
-import 'package:go_hrm/app/ui/pages/home_page/widgets/home_head.dart';
+
 import 'home_controller.dart';
+import 'widgets/home_body.dart';
+import 'widgets/home_head.dart';
 
 
 class HomePage extends GetView<HomeController> {

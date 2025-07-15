@@ -431,7 +431,7 @@ class DataList {
 
 
 
-static final List<Map<String, dynamic>> favouriteData =  [
+static final List<Map<String, dynamic>> menuData =  [
     {'icon': Icons.description_outlined, 'title': 'ขอใบลา', 'onPressed': () => Get.toNamed(AppRoutes.LEAVE)},
     {'icon': Icons.note_add_outlined, 'title': 'ขอเอกสาร', 'onPressed': () {}},
     {'icon': Icons.access_time, 'title': 'ตารางเวลา', 'onPressed': () {}},
@@ -459,5 +459,9 @@ static  final List<Map<String, dynamic>> quotasData = [
     {'type': 'ลากิจ (ไม่ได้รับค่าจ้าง)', 'remaining': 5, 'total': 10},
     {'type': 'ลาป่วย', 'remaining': 10, 'total': 10},
     {'type': 'ลาคลอด (ได้รับค่าจ้าง)', 'remaining': 10, 'total': 10},
+    {'type': 'ลาคลอด (ไม่ได้รับค่าจ้าง)', 'remaining': 10, 'total': 10},
+    {'type': 'ลาพักร้อน', 'remaining': 10, 'total': 10},
+    {'type': 'ขาดงาน ', 'remaining': 10, 'total': 10},
+
   ].obs;
 }

@@ -9,6 +9,12 @@ class Themes {
     appBarTheme: AppBarTheme(backgroundColor: Colors.white),
     scaffoldBackgroundColor: Colors.grey[200],
     shadowColor: Colors.grey,
+    datePickerTheme: DatePickerThemeData(
+      backgroundColor: Colors.white,
+      headerBackgroundColor: MyColors.blue,
+      headerForegroundColor: Colors.white,
+      
+    )
   );
   // final darkTheme = ThemeData.dark().copyWith(
   //   primaryColor: Colors.grey[900],

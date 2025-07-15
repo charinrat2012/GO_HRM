@@ -28,7 +28,7 @@ class HomeMenu extends GetView<HomeController> {
                 dense: true,
                 contentPadding: EdgeInsets.zero,
                 leading: const Text(
-                  'Menu',
+                  'เมนู',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 trailing: IconButton(
@@ -36,7 +36,8 @@ class HomeMenu extends GetView<HomeController> {
                   icon: Icon(Icons.navigate_next, color: Colors.grey[700]),
                 ),
               ),
-              // Divider(color: Colors.grey[400]),
+
+              Divider(color: Colors.grey[200]),
 
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,7 +54,7 @@ class HomeMenu extends GetView<HomeController> {
                 crossAxisCount: 4,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                children: controller.favoriteitems.map((favorite) {
+                children: controller.menuitems.map((favorite) {
                   return Column(
                     children: [
                       IconButton(

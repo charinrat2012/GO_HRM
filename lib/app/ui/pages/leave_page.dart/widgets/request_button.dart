@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../routes/app_routes.dart';
 import '../leave_controller.dart';
 
 import '../../../../config/my_colors.dart';
@@ -23,14 +24,14 @@ class RequestButton extends GetView<LeavePageController> {
       width: double.infinity,
       height: 66,
       child: ElevatedButton.icon(
-        onPressed: () {},
+        onPressed: () => Get.toNamed(AppRoutes.CREATE_LEAVE_REQUEST),
         icon: const Icon(Icons.add_circle_outline, color: Colors.white),
         label: const Text('ขอลางาน'),
         style: ElevatedButton.styleFrom(
           backgroundColor: MyColors.blue2,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
       ),
     );

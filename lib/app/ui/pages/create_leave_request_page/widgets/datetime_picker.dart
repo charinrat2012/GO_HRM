@@ -1,0 +1,51 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../create_leave_request_controller.dart';
+
+class DatetimePicker extends GetView<CreateLeaveRequestController> {
+  final String label;
+  final TextEditingController textController;
+  const DatetimePicker({
+    super.key,
+    required this.label,
+    required this.textController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: textController,
+          readOnly: true,
+          onTap: () => controller.selectDateTime(Get.context!, textController),
+          decoration: InputDecoration(
+            isDense: true,
+            hintText: 'เลือกวันที่/เวลา',
+            contentPadding: const EdgeInsets.all(12),
+
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(color: Colors.grey[300]!),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            suffixIcon: Icon(
+              Icons.calendar_today_outlined,
+              color: Colors.grey[600],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

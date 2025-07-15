@@ -25,7 +25,7 @@ class SegmentedControl extends GetView<LeavePageController> {
           padding: const EdgeInsets.all(4),
           child: CupertinoSlidingSegmentedControl<int>(
             backgroundColor: Colors.white,
-            thumbColor: Color.fromRGBO(242, 242, 242, 1),
+            thumbColor: Colors.blue[50]!,
             groupValue: controller.selectedViewIndex.value,
             onValueChanged: controller.onViewChanged,
             children: {

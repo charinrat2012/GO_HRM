@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../config/my_colors.dart';
 import '../home_controller.dart';
@@ -9,6 +10,9 @@ class StatusDetail extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
+    // 2. จัดรูปแบบวันที่ให้เป็นภาษาไทยตามที่ต้องการ
+    final formattedDate = DateFormat('EEEEที่ d MMMM yyyy', 'th_TH').format(now);
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -18,9 +22,9 @@ class StatusDetail extends GetView<HomeController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'วันพุธที่ 10 กรกฎาคม 2025',
-            style: TextStyle(
+          Text(
+            '$formattedDate',
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
               fontWeight: FontWeight.bold,

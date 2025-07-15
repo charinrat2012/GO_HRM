@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 
 import 'data/services/theme_service.dart';
@@ -23,6 +24,17 @@ class MyApp extends StatelessWidget {
       // translations: Translation(),
       // locale: Locale('en'),
       // fallbackLocale: Locale('en'),
+      locale: const Locale('th', 'TH'),
+      supportedLocales: const [
+        Locale('th', 'TH'),
+        Locale('en', 'US'),
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      
       initialRoute: AppRoutes.NAVIGATION,
       // initialRoute: AppRoutes.SPLASH,
       unknownRoute: AppPages.unknownRoutePage,

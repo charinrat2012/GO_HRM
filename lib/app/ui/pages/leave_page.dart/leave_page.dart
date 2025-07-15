@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/ui/pages/leave_page.dart/widgets/segmented_control.dart';
 
 import 'leave_controller.dart';
 import 'widgets/card_title.dart';
 import 'widgets/filter_section.dart';
+import 'widgets/head_leave.dart';
 import 'widgets/history_card_list.dart';
 import 'widgets/request_button.dart';
+import 'widgets/segmented_control.dart';
 
 class LeavePage extends GetView<LeavePageController> {
   const LeavePage({super.key});
@@ -17,28 +18,8 @@ class LeavePage extends GetView<LeavePageController> {
       child: Scaffold(
         body: CustomScrollView(
           slivers: [
-            SliverAppBar(
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.black,
-                  size: 20,
-                ),
-                onPressed: () => Get.back(),
-              ),
-              title: const Text(
-                'ขอลางาน',
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-              backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-              elevation: 1.0,
-              centerTitle: true,
-              floating: false, // ทำให้ AppBar เลื่อนกลับมาแสดงผลได้เร็วขึ้น
-              pinned: false, // ทำให้ AppBar ปักหมุดอยู่ด้านบนเสมอ
-              expandedHeight: kToolbarHeight,
-            ),
+            HeadLeave(),
 
-           
             // const SliverToBoxAdapter(
             //   child: Divider(color: Colors.grey, thickness: 1),
             // ),
@@ -50,11 +31,11 @@ class LeavePage extends GetView<LeavePageController> {
                   children: [
                     SegmentedControl(),
                     const SizedBox(height: 16),
-                   RequestButton(),
+                    RequestButton(),
                     const SizedBox(height: 16),
                     FilterSection(),
                     const SizedBox(height: 24),
-                    CardTitle(), 
+                    CardTitle(),
                   ],
                 ),
               ),
@@ -68,10 +49,4 @@ class LeavePage extends GetView<LeavePageController> {
       ),
     );
   }
-
- 
-
-
- 
- 
 }

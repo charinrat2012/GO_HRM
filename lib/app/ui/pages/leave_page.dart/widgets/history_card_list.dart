@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_hrm/app/config/my_colors.dart';
 import 'package:go_hrm/app/ui/pages/leave_page.dart/leave_controller.dart';
 import 'package:intl/intl.dart';
 
@@ -56,10 +57,10 @@ Widget _buildHistoryList() {
                   children: [
                     Text(
                       item.title,
-                      style: const TextStyle(
+                      style:  TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
-                        color: Color.fromRGBO(0, 0, 0, 0.5),
+                        color: MyColors.blue2,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -73,7 +74,7 @@ Widget _buildHistoryList() {
 
                         children: [
                           TextSpan(
-                            text: 'ยื่นขอ',
+                            text: 'ยื่นขอ ',
                             style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -134,7 +135,7 @@ Widget _buildHistoryList() {
                 ),
                 child: Text(
                   item.statusText,
-                  style: TextStyle(color: item.statusTextColor, fontSize: 12),
+                  style: TextStyle(color: item.statusTextColor, fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
@@ -147,10 +148,10 @@ Widget _buildHistoryList() {
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {},
-                    child: Text('ดูเพิ่ม'),
+                    child: Text('ยกเลิก',style: TextStyle(color: MyColors.blue2,fontWeight: FontWeight.bold),),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.blue,
-                      side: const BorderSide(color: Colors.blue),
+                      foregroundColor: MyColors.blue2,
+                      side: const BorderSide(color: MyColors.blue2),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -163,7 +164,7 @@ Widget _buildHistoryList() {
                     onPressed: () {}, // ปิดปุ่มถ้าไม่ใชสถานะ "รออนุมัติ"
                     child: Text('อนุมัติ'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey[300],
+                      backgroundColor: MyColors.blue2,
                       foregroundColor: Colors.white,
                       elevation: 0,
                       shape: RoundedRectangleBorder(

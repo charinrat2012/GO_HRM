@@ -12,4 +12,5 @@ class AppRoutes {
   static const PROFILE = '/profile';
   static const NOTIFICATION = '/notification';
   static const LEAVE = '/leave';
+  static const CREATE_LEAVE_REQUEST = '/create_leave_request';
 }

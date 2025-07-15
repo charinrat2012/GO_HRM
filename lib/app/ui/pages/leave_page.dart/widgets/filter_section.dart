@@ -74,6 +74,7 @@ class FilterSection extends GetView<LeavePageController> {
           style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
         ),
         DropdownButtonFormField<String>(
+          dropdownColor: Colors.white,
           value: selectedItem.value,
           isDense: true,
           items: items.map((String value) {
@@ -97,6 +98,7 @@ class FilterSection extends GetView<LeavePageController> {
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 12,
               vertical: 8,
+
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -110,6 +112,7 @@ class FilterSection extends GetView<LeavePageController> {
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(color: Colors.grey[300]!),
             ),
+           isDense: true,
           ),
         ),
       ],

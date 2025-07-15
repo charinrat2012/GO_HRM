@@ -33,7 +33,7 @@ class QuotaDetail extends GetView<HomeController> {
                   icon: Icon(Icons.navigate_next, color: Colors.grey[700]),
                 ),
               ),
-              Divider(color: Colors.grey[400]),
+              Divider(color: Colors.grey[200]),
               const SizedBox(height: 8),
 
               Column(

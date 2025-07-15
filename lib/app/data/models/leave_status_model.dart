@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_hrm/app/config/my_colors.dart';
 
 enum LeaveStatus { approved, pending, rejected }
 
@@ -36,7 +37,7 @@ class LeaveHistoryModel {
   Color get statusBadgeColor {
     switch (status) {
       case LeaveStatus.approved:
-        return Colors.green[800]!;
+        return Colors.blue[100]!;
       case LeaveStatus.pending:
         return Colors.grey.withValues(alpha: 0.1);
       case LeaveStatus.rejected:
@@ -47,7 +48,7 @@ class LeaveHistoryModel {
   Color get statusTextColor {
     switch (status) {
       case LeaveStatus.approved:
-        return Colors.white;
+        return MyColors.blue2;
       case LeaveStatus.pending:
         return Colors.grey[600]!;
       case LeaveStatus.rejected:

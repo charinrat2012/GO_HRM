@@ -16,6 +16,7 @@ class SplashPage extends GetView<SplashController> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Center(
           child: SingleChildScrollView(
             child: SlideTransition(
@@ -45,11 +46,8 @@ class SplashPage extends GetView<SplashController> {
                         height: 100,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Colors.grey.shade50,
-                            width: 2,
-                          ),
-                          color: Colors.grey.shade50,
+                          
+                          color: Theme.of(context).scaffoldBackgroundColor,
                         ),
                       ),
                     ),
