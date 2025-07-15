@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_hrm/app/config/my_colors.dart';
 
@@ -13,6 +15,7 @@ class LeaveHistoryModel {
   final DateTime requestDateTime;
   final String? note;
   final LeaveStatus status;
+  final List<File>? attachedFiles;
 
   LeaveHistoryModel({
     required this.leaveType,
@@ -21,6 +24,7 @@ class LeaveHistoryModel {
     required this.requestDateTime,
     this.note,
     required this.status,
+    this.attachedFiles,
   });
 
   String get statusText {

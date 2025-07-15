@@ -41,6 +41,7 @@ dependencies:
   google_fonts:
   intl: 
   image_picker:
+  file_picker:
 dev_dependencies:
   flutter_test:
     sdk: flutter

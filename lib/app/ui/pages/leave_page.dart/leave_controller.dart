@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import '../../../data/models/leave_status_model.dart'; // ตรวจสอบ Path
 
@@ -19,7 +21,7 @@ class LeavePageController extends GetxController {
   final RxnString selectedOther = RxnString('ค้นหาแบบละเอียด');
 
   final RxList<LeaveHistoryModel> leaveHistory = <LeaveHistoryModel>[].obs;
-
+final expandedCardIndex = Rxn<int>();
 
 
   // ข้อมูลสำหรับมุมมอง "ของตัวเอง"
@@ -44,6 +46,10 @@ class LeavePageController extends GetxController {
       leaveCategory: 'ลากิจ',
       requestDateTime: DateTime(2025, 6, 25, 12, 6),
       status: LeaveStatus.approved,
+      attachedFiles: [
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+      ],
     ),
     LeaveHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -51,6 +57,9 @@ class LeavePageController extends GetxController {
       leaveCategory: 'ลาป่วย',
       requestDateTime: DateTime(2025, 6, 24, 10, 30),
       status: LeaveStatus.rejected,
+      attachedFiles: [
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+      ],
     ),
     LeaveHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -58,6 +67,9 @@ class LeavePageController extends GetxController {
       leaveCategory: 'ลากิจ',
       requestDateTime: DateTime(2025, 6, 25, 12, 6),
       status: LeaveStatus.approved,
+      attachedFiles: [
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+      ],
     ),
     LeaveHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -65,6 +77,9 @@ class LeavePageController extends GetxController {
       leaveCategory: 'ลาป่วย',
       requestDateTime: DateTime(2025, 6, 24, 10, 30),
       status: LeaveStatus.rejected,
+      attachedFiles: [
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+      ],
     ),
   ];
 
@@ -76,6 +91,11 @@ class LeavePageController extends GetxController {
       leaveCategory: 'ลากิจ',
       requestDateTime: DateTime(2025, 7, 1, 9, 0),
       status: LeaveStatus.pending,
+      attachedFiles: [
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+      ],
     ),
     LeaveHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -83,6 +103,9 @@ class LeavePageController extends GetxController {
       leaveCategory: 'ลาป่วย',
       requestDateTime: DateTime(2025, 6, 30, 14, 20),
       status: LeaveStatus.pending,
+      attachedFiles: [
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+      ],
     ),
     LeaveHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -90,6 +113,9 @@ class LeavePageController extends GetxController {
       leaveCategory: 'ลาพักร้อน',
       requestDateTime: DateTime(2025, 6, 28, 16, 5),
       status: LeaveStatus.pending,
+      attachedFiles: [
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+      ],
     ),
     LeaveHistoryModel(
       leaveType: 'ขอลาพักงาน',

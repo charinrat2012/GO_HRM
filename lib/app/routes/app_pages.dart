@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:go_hrm/app/ui/pages/quota_page/quota_controller.dart';
+import 'package:go_hrm/app/ui/pages/quota_page/quota_page.dart';
 
 import '../bindings/chats_binding.dart';
 import '../bindings/create_leave_request_binding.dart';
@@ -11,6 +13,7 @@ import '../bindings/news_binding.dart';
 import '../bindings/news_details_binding.dart';
 import '../bindings/notification_binding.dart';
 import '../bindings/profile_binding.dart';
+import '../bindings/quota_binding.dart';
 import '../bindings/splash_binding.dart';
 import '../data/models/news_card_model.dart';
 import '../ui/pages/chats_page/chats_page.dart';
@@ -127,5 +130,11 @@ class AppPages {
   page: () => const CreateLeaveRequestPage(),
   binding: CreateLeaveRequestBinding(),
 ),
+    GetPage(
+  name: AppRoutes.QUOTA,
+  page: () => const QuotaPage(),
+  binding: QuotaBinding(),
+),
+
   ];
 }

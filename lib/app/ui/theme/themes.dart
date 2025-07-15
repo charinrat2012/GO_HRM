@@ -9,12 +9,18 @@ class Themes {
     appBarTheme: AppBarTheme(backgroundColor: Colors.white),
     scaffoldBackgroundColor: Colors.grey[200],
     shadowColor: Colors.grey,
+     highlightColor: Colors.transparent,
+    splashFactory: NoSplash.splashFactory,
     datePickerTheme: DatePickerThemeData(
       backgroundColor: Colors.white,
       headerBackgroundColor: MyColors.blue,
       headerForegroundColor: Colors.white,
+    ),
+    expansionTileTheme: ExpansionTileThemeData(
+      shape: LinearBorder.none,
+      collapsedShape: LinearBorder.none,
       
-    )
+    ),
   );
   // final darkTheme = ThemeData.dark().copyWith(
   //   primaryColor: Colors.grey[900],

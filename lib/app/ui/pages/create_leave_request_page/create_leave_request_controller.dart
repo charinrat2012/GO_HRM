@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -79,31 +80,30 @@ class CreateLeaveRequestController extends GetxController {
     }
   }
 
-  // 1. สร้าง State สำหรับเก็บไฟล์รูปภาพที่เลือก (ใช้ .obs เพื่อให้สังเกตการณ์ได้)
-  final Rx<File?> selectedImage = Rx(null);
+
+  final RxList<File> pickedFiles = <File>[].obs;
   
-  // 2. สร้างตัวแปรสำหรับเรียกใช้ ImagePicker
-  final ImagePicker _picker = ImagePicker();
 
-  // 3. สร้างเมธอดสำหรับเลือกรูปภาพจากแกลเลอรี
-  Future<void> pickImage() async {
+Future<void> pickMultipleFiles() async {
     try {
-      // ใช้ _picker เพื่อเปิดหน้าแกลเลอรีและรอผู้ใช้เลือกรูป
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'],
+      );
 
-      // ตรวจสอบว่าผู้ใช้ได้เลือกรูปมาหรือไม่
-      if (image != null) {
-        // ถ้ามีรูป ให้แปลง XFile เป็น File แล้วเก็บไว้ใน State
-        selectedImage.value = File(image.path);
+      if (result != null) {
+        pickedFiles.addAll(result.paths.map((path) => File(path!)));
       }
     } catch (e) {
-      // จัดการ Error กรณีที่เกิดปัญหา
-      Get.snackbar('เกิดข้อผิดพลาด', 'ไม่สามารถเลือกรูปภาพได้');
+      Get.snackbar('เกิดข้อผิดพลาด', 'ไม่สามารถเลือกไฟล์ได้: $e');
     }
   }
 
-  // 4. สร้างเมธอดสำหรับลบรูปภาพที่เลือก
-  void removeImage() {
-    selectedImage.value = null;
+  // --- เมธอดสำหรับลบไฟล์ออกจาก List ---
+  void removeFile(int index) {
+    if (index >= 0 && index < pickedFiles.length) {
+      pickedFiles.removeAt(index);
+    }
   }
 }

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_hrm/app/config/my_colors.dart';
-import '../../../../routes/app_routes.dart';
-import '../home_controller.dart';
 
-class QuotaDetail extends GetView<HomeController> {
-  const QuotaDetail({super.key});
+import '../quota_controller.dart';
+
+
+class AllDetailQuota extends GetView<QuotaController> {
+  const AllDetailQuota ({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,23 +23,12 @@ class QuotaDetail extends GetView<HomeController> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListTile(
-                dense: true,
-                contentPadding: EdgeInsets.zero,
-                leading: const Text(
-                  'โควต้าการลา',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                trailing: IconButton(
-                  onPressed: () {Get.toNamed(AppRoutes.QUOTA);},
-                  icon: Icon(Icons.navigate_next, color: Colors.grey[700]),
-                ),
-              ),
-              Divider(color: Colors.grey[200]),
+             
+             
               const SizedBox(height: 8),
 
               Column(
-                children: controller.quotaitems.map((quota) {
+                children: controller.quotaitemsall.map((quota) {
                   final progress = quota.total > 0
                       ? quota.remaining / quota.total
                       : 0.0;

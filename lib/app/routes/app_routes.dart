@@ -13,4 +13,5 @@ class AppRoutes {
   static const NOTIFICATION = '/notification';
   static const LEAVE = '/leave';
   static const CREATE_LEAVE_REQUEST = '/create_leave_request';
+  static const QUOTA = '/quota';
 }
