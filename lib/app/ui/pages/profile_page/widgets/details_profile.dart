@@ -132,18 +132,7 @@ class DetailsProfile extends StatelessWidget {
             color: Colors.black,
             fontWeight: FontWeight.w400,
           ),
-          decoration: InputDecoration(
-            isDense: true,
 
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey[400]!),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey[400]!),
-            ),
-          ),
         ),
       ],
     );

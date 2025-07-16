@@ -36,7 +36,6 @@ class HistoryCardList extends GetView<LeavePageController> {
     );
   }
 
-
   Widget _buildHistoryCard(
     LeaveHistoryModel item,
     int index, {
@@ -45,108 +44,109 @@ class HistoryCardList extends GetView<LeavePageController> {
     final formattedDate = DateFormat('dd/MM/yyyy').format(item.requestDateTime);
     final formattedTime = DateFormat('HH:mm น.').format(item.requestDateTime);
 
-    return  Obx(() {
-    final bool isExpanded = controller.expandedCardIndex.value == index;
-    return Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-             border: Border.all(
+    return Obx(() {
+      final bool isExpanded = controller.expandedCardIndex.value == index;
+      return Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
             color: isExpanded ? MyColors.blue2 : Colors.transparent,
             width: 1.5,
           ),
-            
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.title,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: MyColors.blue2,
-                          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: MyColors.blue2,
                         ),
-                        const SizedBox(height: 8),
-                        RichText(
-                          text: TextSpan(
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                            ),
-                            children: [
-                              TextSpan(text: '${item.employeeName} '),
-                              const TextSpan(
-                                text: 'ยื่นขอ ',
-                                style: TextStyle(fontWeight: FontWeight.normal),
-                              ),
-                              TextSpan(
-                                text: '"${item.leaveCategory}"',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'ขอวันที่ $formattedDate เวลา $formattedTime',
-                      style: const TextStyle(color: Colors.grey, fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: item.statusBadgeColor,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  item.statusText,
-                  style: TextStyle(
-                    color: item.statusTextColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
+                      const SizedBox(height: 8),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                          children: [
+                            TextSpan(text: '${item.employeeName} '),
+                            const TextSpan(
+                              text: 'ยื่นขอ ',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                              text: '"${item.leaveCategory}"',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'ขอวันที่ $formattedDate เวลา $formattedTime',
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
 
-          // const SizedBox(height: 8),
-          ExpansionTile(
-               key: GlobalKey(),
-                  tilePadding: EdgeInsets.only(right: 150),
-                  
-                  
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: item.statusBadgeColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    item.statusText,
+                    style: TextStyle(
+                      color: item.statusTextColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
 
-                  // **ควบคุมสถานะการเปิด-ปิดจาก Controller**
-                  initiallyExpanded: controller.expandedCardIndex.value == index,
+            // const SizedBox(height: 8),
+            ExpansionTile(
+              key: GlobalKey(),
+              tilePadding: EdgeInsets.only(right: 150),
 
-                  // **เมื่อมีการกด ให้ไปอัปเดตสถานะใน Controller**
-                  onExpansionChanged: (isExpanding) {
-                    if (isExpanding) {
-                      // ถ้ากดเปิด ให้ตั้งค่า index ปัจจุบัน
-                      controller.expandedCardIndex.value = index;
-                    } else {
-                      // ถ้ากดปิด ให้เคลียร์ค่า (ไม่มีการ์ดไหนถูกเปิด)
-                      controller.expandedCardIndex.value = null;
-                    }
-                  },
+              // **ควบคุมสถานะการเปิด-ปิดจาก Controller**
+              initiallyExpanded: controller.expandedCardIndex.value == index,
+
+              // **เมื่อมีการกด ให้ไปอัปเดตสถานะใน Controller**
+              onExpansionChanged: (isExpanding) {
+                if (isExpanding) {
+                  // ถ้ากดเปิด ให้ตั้งค่า index ปัจจุบัน
+                  controller.expandedCardIndex.value = index;
+                } else {
+                  // ถ้ากดปิด ให้เคลียร์ค่า (ไม่มีการ์ดไหนถูกเปิด)
+                  controller.expandedCardIndex.value = null;
+                }
+              },
               //  shape: LinearBorder.none,
               // collapsedShape: LinearBorder.none,
               dense: true,
@@ -164,28 +164,32 @@ class HistoryCardList extends GetView<LeavePageController> {
                 ),
               ),
               children: [
-                 if (item.attachedFiles != null && item.attachedFiles!.isNotEmpty)
+                if (item.attachedFiles != null &&
+                    item.attachedFiles!.isNotEmpty)
                   // ถ้ามี ให้วนลูปแสดงรายการไฟล์
-                  ...item.attachedFiles!.map((file) => _buildAttachmentItem(file)).toList()
+                  ...item.attachedFiles!
+                      .map((file) => _buildAttachmentItem(file))
+                      .toList()
                 else
                   // ถ้าไม่มี ให้แสดงข้อความ
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: Text('ไม่มีไฟล์แนบ', style: TextStyle(color: Colors.grey)),
+                    child: Text(
+                      'ไม่มีไฟล์แนบ',
+                      style: TextStyle(color: Colors.grey),
+                    ),
                   ),
               ],
             ),
-          
 
-          if (isManagerView) ...[
-            const SizedBox(height: 8),
-            _buildManagerActionButtons(),
+            if (isManagerView) ...[
+              const SizedBox(height: 8),
+              _buildManagerActionButtons(),
+            ],
           ],
-        ],
-      ),
-    );
+        ),
+      );
     });
-    
   }
 
   // Helper สำหรับสร้างปุ่มของ Manager (โค้ดเดิม)
@@ -227,20 +231,28 @@ class HistoryCardList extends GetView<LeavePageController> {
     );
   }
 
- Widget _buildAttachmentItem(File file) {
+  Widget _buildAttachmentItem(File file) {
     final fileName = file.path.split('/').last;
-    final fileExtension = fileName.contains('.') ? fileName.split('.').last.toLowerCase() : '';
+    final fileExtension = fileName.contains('.')
+        ? fileName.split('.').last.toLowerCase()
+        : '';
     IconData getIconForFile(String extension) {
-      if (['jpg', 'jpeg', 'png'].contains(extension)) return Icons.image_outlined;
+      if (['jpg', 'jpeg', 'png'].contains(extension))
+        return Icons.image_outlined;
       if (extension == 'pdf') return Icons.picture_as_pdf_outlined;
-      if (['doc', 'docx'].contains(extension)) return Icons.description_outlined;
+      if (['doc', 'docx'].contains(extension))
+        return Icons.description_outlined;
       return Icons.insert_drive_file_outlined;
     }
 
-    return ListTile(
-      leading: Icon(getIconForFile(fileExtension), color: Colors.grey[700]),
-      title: Text(fileName, style: const TextStyle(fontSize: 14)),
-      dense: true,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8), side: BorderSide(color: Color.fromRGBO(204, 218, 255, 1))),
+        leading: Icon(getIconForFile(fileExtension), color: Colors.grey[700]),
+        title: Text(fileName, style: const TextStyle(fontSize: 14)),
+        dense: true,
+      ),
     );
   }
 }

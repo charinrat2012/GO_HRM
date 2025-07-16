@@ -42,6 +42,8 @@ dependencies:
   intl: 
   image_picker:
   file_picker:
+  font_awesome_flutter:
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

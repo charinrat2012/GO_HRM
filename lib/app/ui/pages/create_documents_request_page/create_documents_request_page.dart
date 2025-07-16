@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/ui/pages/create_leave_request_page/widgets/body_request.dart';
 
-import 'create_leave_request_controller.dart';
+
+import 'create_documents_request_controller.dart';
+import 'widgets/body_request.dart';
 import 'widgets/head_leave_request.dart';
 
-class CreateLeaveRequestPage extends GetView<CreateLeaveRequestController> {
-  const CreateLeaveRequestPage({super.key});
+class CreateDocumentsRequestPage extends GetView<CreateDocumentRequestController> {
+  const CreateDocumentsRequestPage({super.key});
 
   @override
   Widget build(BuildContext context) {

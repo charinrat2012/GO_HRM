@@ -1,8 +1,14 @@
+
+
 import 'package:get/get.dart';
+import 'package:go_hrm/app/bindings/calender_binding.dart';
+import 'package:go_hrm/app/ui/pages/calender_page/calender_page.dart';
 
 import '../bindings/activity_detail_binding.dart';
 import '../bindings/chats_binding.dart';
+import '../bindings/create_document_request_binding.dart';
 import '../bindings/create_leave_request_binding.dart';
+import '../bindings/documents_binding.dart';
 import '../bindings/home_binding.dart';
 import '../bindings/leave_binding.dart';
 import '../bindings/login_binging.dart';
@@ -20,7 +26,9 @@ import '../bindings/timetable_binding.dart';
 import '../data/models/news_card_model.dart';
 import '../ui/pages/activity_detail_page/activity_detail_page.dart';
 import '../ui/pages/chats_page/chats_page.dart';
+import '../ui/pages/create_documents_request_page/create_documents_request_page.dart';
 import '../ui/pages/create_leave_request_page/create_leave_request_page.dart';
+import '../ui/pages/document_page.dart/document_page.dart';
 import '../ui/pages/home_page/home_page.dart';
 import '../ui/pages/leave_page.dart/leave_page.dart';
 import '../ui/pages/login_page/login_page.dart';
@@ -87,8 +95,8 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.CALENDER,
-      page: () => ChatsPage(),
-      binding: ChatsBinding(),
+      page: () => CalenderPage(),
+      binding: CalenderBinding(),
       transition: _defaultTransition,
     ),
     GetPage(
@@ -166,5 +174,17 @@ class AppPages {
       binding: SalaryBinding(),
       transition: _defaultTransition,
     ),
+     GetPage(
+       name: AppRoutes.DOCUMENTS,
+       page: () => DocumentsPage(),
+       binding: DocumentsBinding(),
+       transition: _defaultTransition,
+     ),
+     GetPage(
+       name: AppRoutes.CREATE_DOCUMENT_REQUEST,
+       page: () => CreateDocumentsRequestPage(),
+       binding: CreateDocumentRequestBinding(),
+       transition: _defaultTransition,
+     ),
   ];
 }

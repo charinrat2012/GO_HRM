@@ -22,15 +22,7 @@ class FormPassword extends GetView<SplashController> {
           obscureText: true,
           decoration: InputDecoration(
             hintText: 'Password',
-            contentPadding: const EdgeInsets.all(14.0),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey[400]!),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey[400]!),
-            ),
+            
           ),
         ),
       ],

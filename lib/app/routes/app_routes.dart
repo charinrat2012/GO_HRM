@@ -18,4 +18,8 @@ class AppRoutes {
   static const ACTIVITYDETAIL = '/activitydetail';
   static const MEETINGDETAIL = '/meetingdetail';
   static const SALARY = '/salary';
+  static const ACTIVITYDETAILPAGE = '/activitydetailpage';
+  static const MEETINGDETAILPAGE = '/meetingdetailpage';
+  static const DOCUMENTS = '/documents';
+  static const CREATE_DOCUMENT_REQUEST = '/create_document_request';
 }

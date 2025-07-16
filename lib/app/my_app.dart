@@ -35,7 +35,9 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       
-      initialRoute: AppRoutes.SALARY,
+      initialRoute: AppRoutes.NAVIGATION,
+      
+      // initialRoute: AppRoutes.SALARY,
       // initialRoute: AppRoutes.SPLASH,
       unknownRoute: AppPages.unknownRoutePage,
       getPages: AppPages.pages,

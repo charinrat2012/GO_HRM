@@ -1,0 +1,11 @@
+import 'package:get/get.dart';
+import 'package:go_hrm/app/ui/pages/document_page.dart/document_controller.dart';
+
+
+class DocumentsBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<DocumentsController>(() => DocumentsController());
+    // Get.put<DocumentsController>(DocumentsController());
+  }
+}

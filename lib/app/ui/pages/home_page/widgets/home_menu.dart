@@ -28,16 +28,16 @@ class HomeMenu extends GetView<HomeController> {
                 dense: true,
                 contentPadding: EdgeInsets.zero,
                 leading: const Text(
-                  'เมนู',
+                  'รายการโปรด',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 trailing: IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.navigate_next, color: Colors.grey[700]),
+                  icon: Icon(Icons.navigate_next, color: MyColors.blue2),
                 ),
               ),
 
-              Divider(color: Colors.grey[200]),
+              Divider(),
 
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
