@@ -4,34 +4,35 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_hrm/app/config/my_colors.dart';
 
-enum LeaveStatus { approved, pending, rejected }
+enum DocumentStatus { approved, pending, rejected }
 
 
-class LeaveHistoryModel {
+class DocumentHistoryModel {
   final String title = 'ออกใบลา';
   final String leaveType;
   final String employeeName;
   final String leaveCategory;
   final DateTime requestDateTime;
-  // final String? note;
-  final LeaveStatus status;
+  final String? note;
+  final DocumentStatus status;
   final List<File>? attachedFiles;
 
-  LeaveHistoryModel({
+  DocumentHistoryModel({
     required this.leaveType,
     required this.employeeName,
     required this.leaveCategory,
     required this.requestDateTime,
-    // this.note,
+    this.note,
     required this.status,
     this.attachedFiles,
   });
-    factory LeaveHistoryModel.fromMap(Map<String, dynamic> map) {
-    return LeaveHistoryModel(
+      factory DocumentHistoryModel.fromMap(Map<String, dynamic> map) {
+    return DocumentHistoryModel(
       leaveType: map['leaveType'] ?? '',
       employeeName: map['employeeName'] ?? '', 
       leaveCategory: map['leaveCategory']?? '',
       requestDateTime: map['requestDateTime']?? '',
+      note: map['note']?? '',
       status: map['status']?? '',
       attachedFiles: map['attachedFiles']?? [],
     );
@@ -39,33 +40,33 @@ class LeaveHistoryModel {
 
   String get statusText {
     switch (status) {
-      case LeaveStatus.approved:
+      case DocumentStatus.approved:
         return 'อนุมัติ';
-      case LeaveStatus.pending:
+      case DocumentStatus.pending:
         return 'รออนุมัติ';
-      case LeaveStatus.rejected:
+      case DocumentStatus.rejected:
         return 'ไม่อนุมัติ';
     }
   }
 
   Color get statusBadgeColor {
     switch (status) {
-      case LeaveStatus.approved:
+      case DocumentStatus.approved:
         return Colors.blue[100]!;
-      case LeaveStatus.pending:
+      case DocumentStatus.pending:
         return Colors.grey.withValues(alpha: 0.1);
-      case LeaveStatus.rejected:
+      case DocumentStatus.rejected:
         return Colors.red;
     }
   }
 
   Color get statusTextColor {
     switch (status) {
-      case LeaveStatus.approved:
+      case DocumentStatus.approved:
         return MyColors.blue2;
-      case LeaveStatus.pending:
+      case DocumentStatus.pending:
         return Colors.grey[600]!;
-      case LeaveStatus.rejected:
+      case DocumentStatus.rejected:
         return Colors.white;
     }
   }

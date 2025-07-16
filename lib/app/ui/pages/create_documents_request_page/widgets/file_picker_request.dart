@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../../config/my_colors.dart';
-import '../create_leave_request_controller.dart';
+import '../create_documents_request_controller.dart';
 
 // หมายเหตุ: ถึงแม้ชื่อไฟล์จะเป็น FilePickerRequest แต่โค้ดนี้ทำงานกับ image_picker
 // ตามที่ได้แก้ไขใน Controller ไปแล้ว
 
-class FilePickerRequest extends GetView<CreateLeaveRequestController> {
+class FilePickerRequest extends GetView<CreateDocumentRequestController> {
   const FilePickerRequest({super.key});
 
   @override
@@ -15,7 +16,7 @@ class FilePickerRequest extends GetView<CreateLeaveRequestController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+       const Text(
           'แนบไฟล์',
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         ),
@@ -58,28 +59,24 @@ class FilePickerRequest extends GetView<CreateLeaveRequestController> {
         decoration: BoxDecoration(
           
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Color.fromRGBO(204, 218, 255, 1)),
+          border: Border.all(color:Color.fromRGBO(204, 218, 255, 1)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.image_outlined, size: 40),
+            Icon(Icons.image_outlined, size: 40, ),
             const SizedBox(height: 8),
-            Text(
-              'อัปโหลดรูปภาพหรือไฟล์',
-              style: TextStyle(color: MyColors.blue2),
-            ),
+            Text('อัปโหลดรูปภาพหรือไฟล์', style: TextStyle(color: MyColors.blue2)),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildFileListItem(File file, int index) {
+
+ Widget _buildFileListItem(File file, int index) {
     final fileName = file.path.split('/').last;
-    final fileExtension = fileName.contains('.')
-        ? fileName.split('.').last.toLowerCase()
-        : '';
+    final fileExtension = fileName.contains('.') ? fileName.split('.').last.toLowerCase() : '';
 
     IconData getIconForFile(String extension) {
       if (['jpg', 'jpeg', 'png'].contains(extension)) {

@@ -17,4 +17,6 @@ class AppRoutes {
   static const TIMETABLE = '/timetable';
   static const ACTIVITYDETAILPAGE = '/activitydetailpage';
   static const MEETINGDETAILPAGE = '/meetingdetailpage';
+  static const DOCUMENTS = '/documents';
+  static const CREATE_DOCUMENT_REQUEST = '/create_document_request';
 }

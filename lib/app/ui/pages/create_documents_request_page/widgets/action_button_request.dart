@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/my_colors.dart';
-import '../create_leave_request_controller.dart';
+import '../create_documents_request_controller.dart';
 
-class ActionButtonRequest extends GetView<CreateLeaveRequestController> {
+class ActionButtonRequest extends GetView<CreateDocumentRequestController> {
   const ActionButtonRequest({super.key});
 
   @override

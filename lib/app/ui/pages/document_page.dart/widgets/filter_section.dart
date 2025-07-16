@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/my_colors.dart';
-import '../leave_controller.dart';
+import '../document_controller.dart';
 
 
-class FilterSection extends GetView<LeavePageController> {
+class FilterSection extends GetView<DocumentsController> {
   const FilterSection({super.key});
 
   @override
@@ -45,7 +45,7 @@ class FilterSection extends GetView<LeavePageController> {
             const SizedBox(height: 16),
 
             _buildDropdown(
-              'สถานะ',
+              'ประเภทเอกสาร',
               controller.leaveTypes,
               controller.selectedLeaveType,
             ),
@@ -97,6 +97,8 @@ class FilterSection extends GetView<LeavePageController> {
           onChanged: (newValue) {
             selectedItem.value = newValue;
           },
+
+         
         ),
       ],
     );

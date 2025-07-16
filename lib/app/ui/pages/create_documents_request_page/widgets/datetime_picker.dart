@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../create_leave_request_controller.dart';
+import '../create_documents_request_controller.dart';
 
-class DatetimePicker extends GetView<CreateLeaveRequestController> {
+class DatetimePicker extends GetView<CreateDocumentRequestController> {
   final String label;
   final TextEditingController textController;
   const DatetimePicker({
@@ -34,7 +34,7 @@ class DatetimePicker extends GetView<CreateLeaveRequestController> {
            
             suffixIcon: Icon(
               Icons.calendar_today_outlined,
-             
+              
             ),
           ),
         ),

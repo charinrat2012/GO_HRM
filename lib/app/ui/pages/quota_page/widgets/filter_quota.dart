@@ -71,28 +71,6 @@ class FilterQuota extends GetView<QuotaController> {
           onChanged: (newValue) {
             selectedItem.value = newValue;
           },
-
-          decoration: InputDecoration(
-            labelStyle: const TextStyle(color: Colors.grey),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
-
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Colors.grey[300]!),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Colors.grey[300]!),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Colors.grey[300]!),
-            ),
-           isDense: true,
-          ),
         ),
       ],
     );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../create_leave_request_controller.dart';
+import '../create_documents_request_controller.dart';
 
-class DetailTextfield extends GetView<CreateLeaveRequestController> {
-  const DetailTextfield({super.key});
+class TitleTextfield extends GetView<CreateDocumentRequestController> {
+  const TitleTextfield({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,17 +12,14 @@ class DetailTextfield extends GetView<CreateLeaveRequestController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'รายละเอียด',
+          'ชื่อเรื่องเอกสาร',
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         TextFormField(
           controller: controller.detailsController,
-          maxLines: 5,
-          decoration: InputDecoration(
-            hintText: 'กรุณากรอกรายละเอียด',
-           
-          ),
+          maxLines: 1,
+          decoration: InputDecoration(hintText: 'กรุณากรอกรายละเอียด'),
         ),
       ],
     );

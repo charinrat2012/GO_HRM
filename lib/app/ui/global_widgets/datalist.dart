@@ -434,7 +434,7 @@ class DataList {
       'title': 'ขอใบลา',
       'onPressed': () => Get.toNamed(AppRoutes.LEAVE),
     },
-    {'icon': Icons.note_add_outlined, 'title': 'ขอเอกสาร', 'onPressed': () {}},
+    {'icon': Icons.note_add_outlined, 'title': 'ขอเอกสาร', 'onPressed': () => Get.toNamed(AppRoutes.DOCUMENTS)},
     {
       'icon': Icons.access_time,
       'title': 'ตารางเวลา',
@@ -467,5 +467,11 @@ class DataList {
     {'type': 'ลาคลอด (ไม่ได้รับค่าจ้าง)', 'remaining': 10, 'total': 10},
     {'type': 'ลาพักร้อน', 'remaining': 10, 'total': 10},
     {'type': 'ขาดงาน ', 'remaining': 10, 'total': 10},
+  ].obs;
+
+  static final List<Map<String, dynamic>> docTypes = [
+    {'type': 'ขอโอทีล่วงหน้า', },
+    {'type': 'ขอใบรับรอง',},
+    {'type': 'ขอเอกสาร',},
   ].obs;
 }

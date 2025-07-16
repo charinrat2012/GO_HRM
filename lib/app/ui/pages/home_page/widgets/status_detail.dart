@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_hrm/app/ui/pages/home_page/widgets/dia_test.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../config/my_colors.dart';
@@ -251,7 +252,7 @@ class StatusDetail extends GetView<HomeController> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => Get.dialog(ClockInSuccessDialog(dateTime: DateTime.now(), location: 'Absolute HQ Tower',)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,

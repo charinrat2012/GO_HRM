@@ -18,7 +18,7 @@ class MeauForm extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 8),
-                Divider(color: Color.fromRGBO(194, 198, 204, 0.65)),
+                Divider(),
                 SizedBox(height: 8),
               ],
             ),

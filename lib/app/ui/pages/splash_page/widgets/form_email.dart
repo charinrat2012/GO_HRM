@@ -20,15 +20,7 @@ class FormEmail extends GetView<SplashController> {
           obscureText: false,
           decoration: InputDecoration(
             hintText: 'Email',
-            contentPadding: const EdgeInsets.all(14.0),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey[400]!),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey[400]!),
-            ),
+           
           ),
         ),
       ],

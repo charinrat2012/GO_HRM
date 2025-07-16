@@ -21,6 +21,11 @@ class TypeDropdownRequest extends GetView<CreateLeaveRequestController> {
         Obx(
           () => DropdownButtonFormField<QuotaModel>(
             isDense: true,
+            
+           
+            dropdownColor: Colors.white,
+             iconEnabledColor:  MyColors.blue2,
+             iconDisabledColor: MyColors.blue2,
             // value คืออ็อบเจกต์ QuotaModel ที่ถูกเลือกอยู่
             value: controller.selectedQuota.value,
             // items สร้างจาก List ของ Model ใน Controller
@@ -36,18 +41,7 @@ class TypeDropdownRequest extends GetView<CreateLeaveRequestController> {
                 controller.selectedQuota.value = newValue;
               }
             },
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.all(12),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: Colors.grey[300]!),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              isDense: true,
-            ),
+           
           ),
         ),
         const SizedBox(height: 8),

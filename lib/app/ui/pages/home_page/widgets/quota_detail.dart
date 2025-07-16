@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/config/my_colors.dart';
+
+import '../../../../config/my_colors.dart';
 import '../../../../routes/app_routes.dart';
 import '../home_controller.dart';
 
@@ -27,14 +28,16 @@ class QuotaDetail extends GetView<HomeController> {
                 contentPadding: EdgeInsets.zero,
                 leading: const Text(
                   'โควต้าการลา',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,), 
                 ),
                 trailing: IconButton(
-                  onPressed: () {Get.toNamed(AppRoutes.QUOTA);},
-                  icon: Icon(Icons.navigate_next, color: Colors.grey[700]),
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.QUOTA);
+                  },
+                  icon: Icon(Icons.navigate_next, color: MyColors.blue2),
                 ),
               ),
-              Divider(color: Colors.grey[200]),
+              Divider(),
               const SizedBox(height: 8),
 
               Column(
@@ -53,25 +56,27 @@ class QuotaDetail extends GetView<HomeController> {
                           children: [
                             Text(
                               quota.type,
-                              style: const TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 14,),
                             ),
-                            RichText(text: TextSpan(
-                              text: '${quota.remaining} วัน',
-                              style: TextStyle(
-                                color: MyColors.blue2,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: ' / ${quota.total} วัน',
-                                  style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                  ),
+                            RichText(
+                              text: TextSpan(
+                                text: '${quota.remaining} วัน',
+                                style: TextStyle(
+                                  color: MyColors.blue2,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
                                 ),
-                              ],
-                            ))
+                                children: [
+                                  TextSpan(
+                                    text: ' / ${quota.total} วัน',
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             // Text.rich(
                             //   TextSpan(
                             //     children: [
@@ -80,14 +85,14 @@ class QuotaDetail extends GetView<HomeController> {
                             //         style: TextStyle(
                             //           color: MyColors.blue2,
                             //           fontWeight: FontWeight.bold,
-                                      
+
                             //         ),
                             //       ),
                             //       TextSpan(
                             //         text: ' / ${quota.total} วัน',
                             //         style: const TextStyle(
                             //           color: Colors.grey,
-                                      
+
                             //         ),
                             //       ),
                             //     ],

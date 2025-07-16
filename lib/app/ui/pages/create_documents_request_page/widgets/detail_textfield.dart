@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../create_leave_request_controller.dart';
+import '../create_documents_request_controller.dart';
 
-class DetailTextfield extends GetView<CreateLeaveRequestController> {
+class DetailTextfield extends GetView<CreateDocumentRequestController> {
   const DetailTextfield({super.key});
 
   @override
