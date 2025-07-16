@@ -1,29 +1,21 @@
 import 'package:flutter/material.dart';
 
-class ActivityDetailPageBox extends StatelessWidget {
-  const ActivityDetailPageBox({super.key});
+class MeetingCard extends StatelessWidget {
+  const MeetingCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
+    return
+    // 1. ประชุมกับผู้บริหาร
+    SliverPadding(
       padding: const EdgeInsets.all(16.0),
       sliver: SliverToBoxAdapter(
         child: Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(22.0),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
-            boxShadow: const [
-              // BoxShadow(
-              //   color: Colors.grey.withAlpha(100), //ความทีบ
-              //   spreadRadius: 1, //รัศมีของการกระจายของเงา
-              //   blurRadius: 5, //รัศมีการเบลอ
-              //   offset: const Offset(
-              //     0,
-              //     3,
-              //   ),
-              // ),
-            ],
+            boxShadow: const [],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +24,7 @@ class ActivityDetailPageBox extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'วันก่อตั้งบริษัท',
+                    'ประชุมกับผู้บริหาร',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -40,7 +32,7 @@ class ActivityDetailPageBox extends StatelessWidget {
                   ),
 
                   const Text(
-                    'ทั้งวัน',
+                    '10.30 - 11.00 ',
                     style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                 ],
@@ -63,7 +55,7 @@ class ActivityDetailPageBox extends StatelessWidget {
                     ),
                   ),
                   const Text(
-                    'วันหยุดของบริษัท',
+                    'นัดประชุมกสำคัญ',
                     style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                 ],

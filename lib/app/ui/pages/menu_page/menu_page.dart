@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'widgets/meau_form.dart';
+import 'widgets/menu_form.dart';
 import 'widgets/menu_head.dart';
 
 class MenuPage extends GetView<MenuController> {
@@ -12,7 +12,7 @@ class MenuPage extends GetView<MenuController> {
     return SafeArea(
       child: Scaffold(
         appBar: MenuHead(), 
-        body: MeauForm()),
+        body: MenuForm()),
     );
   }
 }

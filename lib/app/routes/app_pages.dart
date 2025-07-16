@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 
-import '../bindings/activity_detail_page_binding.dart';
+import '../bindings/activity_detail_binding.dart';
 import '../bindings/chats_binding.dart';
 import '../bindings/create_leave_request_binding.dart';
 import '../bindings/home_binding.dart';
 import '../bindings/leave_binding.dart';
 import '../bindings/login_binging.dart';
-import '../bindings/meeting_detail_page_binding.dart';
+import '../bindings/meeting_detail_binding.dart';
 import '../bindings/menu_binding.dart';
 import '../bindings/navigation_binding.dart';
 import '../bindings/news_binding.dart';
@@ -14,6 +14,7 @@ import '../bindings/news_details_binding.dart';
 import '../bindings/notification_binding.dart';
 import '../bindings/profile_binding.dart';
 import '../bindings/quota_binding.dart';
+import '../bindings/salary_binding.dart';
 import '../bindings/splash_binding.dart';
 import '../bindings/timetable_binding.dart';
 import '../data/models/news_card_model.dart';
@@ -31,6 +32,7 @@ import '../ui/pages/news_page/news_page.dart';
 import '../ui/pages/notification_page/notification_page.dart';
 import '../ui/pages/profile_page/profile_page.dart';
 import '../ui/pages/quota_page/quota_page.dart';
+import '../ui/pages/salary_page/salary_page.dart';
 import '../ui/pages/splash_page/splash_page.dart';
 import '../ui/pages/timetable_page/timetable_page.dart';
 import '../ui/pages/unknown_route_page/unknown_route_page.dart';
@@ -147,15 +149,21 @@ class AppPages {
       transition: _defaultTransition,
     ),
     GetPage(
-      name: AppRoutes.ACTIVITYDETAILPAGE,
+      name: AppRoutes.ACTIVITYDETAIL,
       page: () => ActivityDetailPage(),
-      binding: ActivitydetailpageBinding(),
+      binding: ActivitydetailBinding(),
       transition: _defaultTransition,
     ),
     GetPage(
-      name: AppRoutes.MEETINGDETAILPAGE,
+      name: AppRoutes.MEETINGDETAIL,
       page: () => MeetingDetailPage(),
-      binding: MeetingDetailPageBinding(),
+      binding: MeetingDetailBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.SALARY,
+      page: () => SalaryPage(),
+      binding: SalaryBinding(),
       transition: _defaultTransition,
     ),
   ];

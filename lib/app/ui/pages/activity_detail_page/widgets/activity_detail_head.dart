@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ActivityDetailPageHead extends StatelessWidget {
-  const ActivityDetailPageHead({super.key});
+class ActivityDetailHead extends StatelessWidget {
+  const ActivityDetailHead({super.key});
 
   @override
   Widget build(BuildContext context) {

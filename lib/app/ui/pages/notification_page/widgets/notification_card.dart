@@ -66,7 +66,7 @@ class NotificationCard extends GetView<NotificationController> {
                         notification.isExpanded.value
                             ? Icons.keyboard_arrow_up
                             : Icons.keyboard_arrow_down,
-                        color: Colors.grey,
+                        color: MyColors.blue, //สีลูกศร
                       ),
                   ],
                 ),
@@ -112,7 +112,10 @@ class NotificationCard extends GetView<NotificationController> {
                           ),
                           child: Text(
                             'ปฏิเสธ',
-                            style: TextStyle(color: MyColors.blue),
+                            style: TextStyle(
+                              color: MyColors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -121,7 +124,7 @@ class NotificationCard extends GetView<NotificationController> {
                         child: ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[300],
+                            backgroundColor: MyColors.blue,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),

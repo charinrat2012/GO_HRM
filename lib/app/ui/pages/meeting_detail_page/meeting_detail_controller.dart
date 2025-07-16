@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 
-class MeetingDetailPageController extends GetxController {
+class MeetingDetailController extends GetxController {
   final RxList<File> pickedFiles = <File>[].obs;
 
   // Function สำหรับเลือกหลายไฟล์/รูปภาพ
