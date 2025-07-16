@@ -14,4 +14,7 @@ class AppRoutes {
   static const LEAVE = '/leave';
   static const CREATE_LEAVE_REQUEST = '/create_leave_request';
   static const QUOTA = '/quota';
+  static const TIMETABLE = '/timetable';
+  static const ACTIVITYDETAILPAGE = '/activitydetailpage';
+  static const MEETINGDETAILPAGE = '/meetingdetailpage';
 }

@@ -428,13 +428,18 @@ class DataList {
     },
   ].obs;
 
-
-
-
-static final List<Map<String, dynamic>> menuData =  [
-    {'icon': Icons.description_outlined, 'title': 'ขอใบลา', 'onPressed': () => Get.toNamed(AppRoutes.LEAVE)},
+  static final List<Map<String, dynamic>> menuData = [
+    {
+      'icon': Icons.description_outlined,
+      'title': 'ขอใบลา',
+      'onPressed': () => Get.toNamed(AppRoutes.LEAVE),
+    },
     {'icon': Icons.note_add_outlined, 'title': 'ขอเอกสาร', 'onPressed': () {}},
-    {'icon': Icons.access_time, 'title': 'ตารางเวลา', 'onPressed': () {}},
+    {
+      'icon': Icons.access_time,
+      'title': 'ตารางเวลา',
+      'onPressed': () => Get.toNamed(AppRoutes.TIMETABLE),
+    },
     {
       'icon': Icons.monetization_on_outlined,
       'title': 'เงินเดือน',
@@ -454,7 +459,7 @@ static final List<Map<String, dynamic>> menuData =  [
     {'icon': Icons.more_horiz, 'title': 'อื่นๆ', 'onPressed': () {}},
   ].obs;
 
-static  final List<Map<String, dynamic>> quotasData = [
+  static final List<Map<String, dynamic>> quotasData = [
     {'type': 'ลากิจ (ได้รับค่าจ้าง)', 'remaining': 2, 'total': 10},
     {'type': 'ลากิจ (ไม่ได้รับค่าจ้าง)', 'remaining': 5, 'total': 10},
     {'type': 'ลาป่วย', 'remaining': 10, 'total': 10},
@@ -462,6 +467,5 @@ static  final List<Map<String, dynamic>> quotasData = [
     {'type': 'ลาคลอด (ไม่ได้รับค่าจ้าง)', 'remaining': 10, 'total': 10},
     {'type': 'ลาพักร้อน', 'remaining': 10, 'total': 10},
     {'type': 'ขาดงาน ', 'remaining': 10, 'total': 10},
-
   ].obs;
 }

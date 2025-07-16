@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:go_hrm/app/ui/pages/quota_page/quota_controller.dart';
-import 'package:go_hrm/app/ui/pages/quota_page/quota_page.dart';
 
+import '../bindings/activity_detail_page_binding.dart';
 import '../bindings/chats_binding.dart';
 import '../bindings/create_leave_request_binding.dart';
 import '../bindings/home_binding.dart';
 import '../bindings/leave_binding.dart';
 import '../bindings/login_binging.dart';
+import '../bindings/meeting_detail_page_binding.dart';
 import '../bindings/menu_binding.dart';
 import '../bindings/navigation_binding.dart';
 import '../bindings/news_binding.dart';
@@ -15,19 +15,24 @@ import '../bindings/notification_binding.dart';
 import '../bindings/profile_binding.dart';
 import '../bindings/quota_binding.dart';
 import '../bindings/splash_binding.dart';
+import '../bindings/timetable_binding.dart';
 import '../data/models/news_card_model.dart';
+import '../ui/pages/activity_detail_page/activity_detail_page.dart';
 import '../ui/pages/chats_page/chats_page.dart';
 import '../ui/pages/create_leave_request_page/create_leave_request_page.dart';
 import '../ui/pages/home_page/home_page.dart';
 import '../ui/pages/leave_page.dart/leave_page.dart';
 import '../ui/pages/login_page/login_page.dart';
+import '../ui/pages/meeting_detail_page/meeting_detail_page.dart';
 import '../ui/pages/menu_page/menu_page.dart';
 import '../ui/pages/navigation_page/navigation_page.dart';
 import '../ui/pages/news_details_page/news_details_page.dart';
 import '../ui/pages/news_page/news_page.dart';
 import '../ui/pages/notification_page/notification_page.dart';
 import '../ui/pages/profile_page/profile_page.dart';
+import '../ui/pages/quota_page/quota_page.dart';
 import '../ui/pages/splash_page/splash_page.dart';
+import '../ui/pages/timetable_page/timetable_page.dart';
 import '../ui/pages/unknown_route_page/unknown_route_page.dart';
 import 'app_routes.dart';
 
@@ -126,15 +131,32 @@ class AppPages {
       transition: _defaultTransition,
     ),
     GetPage(
-  name: AppRoutes.CREATE_LEAVE_REQUEST,
-  page: () => const CreateLeaveRequestPage(),
-  binding: CreateLeaveRequestBinding(),
-),
+      name: AppRoutes.CREATE_LEAVE_REQUEST,
+      page: () => const CreateLeaveRequestPage(),
+      binding: CreateLeaveRequestBinding(),
+    ),
     GetPage(
-  name: AppRoutes.QUOTA,
-  page: () => const QuotaPage(),
-  binding: QuotaBinding(),
-),
-
+      name: AppRoutes.QUOTA,
+      page: () => const QuotaPage(),
+      binding: QuotaBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.TIMETABLE,
+      page: () => TimetablePage(),
+      binding: TimetableBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.ACTIVITYDETAILPAGE,
+      page: () => ActivityDetailPage(),
+      binding: ActivitydetailpageBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.MEETINGDETAILPAGE,
+      page: () => MeetingDetailPage(),
+      binding: MeetingDetailPageBinding(),
+      transition: _defaultTransition,
+    ),
   ];
 }
