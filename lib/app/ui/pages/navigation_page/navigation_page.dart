@@ -35,6 +35,7 @@ class NavigationPage extends GetView<NavigationController> {
       // ส่วน BottomNavigationBar
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
+          backgroundColor: Colors.white,
           // currentIndex บอกว่าแท็บไหนกำลังถูกเลือก
           currentIndex: controller.tabIndex.value,
           // onTap คือ event ที่จะทำงานเมื่อกดที่แท็บ
@@ -64,8 +65,8 @@ class NavigationPage extends GetView<NavigationController> {
               label: 'Chats',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.insert_chart_outlined_rounded),
-              activeIcon: Icon(Icons.insert_chart_outlined),
+              icon: Icon(Icons.calendar_month),
+              activeIcon: Icon(Icons.calendar_month),
               label: 'Calendar',
             ),
             BottomNavigationBarItem(

@@ -18,7 +18,7 @@ class HomeController extends GetxController {
   }
 
   void loadData() {
-    final List<MenuModel> menuData = DataList.menuData.map((map) {
+    final List<MenuModel> menuData = DataList.defaultFavoriteMenus.map((map) {
       // หมายเหตุ: ต้องมีการสร้าง fromMap ใน FavoriteItemModel ด้วย
       return MenuModel.fromMap(map);
     }).toList();

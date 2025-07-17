@@ -9,6 +9,7 @@ import '../bindings/chats_binding.dart';
 import '../bindings/create_document_request_binding.dart';
 import '../bindings/create_leave_request_binding.dart';
 import '../bindings/documents_binding.dart';
+import '../bindings/favourite_binding.dart';
 import '../bindings/home_binding.dart';
 import '../bindings/leave_binding.dart';
 import '../bindings/login_binging.dart';
@@ -29,6 +30,7 @@ import '../ui/pages/chats_page/chats_page.dart';
 import '../ui/pages/create_documents_request_page/create_documents_request_page.dart';
 import '../ui/pages/create_leave_request_page/create_leave_request_page.dart';
 import '../ui/pages/document_page.dart/document_page.dart';
+import '../ui/pages/favourite_page/favourite_page.dart';
 import '../ui/pages/home_page/home_page.dart';
 import '../ui/pages/leave_page.dart/leave_page.dart';
 import '../ui/pages/login_page/login_page.dart';
@@ -184,6 +186,12 @@ class AppPages {
        name: AppRoutes.CREATE_DOCUMENT_REQUEST,
        page: () => CreateDocumentsRequestPage(),
        binding: CreateDocumentRequestBinding(),
+       transition: _defaultTransition,
+     ),
+     GetPage( // <-- เพิ่ม GetPage ใหม่นี้
+       name: AppRoutes.FAVOURITE_SETTINGS,
+       page: () => FavouritePage(),
+       binding: FavouriteBinding(),
        transition: _defaultTransition,
      ),
   ];

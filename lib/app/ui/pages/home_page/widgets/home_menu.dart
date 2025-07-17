@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/my_colors.dart';
+import '../../../../routes/app_routes.dart';
 import '../home_controller.dart';
 
 class HomeMenu extends GetView<HomeController> {
@@ -32,7 +33,7 @@ class HomeMenu extends GetView<HomeController> {
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 trailing: IconButton(
-                  onPressed: () {},
+                  onPressed: ()  => Get.toNamed(AppRoutes.FAVOURITE_SETTINGS),
                   icon: Icon(Icons.navigate_next, color: MyColors.blue2),
                 ),
               ),
@@ -52,6 +53,7 @@ class HomeMenu extends GetView<HomeController> {
               GridView.count(
                 padding: EdgeInsets.zero,
                 crossAxisCount: 4,
+                
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: controller.menuitems.map((favorite) {

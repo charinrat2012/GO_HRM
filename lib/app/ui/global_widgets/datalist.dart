@@ -428,38 +428,140 @@ class DataList {
     },
   ].obs;
 
-  static final List<Map<String, dynamic>> menuData = [
+static final List<Map<String, dynamic>> defaultFavoriteMenus = [
     {
       'icon': Icons.description_outlined,
       'title': 'ขอใบลา',
       'onPressed': () => Get.toNamed(AppRoutes.LEAVE),
+      'category': 'รายการโปรด',
     },
-    {'icon': Icons.note_add_outlined, 'title': 'ขอเอกสาร', 'onPressed': () => Get.toNamed(AppRoutes.DOCUMENTS)},
+    {
+      'icon': Icons.note_add_outlined,
+      'title': 'ขอเอกสาร',
+      'onPressed': () => Get.toNamed(AppRoutes.DOCUMENTS),
+      'category': 'รายการโปรด',
+    },
     {
       'icon': Icons.access_time,
       'title': 'ตารางเวลา',
       'onPressed': () => Get.toNamed(AppRoutes.TIMETABLE),
+      'category': 'รายการโปรด',
     },
     {
       'icon': Icons.monetization_on_outlined,
       'title': 'เงินเดือน',
       'onPressed': () => Get.toNamed(AppRoutes.SALARY),
+      'category': 'รายการโปรด',
     },
     {
       'icon': Icons.account_circle,
       'title': 'ข้อมูลพนักงาน',
       'onPressed': () {},
+      'category': 'รายการโปรด',
     },
     {
       'icon': Icons.insert_chart_outlined_outlined,
       'title': 'ร้องเรียน',
       'onPressed': () {},
+      'category': 'รายการโปรด',
     },
-    {'icon': Icons.dashboard, 'title': 'จัดการเวลา', 'onPressed': () {}},
-    {'icon': Icons.more_horiz, 'title': 'อื่นๆ', 'onPressed': () {}},
-    {'icon': Icons.more_horiz, 'title': 'กิจกรรม', 'onPressed': () => Get.toNamed(AppRoutes.ACTIVITYDETAIL)}, 
-    {'icon': Icons.more_horiz, 'title': 'รายละเอียดกิจกรรม', 'onPressed': () => Get.toNamed(AppRoutes.MEETINGDETAIL)}, 
-  ].obs;
+    {
+      'icon': Icons.dashboard,
+      'title': 'จัดการเวลา',
+      'onPressed': () {},
+      'category': 'รายการโปรด',
+    },
+    {
+      'icon': Icons.more_horiz,
+      'title': 'อื่นๆ',
+      'onPressed': () {},
+      'category': 'รายการโปรด',
+    },
+    // {
+    //   'icon': Icons.more_horiz,
+    //   'title': 'กิจกรรม',
+    //   'onPressed': () => Get.toNamed(AppRoutes.ACTIVITYDETAIL),
+    //   'category': 'รายการโปรด',
+    // },
+    // {
+    //   'icon': Icons.more_horiz,
+    //   'title': 'รายละเอียดกิจกรรม',
+    //   'onPressed': () => Get.toNamed(AppRoutes.MEETINGDETAIL),
+    //   'category': 'รายการโปรด',
+    // },
+  ];
+
+
+    // หมวด: งานเอกสาร
+  static final List<Map<String, dynamic>> allMenus = [
+    // หมวด: งานเอกสาร
+    {
+      // [แก้ไข] เปลี่ยนไอคอนให้ตรงกับ defaultFavoriteMenus
+      'icon': Icons.note_add_outlined,
+      'title': 'ขอเอกสาร',
+      'onPressed': () => Get.toNamed(AppRoutes.DOCUMENTS),
+      'category': 'งานเอกสาร',
+    },
+    {
+      'icon': Icons.edit_document,
+      'title': 'เอกสารของฉัน',
+      'onPressed': () {},
+      'category': 'งานเอกสาร',
+    },
+    {
+      'icon': Icons.wysiwyg,
+      'title': 'ทั้งหมด',
+      'onPressed': () {},
+      'category': 'งานเอกสาร',
+    },
+    {
+      'icon': Icons.folder_open,
+      'title': 'ดาวน์โหลด',
+      'onPressed': () {},
+      'category': 'งานเอกสาร',
+    },
+    // หมวด: พนักงาน
+    {
+      // [แก้ไข] เปลี่ยนไอคอนให้ตรงกับ defaultFavoriteMenus
+      'icon': Icons.account_circle,
+      'title': 'ข้อมูลพนักงาน',
+      'onPressed': () {},
+      'category': 'พนักงาน',
+    },
+    {
+      'icon': Icons.person_search_outlined,
+      'title': 'ค้นหาพนักงาน',
+      'onPressed': () {},
+      'category': 'พนักงาน',
+    },
+    {
+      'icon': Icons.group_add_outlined,
+      'title': 'ทีมของฉัน',
+      'onPressed': () {},
+      'category': 'พนักงาน',
+    },
+    {
+      'icon': Icons.work_outline,
+      'title': 'ตำแหน่งงาน',
+      'onPressed': () {},
+      'category': 'พนักงาน',
+    },
+    // หมวด: ตารางเวลา
+    {
+      // [แก้ไข] เปลี่ยนไอคอนให้ตรงกับ defaultFavoriteMenus
+      'icon': Icons.access_time,
+      'title': 'ตารางเวลา',
+      'onPressed': () => Get.toNamed(AppRoutes.TIMETABLE),
+      'category': 'ตารางเวลา',
+    },
+    {
+      'icon': Icons.schedule_outlined,
+      'title': 'ปฏิทิน',
+      'onPressed': () {},
+      'category': 'ตารางเวลา',
+    },
+  ];
+  
 
   static final List<Map<String, dynamic>> quotasData = [
     {'type': 'ลากิจ (ได้รับค่าจ้าง)', 'remaining': 2, 'total': 10},

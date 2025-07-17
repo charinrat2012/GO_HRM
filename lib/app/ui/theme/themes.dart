@@ -6,7 +6,10 @@ import '../../config/my_colors.dart';
 class Themes {
   final lightTheme = ThemeData.light().copyWith(
     primaryColor: MyColors.blue,
-    cardColor: Colors.white,
+    cardTheme:CardThemeData(
+      color: Colors.white,
+    ),
+    // cardColor: Colors.white,
     appBarTheme: AppBarTheme(backgroundColor: Colors.white),
     scaffoldBackgroundColor: Colors.grey[200],
     shadowColor: Colors.grey,
@@ -19,6 +22,7 @@ class Themes {
     
     dividerTheme: const DividerThemeData(
       color: Color.fromRGBO(204, 218, 255, 1),
+      thickness: 1,
     ),
 
     
