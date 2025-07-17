@@ -21,4 +21,5 @@ class AppRoutes {
   static const ACTIVITYDETAILPAGE = '/activitydetailpage';
   static const DOCUMENTS = '/documents';
   static const CREATE_DOCUMENT_REQUEST = '/create_document_request';
+  static const SALARYDEDAIL = '/salarydetail';
 }

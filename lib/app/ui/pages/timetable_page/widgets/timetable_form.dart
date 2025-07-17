@@ -39,23 +39,23 @@ class TimetableForm extends GetView<TimetableController> {
   // เมธอดสำหรับสร้างการ์ดตารางเวลาแต่ละรายการ
   Widget _buildScheduleCard(TimetableModel schedule, int index) {
     return Obx(
-      () => Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border:
-              schedule
-                  .isExpanded
-                  .value // ตรวจสอบสถานะการขยายจากการ์ดเอง
-              ? Border.all(color: MyColors.blue, )
-              : Border.all(color: Colors.transparent),
-        ),
-        child: GestureDetector(
-          onTap: () {
-            // ถ้าการ์ดขยายอยู่ แตะมันซ้ำ มันก็จะปิด
-            controller.toggleCardExpansion(index);
-          },
+      () => GestureDetector(
+        onTap: () {
+          // ถ้าการ์ดขยายอยู่ แตะมันซ้ำ มันก็จะปิด
+          controller.toggleCardExpansion(index);
+        },
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border:
+                schedule
+                    .isExpanded
+                    .value // ตรวจสอบสถานะการขยายจากการ์ดเอง
+                ? Border.all(color: MyColors.blue)
+                : Border.all(color: Colors.transparent),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

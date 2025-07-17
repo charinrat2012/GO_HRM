@@ -28,7 +28,7 @@ class QuotaDetail extends GetView<HomeController> {
                 contentPadding: EdgeInsets.zero,
                 leading: const Text(
                   'โควต้าการลา',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,), 
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 trailing: IconButton(
                   onPressed: () {
@@ -56,7 +56,7 @@ class QuotaDetail extends GetView<HomeController> {
                           children: [
                             Text(
                               quota.type,
-                              style: const TextStyle(fontSize: 14,),
+                              style: const TextStyle(fontSize: 14),
                             ),
                             RichText(
                               text: TextSpan(

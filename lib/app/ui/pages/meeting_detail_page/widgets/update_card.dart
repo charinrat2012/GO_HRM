@@ -32,8 +32,7 @@ class UpdateCard extends StatelessWidget {
                     '1. สร้างหน้าโปรไฟล์ใหม่ (มีการค้นหาที่มากขึ้น) และแสดงการตอบกลับตั้งค่าหน้าใหม่ อีกครั้ง (เพิ่มเติมของเดิม)',
                   ),
                   _buildUpdateItem('2. ปรับแบบฟอร์มการเข้าและการเวลา งานใหม่'),
-                  _buildUpdateItem(
-                    '3. รื้อหน้าบัญชีและการโอนเงิน (สลิปโอนเงิน)',
+                  _buildUpdateItem('3. รื้อหน้าบัญชีและการโอนเงิน (สลิปโอนเงิน)',
                   ),
                 ],
               ),
@@ -45,16 +44,9 @@ class UpdateCard extends StatelessWidget {
   }
 
   Widget _buildUpdateItem(String text) {
-    return 
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: (16.0),),
-        child: Text(
-          text,
-          style: TextStyle( color: Colors.grey[700]),
-        
-             
-            ),
-            
-      );
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: (16.0)),
+      child: Text(text, style: TextStyle(color: Colors.grey[700])),
+    );
   }
 }

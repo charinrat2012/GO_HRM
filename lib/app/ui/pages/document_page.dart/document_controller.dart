@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../../data/models/document_status_model.dart';
 
-
 class DocumentsController extends GetxController {
   // 0 = ของตัวเอง, 1 = ของพนักงาน
   final RxInt selectedViewIndex = 0.obs;
@@ -22,9 +21,9 @@ class DocumentsController extends GetxController {
   final other = ['ค้นหาแบบละเอียด', '1', '2', '3'].obs;
   final RxnString selectedOther = RxnString('ค้นหาแบบละเอียด');
 
-  final RxList<DocumentHistoryModel> leaveHistory = <DocumentHistoryModel>[].obs;
-final expandedCardIndex = Rxn<int>();
-
+  final RxList<DocumentHistoryModel> leaveHistory =
+      <DocumentHistoryModel>[].obs;
+  final expandedCardIndex = Rxn<int>();
 
   // ข้อมูลสำหรับมุมมอง "ของตัวเอง"
   final List<DocumentHistoryModel> _myLeaveData = [
@@ -62,9 +61,7 @@ final expandedCardIndex = Rxn<int>();
       requestDateTime: DateTime(2025, 6, 24, 10, 30),
       note: 'ต้องการเงินล่วงหน้า',
       status: DocumentStatus.rejected,
-      attachedFiles: [
-        File('/mock/path/ใบรับรองแพทย์.jpg'),
-      ],
+      attachedFiles: [File('/mock/path/ใบรับรองแพทย์.jpg')],
     ),
     DocumentHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -73,9 +70,7 @@ final expandedCardIndex = Rxn<int>();
       requestDateTime: DateTime(2025, 6, 25, 12, 6),
       note: 'ต้องการเงินล่วงหน้า',
       status: DocumentStatus.approved,
-      attachedFiles: [
-        File('/mock/path/ใบรับรองแพทย์.jpg'),
-      ],
+      attachedFiles: [File('/mock/path/ใบรับรองแพทย์.jpg')],
     ),
     DocumentHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -84,9 +79,7 @@ final expandedCardIndex = Rxn<int>();
       requestDateTime: DateTime(2025, 6, 24, 10, 30),
       note: 'ต้องการเงินล่วงหน้า',
       status: DocumentStatus.rejected,
-      attachedFiles: [
-        File('/mock/path/ใบรับรองแพทย์.jpg'),
-      ],
+      attachedFiles: [File('/mock/path/ใบรับรองแพทย์.jpg')],
     ),
   ];
 
@@ -112,9 +105,7 @@ final expandedCardIndex = Rxn<int>();
       requestDateTime: DateTime(2025, 6, 30, 14, 20),
       note: '',
       status: DocumentStatus.pending,
-      attachedFiles: [
-        File('/mock/path/ใบรับรองแพทย์.jpg'),
-      ],
+      attachedFiles: [File('/mock/path/ใบรับรองแพทย์.jpg')],
     ),
     DocumentHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -123,9 +114,7 @@ final expandedCardIndex = Rxn<int>();
       requestDateTime: DateTime(2025, 6, 28, 16, 5),
       note: '',
       status: DocumentStatus.pending,
-      attachedFiles: [
-        File('/mock/path/ใบรับรองแพทย์.jpg'),
-      ],
+      attachedFiles: [File('/mock/path/ใบรับรองแพทย์.jpg')],
     ),
     DocumentHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -153,7 +142,6 @@ final expandedCardIndex = Rxn<int>();
     ),
   ];
 
-
   @override
   void onInit() {
     super.onInit();
@@ -168,7 +156,6 @@ final expandedCardIndex = Rxn<int>();
       loadLeaveHistory();
     }
   }
-
 
   void loadLeaveHistory() {
     // ตรวจสอบค่าของ selectedViewIndex

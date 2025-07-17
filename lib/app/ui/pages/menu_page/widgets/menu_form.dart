@@ -18,12 +18,12 @@ class MenuForm extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 8),
-                Divider(color: Colors.grey,),
+                Divider(color: Colors.grey),
                 SizedBox(height: 8),
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 30),
 
           Center(
             child: Padding(

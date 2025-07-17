@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +7,6 @@ import '../../../data/models/quota_model.dart';
 import '../../global_widgets/datalist.dart';
 
 class CreateLeaveRequestController extends GetxController {
-
   final RxList<QuotaModel> quotaItems = <QuotaModel>[].obs;
 
   // สร้าง State สำหรับเก็บ "ประเภทการลาที่ถูกเลือก" ---
@@ -49,8 +47,11 @@ class CreateLeaveRequestController extends GetxController {
     super.onClose();
   }
 
-  // ฟังก์ชันสำหรับเลือกวันที่และเวลา 
-  Future<void> selectDateTime(BuildContext context, TextEditingController controller) async {
+  // ฟังก์ชันสำหรับเลือกวันที่และเวลา
+  Future<void> selectDateTime(
+    BuildContext context,
+    TextEditingController controller,
+  ) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -77,11 +78,9 @@ class CreateLeaveRequestController extends GetxController {
     }
   }
 
-
   final RxList<File> pickedFiles = <File>[].obs;
-  
 
-Future<void> pickMultipleFiles() async {
+  Future<void> pickMultipleFiles() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,

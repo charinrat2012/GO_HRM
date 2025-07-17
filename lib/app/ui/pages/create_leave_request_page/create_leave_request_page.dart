@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/ui/pages/create_leave_request_page/widgets/body_request.dart';
 
+import '../create_documents_request_page/widgets/body_request.dart';
 import 'create_leave_request_controller.dart';
 import 'widgets/head_leave_request.dart';
 
@@ -14,17 +14,8 @@ class CreateLeaveRequestPage extends GetView<CreateLeaveRequestController> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: CustomScrollView(
-          slivers: [
-            HeadLeaveRequest(),
-            BodyRequest(),
-          ],
-        ),
+        child: CustomScrollView(slivers: [HeadLeaveRequest(), BodyRequest()]),
       ),
     );
   }
-
-
-
-
 }

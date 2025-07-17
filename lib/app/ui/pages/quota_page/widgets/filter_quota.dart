@@ -9,9 +9,10 @@ class FilterQuota extends GetView<QuotaController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => _buildFilterSection()); 
+    return Obx(() => _buildFilterSection());
   }
-   Widget _buildFilterSection() {
+
+  Widget _buildFilterSection() {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -20,16 +21,9 @@ class FilterQuota extends GetView<QuotaController> {
       ),
       child: Column(
         children: [
+          const SizedBox(height: 16),
 
-         
-            const SizedBox(height: 16),
-
-            _buildDropdown(
-              'เลือกปี',
-              controller.years,
-              controller.selectedYear,
-
-            ),
+          _buildDropdown('เลือกปี', controller.years, controller.selectedYear),
           const SizedBox(height: 16),
           _buildDropdown(
             'รายละเอียด',
@@ -54,10 +48,10 @@ class FilterQuota extends GetView<QuotaController> {
           style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
         ),
         DropdownButtonFormField<String>(
-          icon:  const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              color: MyColors.blue2,
-            ),
+          icon: const Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: MyColors.blue2,
+          ),
           dropdownColor: Colors.white,
           value: selectedItem.value,
           isDense: true,

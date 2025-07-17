@@ -56,7 +56,6 @@ class FilePickerRequest extends GetView<CreateLeaveRequestController> {
         height: 120,
         width: double.infinity,
         decoration: BoxDecoration(
-          
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Color.fromRGBO(204, 218, 255, 1)),
         ),

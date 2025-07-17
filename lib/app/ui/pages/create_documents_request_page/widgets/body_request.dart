@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/ui/pages/create_documents_request_page/widgets/title_textfield.dart';
 
 import '../create_documents_request_controller.dart';
 import 'action_button_request.dart';
 import 'datetime_picker.dart';
 import 'detail_textfield.dart';
 import 'file_picker_request.dart';
+import 'title_textfield.dart';
 import 'type_dropdown_request.dart';
 
 class BodyRequest extends GetView<CreateDocumentRequestController> {

@@ -434,7 +434,11 @@ class DataList {
       'title': 'ขอใบลา',
       'onPressed': () => Get.toNamed(AppRoutes.LEAVE),
     },
-    {'icon': Icons.note_add_outlined, 'title': 'ขอเอกสาร', 'onPressed': () => Get.toNamed(AppRoutes.DOCUMENTS)},
+    {
+      'icon': Icons.note_add_outlined,
+      'title': 'ขอเอกสาร',
+      'onPressed': () => Get.toNamed(AppRoutes.DOCUMENTS),
+    },
     {
       'icon': Icons.access_time,
       'title': 'ตารางเวลา',
@@ -457,8 +461,16 @@ class DataList {
     },
     {'icon': Icons.dashboard, 'title': 'จัดการเวลา', 'onPressed': () {}},
     {'icon': Icons.more_horiz, 'title': 'อื่นๆ', 'onPressed': () {}},
-    {'icon': Icons.more_horiz, 'title': 'กิจกรรม', 'onPressed': () => Get.toNamed(AppRoutes.ACTIVITYDETAIL)}, 
-    {'icon': Icons.more_horiz, 'title': 'รายละเอียดกิจกรรม', 'onPressed': () => Get.toNamed(AppRoutes.MEETINGDETAIL)}, 
+    {
+      'icon': Icons.more_horiz,
+      'title': 'กิจกรรม',
+      'onPressed': () => Get.toNamed(AppRoutes.ACTIVITYDETAIL),
+    },
+    {
+      'icon': Icons.more_horiz,
+      'title': 'รายละเอียดกิจกรรม',
+      'onPressed': () => Get.toNamed(AppRoutes.MEETINGDETAIL),
+    },
   ].obs;
 
   static final List<Map<String, dynamic>> quotasData = [
@@ -472,8 +484,8 @@ class DataList {
   ].obs;
 
   static final List<Map<String, dynamic>> docTypes = [
-    {'type': 'ขอโอทีล่วงหน้า', },
-    {'type': 'ขอใบรับรอง',},
-    {'type': 'ขอเอกสาร',},
+    {'type': 'ขอโอทีล่วงหน้า'},
+    {'type': 'ขอใบรับรอง'},
+    {'type': 'ขอเอกสาร'},
   ].obs;
 }

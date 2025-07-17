@@ -9,7 +9,6 @@ class HomeController extends GetxController {
   final RxList<MenuModel> menuitems = <MenuModel>[].obs;
   final RxList<QuotaModel> quotaitems = <QuotaModel>[].obs;
   final RxList<QuotaModel> quotaitemsall = <QuotaModel>[].obs;
-  
 
   @override
   void onReady() {
@@ -36,15 +35,7 @@ class HomeController extends GetxController {
     quotaitems.assignAll(quotasToShow);
   }
 
-
-
-
-
-
-
-
-  
-    void handleClockIn() async {
+  void handleClockIn() async {
     // --- ส่วนของ Logic การลงเวลาของคุณ ---
     bool success = true;
 
@@ -65,5 +56,4 @@ class HomeController extends GetxController {
       barrierDismissible: false,
     );
   }
-
 }

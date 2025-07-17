@@ -1,19 +1,18 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/my_colors.dart';
 import '../document_controller.dart';
 
-
 class FilterSection extends GetView<DocumentsController> {
   const FilterSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => _buildFilterSection()); 
+    return Obx(() => _buildFilterSection());
   }
-   Widget _buildFilterSection() {
+
+  Widget _buildFilterSection() {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -75,10 +74,10 @@ class FilterSection extends GetView<DocumentsController> {
           style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
         ),
         DropdownButtonFormField<String>(
-           icon:  const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              color: MyColors.blue2,
-            ),
+          icon: const Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: MyColors.blue2,
+          ),
           dropdownColor: Colors.white,
           value: selectedItem.value,
           isDense: true,
@@ -97,8 +96,6 @@ class FilterSection extends GetView<DocumentsController> {
           onChanged: (newValue) {
             selectedItem.value = newValue;
           },
-
-         
         ),
       ],
     );

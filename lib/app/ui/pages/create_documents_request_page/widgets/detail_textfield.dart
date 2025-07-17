@@ -19,10 +19,7 @@ class DetailTextfield extends GetView<CreateDocumentRequestController> {
         TextFormField(
           controller: controller.detailsController,
           maxLines: 5,
-          decoration: InputDecoration(
-            hintText: 'กรุณากรอกรายละเอียด',
-           
-          ),
+          decoration: InputDecoration(hintText: 'กรุณากรอกรายละเอียด'),
         ),
       ],
     );

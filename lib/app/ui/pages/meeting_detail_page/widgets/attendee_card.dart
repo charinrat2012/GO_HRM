@@ -76,8 +76,15 @@ class AttendeeCard extends StatelessWidget {
             name,
             style: const TextStyle(fontWeight: FontWeight.normal),
           ),
-          subtitle: Text(email, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-          trailing: const Icon(Icons.mail_outline, color: Colors.grey, size: 20,),
+          subtitle: Text(
+            email,
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
+          ),
+          trailing: const Icon(
+            Icons.mail_outline,
+            color: Colors.grey,
+            size: 20,
+          ),
         ),
       ],
     );

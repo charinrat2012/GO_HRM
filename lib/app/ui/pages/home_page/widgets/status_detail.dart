@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/ui/pages/home_page/widgets/dia_test.dart';
-import 'package:intl/intl.dart';
 
+import 'package:intl/intl.dart';
 import '../../../../config/my_colors.dart';
 import '../home_controller.dart';
+import 'dia_test.dart';
 
 class StatusDetail extends GetView<HomeController> {
   const StatusDetail({super.key});
@@ -13,7 +13,10 @@ class StatusDetail extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final now = DateTime.now();
     // 2. จัดรูปแบบวันที่ให้เป็นภาษาไทยตามที่ต้องการ
-    final formattedDate = DateFormat('EEEEที่ d MMMM yyyy', 'th_TH').format(now);
+    final formattedDate = DateFormat(
+      'EEEEที่ d MMMM yyyy',
+      'th_TH',
+    ).format(now);
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -252,7 +255,12 @@ class StatusDetail extends GetView<HomeController> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => Get.dialog(ClockInSuccessDialog(dateTime: DateTime.now(), location: 'Absolute HQ Tower',)),
+              onPressed: () => Get.dialog(
+                ClockInSuccessDialog(
+                  dateTime: DateTime.now(),
+                  location: 'Absolute HQ Tower',
+                ),
+              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
@@ -260,8 +268,10 @@ class StatusDetail extends GetView<HomeController> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-              child: const Text('ลงเวลาเข้า/ออกงาน',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
+              child: const Text(
+                'ลงเวลาเข้า/ออกงาน',
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              ),
             ),
           ),
         ],

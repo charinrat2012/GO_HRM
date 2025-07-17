@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import 'create_documents_request_controller.dart';
 import 'widgets/body_request.dart';
 import 'widgets/head_leave_request.dart';
 
-class CreateDocumentsRequestPage extends GetView<CreateDocumentRequestController> {
+class CreateDocumentsRequestPage
+    extends GetView<CreateDocumentRequestController> {
   const CreateDocumentsRequestPage({super.key});
 
   @override
@@ -15,17 +15,8 @@ class CreateDocumentsRequestPage extends GetView<CreateDocumentRequestController
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: CustomScrollView(
-          slivers: [
-            HeadLeaveRequest(),
-            BodyRequest(),
-          ],
-        ),
+        child: CustomScrollView(slivers: [HeadLeaveRequest(), BodyRequest()]),
       ),
     );
   }
-
-
-
-
 }

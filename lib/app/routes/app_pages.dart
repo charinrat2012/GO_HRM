@@ -1,10 +1,7 @@
-
-
 import 'package:get/get.dart';
-import 'package:go_hrm/app/bindings/calender_binding.dart';
-import 'package:go_hrm/app/ui/pages/calender_page/calender_page.dart';
 
 import '../bindings/activity_detail_binding.dart';
+import '../bindings/calender_binding.dart';
 import '../bindings/chats_binding.dart';
 import '../bindings/create_document_request_binding.dart';
 import '../bindings/create_leave_request_binding.dart';
@@ -21,10 +18,12 @@ import '../bindings/notification_binding.dart';
 import '../bindings/profile_binding.dart';
 import '../bindings/quota_binding.dart';
 import '../bindings/salary_binding.dart';
+import '../bindings/salary_detail_binding.dart';
 import '../bindings/splash_binding.dart';
 import '../bindings/timetable_binding.dart';
 import '../data/models/news_card_model.dart';
 import '../ui/pages/activity_detail_page/activity_detail_page.dart';
+import '../ui/pages/calender_page/calender_page.dart';
 import '../ui/pages/chats_page/chats_page.dart';
 import '../ui/pages/create_documents_request_page/create_documents_request_page.dart';
 import '../ui/pages/create_leave_request_page/create_leave_request_page.dart';
@@ -40,6 +39,7 @@ import '../ui/pages/news_page/news_page.dart';
 import '../ui/pages/notification_page/notification_page.dart';
 import '../ui/pages/profile_page/profile_page.dart';
 import '../ui/pages/quota_page/quota_page.dart';
+import '../ui/pages/salary_detail_page/salary_dedail_page.dart';
 import '../ui/pages/salary_page/salary_page.dart';
 import '../ui/pages/splash_page/splash_page.dart';
 import '../ui/pages/timetable_page/timetable_page.dart';
@@ -174,17 +174,23 @@ class AppPages {
       binding: SalaryBinding(),
       transition: _defaultTransition,
     ),
-     GetPage(
-       name: AppRoutes.DOCUMENTS,
-       page: () => DocumentsPage(),
-       binding: DocumentsBinding(),
-       transition: _defaultTransition,
-     ),
-     GetPage(
-       name: AppRoutes.CREATE_DOCUMENT_REQUEST,
-       page: () => CreateDocumentsRequestPage(),
-       binding: CreateDocumentRequestBinding(),
-       transition: _defaultTransition,
-     ),
+    GetPage(
+      name: AppRoutes.DOCUMENTS,
+      page: () => DocumentsPage(),
+      binding: DocumentsBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.CREATE_DOCUMENT_REQUEST,
+      page: () => CreateDocumentsRequestPage(),
+      binding: CreateDocumentRequestBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.SALARYDEDAIL,
+      page: () => SalaryDedailPage(),
+      binding: SalaryDetailBinding(),
+      transition: _defaultTransition,
+    ),
   ];
 }

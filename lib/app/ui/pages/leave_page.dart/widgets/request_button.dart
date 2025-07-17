@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../leave_controller.dart';
-
 import '../../../../config/my_colors.dart';
 
 class RequestButton extends GetView<LeavePageController> {
@@ -31,7 +30,9 @@ class RequestButton extends GetView<LeavePageController> {
           backgroundColor: MyColors.blue2,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
         ),
       ),
     );

@@ -1,6 +1,4 @@
-//go_hrm/lib/app/ui/pages/news_page/news_controller.dart
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
