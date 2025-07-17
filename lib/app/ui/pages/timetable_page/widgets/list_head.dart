@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/my_colors.dart';
 import '../timetable_controllers.dart';
 
 class ListHead extends GetView<TimetableController> {
@@ -89,29 +90,11 @@ class ListHead extends GetView<TimetableController> {
             selectedItem.value = newValue;
             controller.loadTimetableData();
           },
-          icon: const Icon(
-            Icons.keyboard_arrow_down,
-            color: Colors.grey,
-            size: 20,
-          ),
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
+         icon:  const Icon(
+              Icons.keyboard_arrow_down_rounded,
+              color: MyColors.blue2,
             ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Colors.grey[300]!),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Colors.grey[300]!),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Colors.grey[300]!),
-            ),
-          ),
+          
         ),
       ],
     );

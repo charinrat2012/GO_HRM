@@ -43,14 +43,19 @@ dependencies:
   image_picker:
   file_picker:
   font_awesome_flutter:
+  flutter_launcher_icons:
   
+flutter_launcher_icons:
+  android: "applogo" # ตั้งชื่อไฟล์ไอคอนสำหรับ Android
+  ios: true                # บอกให้สร้างไอคอนสำหรับ iOS ด้วย
+  image_path: "assets/imgs/applogo.png"
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
+  # activated in the analysis_options.yaml file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0

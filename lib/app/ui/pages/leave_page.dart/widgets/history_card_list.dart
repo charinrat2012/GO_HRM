@@ -132,7 +132,7 @@ class HistoryCardList extends GetView<LeavePageController> {
             // const SizedBox(height: 8),
             ExpansionTile(
               key: GlobalKey(),
-              tilePadding: EdgeInsets.only(right: 150),
+              tilePadding: EdgeInsets.only(right: 140),
 
               // **ควบคุมสถานะการเปิด-ปิดจาก Controller**
               initiallyExpanded: controller.expandedCardIndex.value == index,

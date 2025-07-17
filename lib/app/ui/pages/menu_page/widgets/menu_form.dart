@@ -18,7 +18,7 @@ class MenuForm extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 8),
-                Divider(),
+                Divider(color: Colors.grey,),
                 SizedBox(height: 8),
               ],
             ),

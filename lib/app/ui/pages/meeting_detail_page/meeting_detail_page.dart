@@ -36,7 +36,7 @@ class MeetingDetailPage extends GetView<MeetingDetailController> {
             FilePickerMeeting(),
             // 7.ผู้เข้าร่วม
             AttendeeCard(),
-            const SliverToBoxAdapter(child: SizedBox(height: 20.0)),
+            const SliverToBoxAdapter(child: SizedBox(height: 70.0)),
           ],
         ),
       ),

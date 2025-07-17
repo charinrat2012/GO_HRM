@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_hrm/app/ui/pages/timetable_page/widgets/list_head.dart';
 
 import 'timetable_controllers.dart';
 import 'widgets/timetable_form.dart';
@@ -16,7 +17,7 @@ class TimetablePage extends GetView<TimetableController> {
           slivers: [
             TimetableHead(),
             const SliverToBoxAdapter(child: SizedBox(height: 20)),
-
+            ListHead(),
             TimetableForm(),
             const SliverToBoxAdapter(child: SizedBox(height: 60)),
           ],

@@ -31,7 +31,7 @@ class Themes {
       shape: LinearBorder.none,
       collapsedShape: LinearBorder.none,
       collapsedIconColor: MyColors.blue2,
-
+      
       
     ),
     inputDecorationTheme: InputDecorationTheme(

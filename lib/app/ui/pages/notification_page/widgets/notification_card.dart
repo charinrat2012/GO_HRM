@@ -31,7 +31,7 @@ class NotificationCard extends GetView<NotificationController> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
             side: notification.isExpanded.value && !isComplaint
-                ? BorderSide(color: MyColors.blue, width: 2.0)
+                ? BorderSide(color: MyColors.blue, )
                 : BorderSide(color: Colors.transparent),
           ),
           elevation: 0,

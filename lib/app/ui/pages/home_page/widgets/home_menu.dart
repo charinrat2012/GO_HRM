@@ -72,6 +72,8 @@ class HomeMenu extends GetView<HomeController> {
                       const SizedBox(height: 8),
                       Text(
                         favorite.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 12),
                       ),

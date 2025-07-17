@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../salary_controller.dart';
-import '../../../../config/my_colors.dart'; // ตรวจสอบ import path อีกครั้งให้ถูกต้อง
+import '../../../../config/my_colors.dart';
 
 class YearFilter extends GetView<SalaryController> {
   const YearFilter({super.key});
@@ -32,15 +32,17 @@ class YearFilter extends GetView<SalaryController> {
                       horizontal: 5,
                     ), // เว้นระยะระหว่างปุ่ม
                     decoration: BoxDecoration(
-                      color: isSelected ? Colors.white : Colors.grey[100],// สีพื้นหลังสีขาวเมื่อเลือก  และโปร่งใส่เมื่อไม่เลือก
-                      borderRadius: BorderRadius.circular(
-                        50.0,
-                      ), 
-                      border: Border.all( 
-                        color: isSelected 
-                            ? MyColors.blue //ถ้าปุ่มถูกเลือก เส้นขอบจะเป็น สีฟ้า
-                            : Colors.grey[300]!, //ถ้าปุ่มไม่ได้ถูกเลือก เส้นขอบจะเป็น สีเทาอ่อน
-                        width: 2.0,
+                      color: isSelected
+                          ? Colors.white
+                          : Colors
+                                .grey[100], // สีพื้นหลังสีขาวเมื่อเลือก  และโปร่งใส่เมื่อไม่เลือก
+                      borderRadius: BorderRadius.circular(50.0),
+                      border: Border.all(
+                        color: isSelected
+                            ? MyColors
+                                  .blue //ถ้าปุ่มถูกเลือก เส้นขอบจะเป็น สีฟ้า
+                            : Colors
+                                  .grey[300]!, //ถ้าปุ่มไม่ได้ถูกเลือก เส้นขอบจะเป็น สีเทาอ่อน
                       ),
                     ),
                     child: Text(
@@ -49,7 +51,10 @@ class YearFilter extends GetView<SalaryController> {
                         fontWeight: isSelected
                             ? FontWeight.bold
                             : FontWeight.normal,
-                        color: isSelected ? MyColors.blue : Colors.black, // สีข้อความเป็นสีฟ้าเมื่อปุ่มถูกเลือก
+                        color: isSelected
+                            ? MyColors.blue
+                            : Colors
+                                  .black, // สีข้อความเป็นสีฟ้าเมื่อปุ่มถูกเลือก
                       ),
                     ),
                   ),

@@ -48,7 +48,7 @@ class TimetableForm extends GetView<TimetableController> {
               schedule
                   .isExpanded
                   .value // ตรวจสอบสถานะการขยายจากการ์ดเอง
-              ? Border.all(color: MyColors.blue, width: 2.0)
+              ? Border.all(color: MyColors.blue, )
               : Border.all(color: Colors.transparent),
         ),
         child: GestureDetector(
@@ -78,7 +78,7 @@ class TimetableForm extends GetView<TimetableController> {
                             .value // เปลี่ยน icon ตามสถานะการขยาย
                         ? Icons.keyboard_arrow_up
                         : Icons.keyboard_arrow_down,
-                    color: Colors.grey,
+                    color: MyColors.blue,
                   ),
                 ],
               ),

@@ -24,7 +24,7 @@ class Checkbotandforgot extends GetView<SplashController> {
                 },
                 activeColor: MyColors.blue,
                 checkColor: Colors.white,
-                side: BorderSide(color: Colors.grey[400]!, width: 1.0),
+                side: BorderSide(color: Colors.grey[400]!, ),
                 visualDensity: VisualDensity(
                   horizontal: -4, //ลดขนาดพื้นที่รอบๆให้น้อยลง
                   // vertical: -4, //ลดความสูง (ขนาดในแนวตั้ง) ให้น้อยลง

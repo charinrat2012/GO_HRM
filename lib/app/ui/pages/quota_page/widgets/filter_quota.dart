@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/my_colors.dart';
 import '../quota_controller.dart';
 
 class FilterQuota extends GetView<QuotaController> {
@@ -53,6 +54,10 @@ class FilterQuota extends GetView<QuotaController> {
           style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
         ),
         DropdownButtonFormField<String>(
+          icon:  const Icon(
+              Icons.keyboard_arrow_down_rounded,
+              color: MyColors.blue2,
+            ),
           dropdownColor: Colors.white,
           value: selectedItem.value,
           isDense: true,

@@ -21,7 +21,10 @@ class TypeDropdownRequest extends GetView<CreateLeaveRequestController> {
         Obx(
           () => DropdownButtonFormField<QuotaModel>(
             isDense: true,
-            
+            icon:  const Icon(
+              Icons.keyboard_arrow_down_rounded,
+              color: MyColors.blue2,
+            ),
            
             dropdownColor: Colors.white,
              iconEnabledColor:  MyColors.blue2,

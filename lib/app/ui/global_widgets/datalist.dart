@@ -443,7 +443,7 @@ class DataList {
     {
       'icon': Icons.monetization_on_outlined,
       'title': 'เงินเดือน',
-      'onPressed': () {},
+      'onPressed': () => Get.toNamed(AppRoutes.SALARY),
     },
     {
       'icon': Icons.account_circle,
@@ -457,6 +457,8 @@ class DataList {
     },
     {'icon': Icons.dashboard, 'title': 'จัดการเวลา', 'onPressed': () {}},
     {'icon': Icons.more_horiz, 'title': 'อื่นๆ', 'onPressed': () {}},
+    {'icon': Icons.more_horiz, 'title': 'กิจกรรม', 'onPressed': () => Get.toNamed(AppRoutes.ACTIVITYDETAIL)}, 
+    {'icon': Icons.more_horiz, 'title': 'รายละเอียดกิจกรรม', 'onPressed': () => Get.toNamed(AppRoutes.MEETINGDETAIL)}, 
   ].obs;
 
   static final List<Map<String, dynamic>> quotasData = [

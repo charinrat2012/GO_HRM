@@ -29,11 +29,11 @@ class UpdateCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildUpdateItem(
-                    '1.สร้างหน้าโปรไฟล์ใหม่ (มีการค้นหาที่มากขึ้น) และแสดงการตอบกลับตั้งค่าหน้าใหม่ อีกครั้ง \n(เพิ่มเติมของเดิม)',
+                    '1. สร้างหน้าโปรไฟล์ใหม่ (มีการค้นหาที่มากขึ้น) และแสดงการตอบกลับตั้งค่าหน้าใหม่ อีกครั้ง (เพิ่มเติมของเดิม)',
                   ),
-                  _buildUpdateItem('2.ปรับแบบฟอร์มการเข้าและการเวลา งานใหม่'),
+                  _buildUpdateItem('2. ปรับแบบฟอร์มการเข้าและการเวลา งานใหม่'),
                   _buildUpdateItem(
-                    '3.รื้อหน้าบัญชีและการโอนเงิน (สลิปโอนเงิน)',
+                    '3. รื้อหน้าบัญชีและการโอนเงิน (สลิปโอนเงิน)',
                   ),
                 ],
               ),
@@ -45,16 +45,16 @@ class UpdateCard extends StatelessWidget {
   }
 
   Widget _buildUpdateItem(String text) {
-    return ListTile(
-      title: Text(
-        text,
-        style: TextStyle( color: Colors.grey[700]),
-      ),
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 16.0,
-        // vertical: 0,
-      ), // ปรับ padding
-      dense: true, // ทำให้ ListTile กระชับขึ้น
-    );
+    return 
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: (16.0),),
+        child: Text(
+          text,
+          style: TextStyle( color: Colors.grey[700]),
+        
+             
+            ),
+            
+      );
   }
 }
