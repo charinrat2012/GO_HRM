@@ -22,4 +22,5 @@ class AppRoutes {
   static const DOCUMENTS = '/documents';
   static const CREATE_DOCUMENT_REQUEST = '/create_document_request';
   static const FAVOURITE_SETTINGS = '/favourite_settings';
+  static const SALARYDEDAIL = '/salarydetail';
 }

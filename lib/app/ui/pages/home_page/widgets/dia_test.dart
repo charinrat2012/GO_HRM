@@ -16,13 +16,17 @@ class ClockInSuccessDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // จัดรูปแบบวันที่และเวลา
-    final String formattedDate = DateFormat('EEE, d MMM yyyy', 'th_TH').format(dateTime);
-    final String formattedTime = DateFormat('HH.mm น.', 'th_TH').format(dateTime);
+    final String formattedDate = DateFormat(
+      'EEE, d MMM yyyy',
+      'th_TH',
+    ).format(dateTime);
+    final String formattedTime = DateFormat(
+      'HH.mm น.',
+      'th_TH',
+    ).format(dateTime);
 
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       elevation: 0,
       backgroundColor: Colors.transparent,
       child: contentBox(context, formattedDate, formattedTime),
@@ -43,10 +47,7 @@ class ClockInSuccessDialog extends StatelessWidget {
         children: <Widget>[
           const Text(
             'ลงเวลาเข้า/ออกงานสำเร็จ',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 24),
 
@@ -54,11 +55,7 @@ class ClockInSuccessDialog extends StatelessWidget {
           const CircleAvatar(
             radius: 40,
             backgroundColor: Colors.green,
-            child: Icon(
-              Icons.check,
-              color: Colors.white,
-              size: 60,
-            ),
+            child: Icon(Icons.check, color: Colors.white, size: 60),
           ),
           const SizedBox(height: 24),
 
@@ -86,10 +83,7 @@ class ClockInSuccessDialog extends StatelessWidget {
               },
               child: const Text(
                 'ยืนยัน',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
           ),
@@ -104,18 +98,12 @@ class ClockInSuccessDialog extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
-            color: Colors.grey.shade600,
-            fontSize: 14,
-          ),
+          style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
         ),
         const SizedBox(height: 4),
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ],
     );

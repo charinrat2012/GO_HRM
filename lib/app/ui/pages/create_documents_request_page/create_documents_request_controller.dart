@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/data/models/doc_model.dart';
 import 'package:intl/intl.dart';
 
+import '../../../data/models/doc_model.dart';
 import '../../global_widgets/datalist.dart';
 
 class CreateDocumentRequestController extends GetxController {

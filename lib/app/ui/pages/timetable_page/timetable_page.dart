@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/ui/pages/timetable_page/widgets/list_head.dart';
 
 import 'timetable_controllers.dart';
+import 'widgets/list_head.dart';
 import 'widgets/timetable_form.dart';
 import 'widgets/timetable_head.dart';
 

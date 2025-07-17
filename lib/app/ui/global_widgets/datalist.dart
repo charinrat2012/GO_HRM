@@ -574,8 +574,8 @@ static final List<Map<String, dynamic>> defaultFavoriteMenus = [
   ].obs;
 
   static final List<Map<String, dynamic>> docTypes = [
-    {'type': 'ขอโอทีล่วงหน้า', },
-    {'type': 'ขอใบรับรอง',},
-    {'type': 'ขอเอกสาร',},
+    {'type': 'ขอโอทีล่วงหน้า'},
+    {'type': 'ขอใบรับรอง'},
+    {'type': 'ขอเอกสาร'},
   ].obs;
 }

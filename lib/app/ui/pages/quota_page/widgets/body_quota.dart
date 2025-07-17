@@ -4,7 +4,6 @@ import 'all_detail_quota.dart';
 import 'filter_quota.dart';
 import 'title_quota.dart';
 
-
 class BodyQuota extends StatelessWidget {
   const BodyQuota({super.key});
 
@@ -24,7 +23,6 @@ class BodyQuota extends StatelessWidget {
                 TitleQuota(),
                 SizedBox(height: 24),
                 AllDetailQuota(),
-             
               ],
             ),
           ),

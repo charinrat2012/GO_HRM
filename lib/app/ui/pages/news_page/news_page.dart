@@ -8,9 +8,6 @@ import 'widgets/news_head.dart';
 import 'widgets/news_feed.dart';
 import 'widgets/slide_image.dart';
 
-
-
-
 class NewsPage extends GetView<NewsController> {
   const NewsPage({super.key});
 
@@ -35,7 +32,7 @@ class NewsPage extends GetView<NewsController> {
                 ],
               ),
             ),
-      
+
             NewsFeed(),
           ],
         ),

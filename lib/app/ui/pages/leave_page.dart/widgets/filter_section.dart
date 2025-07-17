@@ -1,19 +1,18 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/my_colors.dart';
 import '../leave_controller.dart';
 
-
 class FilterSection extends GetView<LeavePageController> {
   const FilterSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => _buildFilterSection()); 
+    return Obx(() => _buildFilterSection());
   }
-   Widget _buildFilterSection() {
+
+  Widget _buildFilterSection() {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -75,10 +74,10 @@ class FilterSection extends GetView<LeavePageController> {
           style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
         ),
         DropdownButtonFormField<String>(
-           icon:  const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              color: MyColors.blue2,
-            ),
+          icon: const Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: MyColors.blue2,
+          ),
           dropdownColor: Colors.white,
           value: selectedItem.value,
           isDense: true,

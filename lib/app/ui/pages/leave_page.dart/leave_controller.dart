@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
-import '../../../data/models/leave_status_model.dart'; // ตรวจสอบ Path
+import '../../../data/models/leave_status_model.dart';
 
 class LeavePageController extends GetxController {
   // 0 = ของตัวเอง, 1 = ของพนักงาน
@@ -21,8 +21,7 @@ class LeavePageController extends GetxController {
   final RxnString selectedOther = RxnString('ค้นหาแบบละเอียด');
 
   final RxList<LeaveHistoryModel> leaveHistory = <LeaveHistoryModel>[].obs;
-final expandedCardIndex = Rxn<int>();
-
+  final expandedCardIndex = Rxn<int>();
 
   // ข้อมูลสำหรับมุมมอง "ของตัวเอง"
   final List<LeaveHistoryModel> _myLeaveData = [
@@ -57,9 +56,7 @@ final expandedCardIndex = Rxn<int>();
       leaveCategory: 'ลาป่วย',
       requestDateTime: DateTime(2025, 6, 24, 10, 30),
       status: LeaveStatus.rejected,
-      attachedFiles: [
-        File('/mock/path/ใบรับรองแพทย์.jpg'),
-      ],
+      attachedFiles: [File('/mock/path/ใบรับรองแพทย์.jpg')],
     ),
     LeaveHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -67,9 +64,7 @@ final expandedCardIndex = Rxn<int>();
       leaveCategory: 'ลากิจ',
       requestDateTime: DateTime(2025, 6, 25, 12, 6),
       status: LeaveStatus.approved,
-      attachedFiles: [
-        File('/mock/path/ใบรับรองแพทย์.jpg'),
-      ],
+      attachedFiles: [File('/mock/path/ใบรับรองแพทย์.jpg')],
     ),
     LeaveHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -77,9 +72,7 @@ final expandedCardIndex = Rxn<int>();
       leaveCategory: 'ลาป่วย',
       requestDateTime: DateTime(2025, 6, 24, 10, 30),
       status: LeaveStatus.rejected,
-      attachedFiles: [
-        File('/mock/path/ใบรับรองแพทย์.jpg'),
-      ],
+      attachedFiles: [File('/mock/path/ใบรับรองแพทย์.jpg')],
     ),
   ];
 
@@ -103,9 +96,7 @@ final expandedCardIndex = Rxn<int>();
       leaveCategory: 'ลาป่วย',
       requestDateTime: DateTime(2025, 6, 30, 14, 20),
       status: LeaveStatus.pending,
-      attachedFiles: [
-        File('/mock/path/ใบรับรองแพทย์.jpg'),
-      ],
+      attachedFiles: [File('/mock/path/ใบรับรองแพทย์.jpg')],
     ),
     LeaveHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -113,9 +104,7 @@ final expandedCardIndex = Rxn<int>();
       leaveCategory: 'ลาพักร้อน',
       requestDateTime: DateTime(2025, 6, 28, 16, 5),
       status: LeaveStatus.pending,
-      attachedFiles: [
-        File('/mock/path/ใบรับรองแพทย์.jpg'),
-      ],
+      attachedFiles: [File('/mock/path/ใบรับรองแพทย์.jpg')],
     ),
     LeaveHistoryModel(
       leaveType: 'ขอลาพักงาน',
@@ -140,7 +129,6 @@ final expandedCardIndex = Rxn<int>();
     ),
   ];
 
-
   @override
   void onInit() {
     super.onInit();
@@ -155,7 +143,6 @@ final expandedCardIndex = Rxn<int>();
       loadLeaveHistory();
     }
   }
-
 
   void loadLeaveHistory() {
     // ตรวจสอบค่าของ selectedViewIndex

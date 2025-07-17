@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/config/my_colors.dart';
 
+import '../../../../config/my_colors.dart';
 import '../quota_controller.dart';
 
-
 class AllDetailQuota extends GetView<QuotaController> {
-  const AllDetailQuota ({super.key});
+  const AllDetailQuota({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +22,6 @@ class AllDetailQuota extends GetView<QuotaController> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-             
-             
               const SizedBox(height: 8),
 
               Column(
@@ -45,23 +42,25 @@ class AllDetailQuota extends GetView<QuotaController> {
                               quota.type,
                               style: const TextStyle(fontSize: 14),
                             ),
-                            RichText(text: TextSpan(
-                              text: '${quota.remaining} วัน',
-                              style: TextStyle(
-                                color: MyColors.blue2,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: ' / ${quota.total} วัน',
-                                  style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                  ),
+                            RichText(
+                              text: TextSpan(
+                                text: '${quota.remaining} วัน',
+                                style: TextStyle(
+                                  color: MyColors.blue2,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
                                 ),
-                              ],
-                            ))
+                                children: [
+                                  TextSpan(
+                                    text: ' / ${quota.total} วัน',
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             // Text.rich(
                             //   TextSpan(
                             //     children: [
@@ -70,14 +69,14 @@ class AllDetailQuota extends GetView<QuotaController> {
                             //         style: TextStyle(
                             //           color: MyColors.blue2,
                             //           fontWeight: FontWeight.bold,
-                                      
+
                             //         ),
                             //       ),
                             //       TextSpan(
                             //         text: ' / ${quota.total} วัน',
                             //         style: const TextStyle(
                             //           color: Colors.grey,
-                                      
+
                             //         ),
                             //       ),
                             //     ],

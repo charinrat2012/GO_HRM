@@ -5,14 +5,13 @@ class TitleQuota extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  ListTile(
-                dense: true,
-                contentPadding: EdgeInsets.zero,
-                leading: const Text(
-                  'โควต้าการลา',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-               
-              );
+    return ListTile(
+      dense: true,
+      contentPadding: EdgeInsets.zero,
+      leading: const Text(
+        'โควต้าการลา',
+        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+      ),
+    );
   }
 }

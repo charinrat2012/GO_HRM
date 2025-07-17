@@ -5,7 +5,7 @@ class EmailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
+    return
     // 2. ส่วนของ "อีเมล"
     SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -33,7 +33,7 @@ class EmailCard extends StatelessWidget {
                 ),
                 title: const Text(
                   'Natthatoddrill@gmail.com',
-                  style: TextStyle(color: Colors.black, ),
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
             ),

@@ -16,7 +16,7 @@ class FilePickerRequest extends GetView<CreateDocumentRequestController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-       const Text(
+        const Text(
           'แนบไฟล์',
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         ),
@@ -57,26 +57,29 @@ class FilePickerRequest extends GetView<CreateDocumentRequestController> {
         height: 120,
         width: double.infinity,
         decoration: BoxDecoration(
-          
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color:Color.fromRGBO(204, 218, 255, 1)),
+          border: Border.all(color: Color.fromRGBO(204, 218, 255, 1)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.image_outlined, size: 40, ),
+            Icon(Icons.image_outlined, size: 40),
             const SizedBox(height: 8),
-            Text('อัปโหลดรูปภาพหรือไฟล์', style: TextStyle(color: MyColors.blue2)),
+            Text(
+              'อัปโหลดรูปภาพหรือไฟล์',
+              style: TextStyle(color: MyColors.blue2),
+            ),
           ],
         ),
       ),
     );
   }
 
-
- Widget _buildFileListItem(File file, int index) {
+  Widget _buildFileListItem(File file, int index) {
     final fileName = file.path.split('/').last;
-    final fileExtension = fileName.contains('.') ? fileName.split('.').last.toLowerCase() : '';
+    final fileExtension = fileName.contains('.')
+        ? fileName.split('.').last.toLowerCase()
+        : '';
 
     IconData getIconForFile(String extension) {
       if (['jpg', 'jpeg', 'png'].contains(extension)) {

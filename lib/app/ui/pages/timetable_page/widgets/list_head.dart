@@ -19,7 +19,7 @@ class ListHead extends GetView<TimetableController> {
             const SizedBox(height: 24),
             const Text(
               'รายการ',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
           ],

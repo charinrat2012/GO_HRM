@@ -27,15 +27,10 @@ class DatetimePicker extends GetView<CreateDocumentRequestController> {
           readOnly: true,
           onTap: () => controller.selectDateTime(Get.context!, textController),
           decoration: InputDecoration(
-           
             hintText: 'เลือกวันที่/เวลา',
-            // contentPadding: const EdgeInsets.all(12),
 
-           
-            suffixIcon: Icon(
-              Icons.calendar_today_outlined,
-              
-            ),
+            // contentPadding: const EdgeInsets.all(12),
+            suffixIcon: Icon(Icons.calendar_today_outlined),
           ),
         ),
       ],
