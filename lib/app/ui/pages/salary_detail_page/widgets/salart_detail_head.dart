@@ -25,12 +25,7 @@ class SalartDetailHead extends StatelessWidget {
         ),
       ),
       centerTitle: true,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.save_alt, color: Colors.black, size: 18.0),
-          onPressed: () {},
-        ),
-      ],
+
     );
   }
 }

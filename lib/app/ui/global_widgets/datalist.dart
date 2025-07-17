@@ -5,11 +5,11 @@ import '../../routes/app_routes.dart';
 
 class DataList {
   static final List<Map<String, String>> picData = [
-    {'imageUrl': 'assets/imgs/pic1.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
-    {'imageUrl': 'assets/imgs/pic1.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
-    {'imageUrl': 'assets/imgs/pic1.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
-    {'imageUrl': 'assets/imgs/pic1.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
-    {'imageUrl': 'assets/imgs/pic1.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
+    {'imageUrl': 'assets/imgs/pic2.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
+    {'imageUrl': 'assets/imgs/pic3.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
+    {'imageUrl': 'assets/imgs/pic4.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
+    {'imageUrl': 'assets/imgs/pic5.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
+    {'imageUrl': 'assets/imgs/pic6.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
   ].obs;
   static final List<Map<String, dynamic>> newsData = [
     {
@@ -477,18 +477,7 @@ static final List<Map<String, dynamic>> defaultFavoriteMenus = [
       'onPressed': () {},
       'category': 'รายการโปรด',
     },
-    // {
-    //   'icon': Icons.more_horiz,
-    //   'title': 'กิจกรรม',
-    //   'onPressed': () => Get.toNamed(AppRoutes.ACTIVITYDETAIL),
-    //   'category': 'รายการโปรด',
-    // },
-    // {
-    //   'icon': Icons.more_horiz,
-    //   'title': 'รายละเอียดกิจกรรม',
-    //   'onPressed': () => Get.toNamed(AppRoutes.MEETINGDETAIL),
-    //   'category': 'รายการโปรด',
-    // },
+
   ];
 
 
@@ -496,7 +485,12 @@ static final List<Map<String, dynamic>> defaultFavoriteMenus = [
   static final List<Map<String, dynamic>> allMenus = [
     // หมวด: งานเอกสาร
     {
-      // [แก้ไข] เปลี่ยนไอคอนให้ตรงกับ defaultFavoriteMenus
+      'icon': Icons.description_outlined,
+      'title': 'ขอใบลา',
+      'onPressed': () => Get.toNamed(AppRoutes.LEAVE),
+      'category': 'งานเอกสาร', // จัดเข้าหมวดหมู่นี้
+    },
+    {
       'icon': Icons.note_add_outlined,
       'title': 'ขอเอกสาร',
       'onPressed': () => Get.toNamed(AppRoutes.DOCUMENTS),
@@ -508,21 +502,15 @@ static final List<Map<String, dynamic>> defaultFavoriteMenus = [
       'onPressed': () {},
       'category': 'งานเอกสาร',
     },
-    {
-      'icon': Icons.wysiwyg,
-      'title': 'ทั้งหมด',
-      'onPressed': () {},
-      'category': 'งานเอกสาร',
-    },
-    {
-      'icon': Icons.folder_open,
-      'title': 'ดาวน์โหลด',
-      'onPressed': () {},
-      'category': 'งานเอกสาร',
+    // หมวด: การเงิน
+     {
+      'icon': Icons.monetization_on_outlined,
+      'title': 'เงินเดือน',
+      'onPressed': () => Get.toNamed(AppRoutes.SALARY),
+      'category': 'การเงิน', // สร้างหมวดหมู่ใหม่
     },
     // หมวด: พนักงาน
     {
-      // [แก้ไข] เปลี่ยนไอคอนให้ตรงกับ defaultFavoriteMenus
       'icon': Icons.account_circle,
       'title': 'ข้อมูลพนักงาน',
       'onPressed': () {},
@@ -540,28 +528,68 @@ static final List<Map<String, dynamic>> defaultFavoriteMenus = [
       'onPressed': () {},
       'category': 'พนักงาน',
     },
-    {
-      'icon': Icons.work_outline,
-      'title': 'ตำแหน่งงาน',
-      'onPressed': () {},
-      'category': 'พนักงาน',
-    },
     // หมวด: ตารางเวลา
     {
-      // [แก้ไข] เปลี่ยนไอคอนให้ตรงกับ defaultFavoriteMenus
       'icon': Icons.access_time,
       'title': 'ตารางเวลา',
       'onPressed': () => Get.toNamed(AppRoutes.TIMETABLE),
       'category': 'ตารางเวลา',
     },
-    {
-      'icon': Icons.schedule_outlined,
-      'title': 'ปฏิทิน',
+     {
+      'icon': Icons.dashboard,
+      'title': 'จัดการเวลา',
       'onPressed': () {},
       'category': 'ตารางเวลา',
     },
+    {
+      'icon': Icons.schedule_outlined,
+      'title': 'ปฏิทิน',
+      'onPressed': () => Get.toNamed(AppRoutes.CALENDER),
+      'category': 'ตารางเวลา',
+    },
+    // หมวด: กิจกรรม
+    {
+      'icon': Icons.more_horiz, // ควรเปลี่ยนไอคอนให้สื่อความหมาย
+      'title': 'กิจกรรม',
+      'onPressed': () => Get.toNamed(AppRoutes.ACTIVITYDETAIL),
+      'category': 'กิจกรรม', // สร้างหมวดหมู่ใหม่
+    },
+    {
+      'icon': Icons.more_horiz, // ควรเปลี่ยนไอคอนให้สื่อความหมาย
+      'title': 'รายละเอียดกิจกรรม',
+      'onPressed': () => Get.toNamed(AppRoutes.MEETINGDETAIL),
+      'category': 'กิจกรรม',
+    },
+    // หมวด: อื่นๆ
+    {
+      'icon': Icons.insert_chart_outlined_outlined,
+      'title': 'ร้องเรียน',
+      'onPressed': () {},
+      'category': 'อื่นๆ', // สร้างหมวดหมู่ใหม่
+    },
+    {
+      'icon': Icons.more_horiz,
+      'title': 'อื่นๆ',
+      'onPressed': () {},
+      'category': 'อื่นๆ',
+    },
   ];
-  
+
+  // --- defaultFavoriteMenus จะใช้สำหรับกำหนด "ค่าเริ่มต้น" เท่านั้น ---
+  // เราจะดึงข้อมูลจาก allMenus มาใช้
+  static final List<String> defaultFavoriteTitles = [
+    'ขอใบลา',
+    'ขอเอกสาร',
+    'ตารางเวลา',
+    'เงินเดือน',
+    'ข้อมูลพนักงาน',
+    'ร้องเรียน',
+    'จัดการเวลา',
+    'อื่นๆ',
+    // 'กิจกรรม', // ถ้าต้องการให้เป็นค่าเริ่มต้น ก็เอา comment ออก
+    // 'รายละเอียดกิจกรรม',
+  ];
+
 
   static final List<Map<String, dynamic>> quotasData = [
     {'type': 'ลากิจ (ได้รับค่าจ้าง)', 'remaining': 2, 'total': 10},

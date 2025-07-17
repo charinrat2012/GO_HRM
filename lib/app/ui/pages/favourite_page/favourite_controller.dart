@@ -1,5 +1,3 @@
-// lib/app/ui/pages/favourite_page/favourite_controller.dart
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_hrm/app/data/models/menu_model.dart';
@@ -20,8 +18,11 @@ class FavouriteController extends GetxController {
   }
 
   void _prepareMenuData() {
+    // แปลง List<Map> จาก Datalist เป็น List<MenuModel>
     final allMenus =
         DataList.allMenus.map((map) => MenuModel.fromMap(map)).toList();
+
+    // จัดกลุ่มเมนูตาม category
     final Map<String, List<MenuModel>> groupedMenus = {};
     for (var menu in allMenus) {
       if (groupedMenus[menu.category] == null) {
@@ -29,16 +30,23 @@ class FavouriteController extends GetxController {
       }
       groupedMenus[menu.category]!.add(menu);
     }
+
+    // สร้าง List<MenuCategory> จากข้อมูลที่จัดกลุ่มแล้ว
     final categories = groupedMenus.entries.map((entry) {
       return MenuCategory(title: entry.key, items: entry.value);
     }).toList();
+
     allMenuCategories.assignAll(categories);
   }
 
   void _prepareDefaultFavorites() {
-    final defaultFavorites = DataList.defaultFavoriteMenus
-        .map((data) => MenuModel.fromMap(data))
+    // ดึงข้อมูลจาก allMenus ที่มี title ตรงกับใน defaultFavoriteTitles
+    final defaultFavorites = DataList.allMenus
+        .where((menu) => DataList.defaultFavoriteTitles.contains(menu['title']))
+        .map((map) => MenuModel.fromMap(map))
         .toList();
+
+    // จำกัดจำนวนโปรดเริ่มต้นไม่ให้เกิน limit
     if (defaultFavorites.length > favoriteLimit) {
       favoriteItems.assignAll(defaultFavorites.take(favoriteLimit));
     } else {
@@ -55,6 +63,7 @@ class FavouriteController extends GetxController {
   }
 
   void addToFavorites(MenuModel item) {
+    // ตรวจสอบว่ารายการโปรดเต็มแล้วหรือยัง
     if (favoriteItems.length >= favoriteLimit) {
       Get.snackbar(
         'เพิ่มรายการโปรดไม่ได้',
@@ -64,44 +73,18 @@ class FavouriteController extends GetxController {
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
       );
-      return;
+      return; // ออกจากฟังก์ชัน ไม่ต้องทำอะไรต่อ
     }
+
+    // ถ้ายังไม่เต็ม ก็เพิ่มรายการตามปกติ
     if (!isFavorite(item)) {
       favoriteItems.add(item);
     }
   }
 
-  // --- จุดที่แก้ไข ---
   void removeFromFavorites(MenuModel item) {
-    // 1. ลบออกจากรายการโปรด
+    // แค่ลบออกจาก list โปรดก็เพียงพอแล้ว
+    // เพราะ UI จะวาดใหม่และไปหาเมนูตัวนี้เจอใน allMenuCategories เอง
     favoriteItems.removeWhere((favItem) => favItem.title == item.title);
-
-    // 2. ค้นหาเมนูตัวเต็มจาก allMenus ใน Datalist (เพื่อให้ได้ onPressed ที่ถูกต้อง)
-    final originalMenuItemMap = DataList.allMenus.firstWhere(
-      (map) => map['title'] == item.title,
-      orElse: () => {}, // ถ้าหาไม่เจอ ให้ return map ว่าง
-    );
-
-    // 3. ถ้าหาเจอใน Datalist (หมายความว่ามันควรจะกลับไปอยู่ในหมวดหมู่อื่น)
-    if (originalMenuItemMap.isNotEmpty) {
-      final originalMenuItem = MenuModel.fromMap(originalMenuItemMap);
-      
-      // 4. หาหมวดหมู่ที่มันควรจะอยู่
-      final categoryIndex = allMenuCategories.indexWhere(
-        (cat) => cat.title == originalMenuItem.category
-      );
-
-      // 5. ถ้าเจอหมวดหมู่ และเมนูนั้นยังไม่มีในหมวดหมู่ (ป้องกันการเพิ่มซ้ำ)
-      if (categoryIndex != -1 && 
-          !allMenuCategories[categoryIndex].items.any((i) => i.title == originalMenuItem.title)) 
-      {
-        // เราไม่จำเป็นต้องเพิ่มกลับเข้าไปโดยตรง เพราะ UI จะวาดใหม่เอง
-        // แค่การลบออกจาก favoriteItems ก็เพียงพอที่จะทำให้ UI แสดงผลถูกต้องแล้ว
-      }
-    }
-    
-    // 6. บังคับให้ UI ที่เกี่ยวข้องกับ allMenuCategories อัปเดตตัวเอง
-    // โดยการ refresh list นั้นๆ (วิธีนี้จะทำให้ Obx ทำงาน)
-    allMenuCategories.refresh();
   }
 }

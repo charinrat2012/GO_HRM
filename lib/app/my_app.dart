@@ -35,10 +35,10 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       
-      initialRoute: AppRoutes.NAVIGATION,
+      // initialRoute: AppRoutes.NAVIGATION,
       
       // initialRoute: AppRoutes.SALARY,
-      // initialRoute: AppRoutes.SPLASH,
+      initialRoute: AppRoutes.SPLASH,
       unknownRoute: AppPages.unknownRoutePage,
       getPages: AppPages.pages,
       builder: (_, child) {

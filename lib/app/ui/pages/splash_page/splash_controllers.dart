@@ -19,6 +19,9 @@ class SplashController extends GetxController
   var rememberMe = false.obs;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final _obscureText = true.obs;
+    get obscureText => _obscureText.value;
+  set obscureText(value) => _obscureText.value = value;
   List<String> userid = ['1', '2', '3'];
   List<String> names = ['Admin', 'User', 'User2'];
   List<String> emails = [

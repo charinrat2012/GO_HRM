@@ -47,9 +47,9 @@ dependencies:
   table_calendar:
   
 flutter_launcher_icons:
-  android: "applogo" # ตั้งชื่อไฟล์ไอคอนสำหรับ Android
+  android: "hrmlogo" # ตั้งชื่อไฟล์ไอคอนสำหรับ Android
   ios: true                # บอกให้สร้างไอคอนสำหรับ iOS ด้วย
-  image_path: "assets/imgs/applogo.png"
+  image_path: "assets/imgs/hrmlogo.png"
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -131,6 +131,7 @@ class AppPages {
       page: () {
         // <--- แก้ไขตรงนี้: ดึง arguments แล้วส่งไปให้ NewsDetailsPage
         final NewsCardModel news = Get.arguments as NewsCardModel;
+        
         return NewsDetailsPage(news: news);
       },
       binding: NewsDetailsBinding(),

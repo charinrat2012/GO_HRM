@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_hrm/app/config/my_colors.dart';
@@ -12,46 +11,63 @@ class FavouritePage extends GetView<FavouriteController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
-          onPressed: () => Get.back(),
-        ),
-        title: const Text('เมนู',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              _buildCategorySection(
-                title: 'รายการโปรด',
-                isFavoriteSection: true,
-              ),
-              const SizedBox(height: 16),
-              // --- จุดที่แก้ไข: ใช้ Obx หุ้ม Column ที่แสดงหมวดหมู่ทั้งหมด ---
-              Obx(
-                () => Column(
-                  children: controller.allMenuCategories.map((category) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: _buildCategorySection(
-                        title: category.title,
-                        items: category.items,
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ],
+      // เราจะไม่ใช้ appBar ปกติ แต่จะใช้ CustomScrollView แทน
+      body: CustomScrollView(
+        slivers: [
+          // 1. เปลี่ยนจาก AppBar เป็น SliverAppBar
+          SliverAppBar(
+            centerTitle: true,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+              onPressed: () => Get.back(),
+            ),
+            title: const Text('เมนู',
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            pinned: false,   // ทำให้ AppBar ปักหมุดอยู่ด้านบนเสมอ
+            floating: false, // ทำให้ AppBar ปรากฏขึ้นเมื่อเลื่อนลงเล็กน้อย
+
           ),
-        ),
+          // 2. ใช้ SliverPadding เพื่อคงระยะห่างรอบๆ เหมือนเดิม
+          SliverPadding(
+            padding: const EdgeInsets.all(16.0),
+            // 3. ใช้ SliverList เพื่อจัดเรียง Widget ที่เหลือในแนวตั้ง
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  _buildCategorySection(
+                    title: 'รายการโปรด',
+                    isFavoriteSection: true,
+                  ),
+                  const SizedBox(height: 16),
+                  // ใช้ Obx หุ้ม Column ที่แสดงหมวดหมู่ทั้งหมด
+                  Obx(
+                    () => Column(
+                      // สร้าง list ของ widget โดยไม่ต้องมี ... (spread operator)
+                      children: controller.allMenuCategories.map((category) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: _buildCategorySection(
+                            title: category.title,
+                            items: category.items,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: const SizedBox(height: 60),)
+        ],
       ),
     );
   }
+
+  // (โค้ดของ Widget อื่นๆ ทั้งหมดเหมือนเดิม ไม่ต้องแก้ไข)
   Widget _buildCategorySection({
     required String title,
     List<MenuModel>? items,
@@ -157,9 +173,7 @@ class FavouritePage extends GetView<FavouriteController> {
     );
   }
 
-
-  // --- จุดที่แก้ไข: เพิ่มเงื่อนไขการแสดงปุ่ม + ---
- Widget _buildMenuItem(MenuModel item, bool isFavoriteSection) {
+  Widget _buildMenuItem(MenuModel item, bool isFavoriteSection) {
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
@@ -175,11 +189,8 @@ class FavouritePage extends GetView<FavouriteController> {
                 color: Color(0xFFE3F2FD),
                 shape: BoxShape.circle,
               ),
-              // ใช้ Obx หุ้มเพื่อให้ onPressed อัปเดตตาม isEditing
               child: Obx(
                 () => IconButton(
-                  // ถ้าไม่ได้อยู่ในโหมดแก้ไข ให้ใช้ onPressed จาก model
-                  // ถ้าอยู่ในโหมดแก้ไข ให้เป็นฟังก์ชันเปล่า (กดไม่ได้)
                   onPressed: !controller.isEditing.value ? item.onPressed : () {},
                   icon: Icon(item.icon, color: MyColors.blue2, size: 28),
                 ),
@@ -189,14 +200,13 @@ class FavouritePage extends GetView<FavouriteController> {
             Text(
               item.title,
               textAlign: TextAlign.center,
-              maxLines: 2,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontSize: 12, height: 1.2),
             ),
           ],
         ),
         Obx(() {
-          // (โค้ดส่วนแสดงปุ่ม + - เหมือนเดิม)
           if (!controller.isEditing.value) {
             return const SizedBox.shrink();
           }
@@ -221,7 +231,6 @@ class FavouritePage extends GetView<FavouriteController> {
 
   Widget _buildEditButton(
       {required IconData icon, required VoidCallback onTap}) {
-    // (โค้ดส่วนนี้เหมือนเดิม)
     return Positioned(
       top: -4,
       right: 4,

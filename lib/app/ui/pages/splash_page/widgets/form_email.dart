@@ -19,8 +19,23 @@ class FormEmail extends GetView<SplashController> {
 
           obscureText: false,
           decoration: InputDecoration(
+            isDense: false,
             hintText: 'Email',
-           
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+                
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+                
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+                
+              ),
           ),
         ),
       ],

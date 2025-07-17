@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../routes/app_routes.dart';
 import '../news_controller.dart';
 import 'images_card.dart';
 
@@ -14,6 +15,7 @@ class SlideImage extends GetView<NewsController> {
         height: 219,
         child: PageView.builder(
           controller: controller.pageController,
+          // ใช้ itemCount จาก imgcard เพื่อให้สไลด์แสดงรูปภาพทั้งหมด
           itemCount: controller.imgcard.length,
           itemBuilder: (context, index) {
             return AnimatedBuilder(
@@ -31,7 +33,23 @@ class SlideImage extends GetView<NewsController> {
                   ),
                 );
               },
-              child: ImagesCard(imgcard: controller.imgcard[index]),
+              child: ImagesCard(
+                imgcard: controller.imgcard[index],
+                onTap: () {
+                  // --- จุดแก้ไข ---
+                  // ตรวจสอบว่า index ของรูปภาพไม่เกินจำนวนข่าวที่มี
+                  if (index < controller.newscard.length) {
+                    // ดึงข้อมูลข่าวจาก newscard ณ ตำแหน่งเดียวกัน
+                    final newsItem = controller.newscard[index];
+
+                    // ส่งข้อมูลข่าว (NewsCardModel) ไปยังหน้า NEWS_DETAILS
+                    Get.toNamed(
+                      AppRoutes.NEWS_DETAILS,
+                      arguments: newsItem, // ส่งข้อมูลที่ถูกต้อง
+                    );
+                  }
+                },
+              ),
             );
           },
         ),

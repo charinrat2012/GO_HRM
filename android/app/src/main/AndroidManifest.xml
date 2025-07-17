@@ -2,7 +2,7 @@
     <application
         android:label="go_hrm"
         android:name="${applicationName}"
-        android:icon="@mipmap/applogo">
+        android:icon="@mipmap/hrmlogo">
         <activity
             android:name=".MainActivity"
             android:exported="true"

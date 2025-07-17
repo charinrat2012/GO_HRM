@@ -12,20 +12,22 @@ class ProfilePage extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: CustomScrollView(
-          slivers: [
-            ProfileHead(),
-
-            SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [ProfileImage(), HeadDetails(), DetailsProfile()],
+    return SafeArea(
+      child: Scaffold(
+        body: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: CustomScrollView(
+            slivers: [
+              ProfileHead(),
+      
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [ProfileImage(), HeadDetails(), DetailsProfile()],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
