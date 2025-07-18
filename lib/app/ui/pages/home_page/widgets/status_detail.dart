@@ -11,12 +11,6 @@ class StatusDetail extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now();
-    // 2. จัดรูปแบบวันที่ให้เป็นภาษาไทยตามที่ต้องการ
-    final formattedDate = DateFormat(
-      'EEEEที่ d MMMM yyyy',
-      'th_TH',
-    ).format(now);
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -26,12 +20,14 @@ class StatusDetail extends GetView<HomeController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '$formattedDate',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+          Obx(
+            () => Text(
+              controller.currentDateFormatted.value,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           const SizedBox(height: 16),
@@ -111,7 +107,7 @@ class StatusDetail extends GetView<HomeController> {
                   fit: StackFit.expand,
                   children: [
                     const CircularProgressIndicator(
-                      value: 0.9,
+                      value: 0.9, // This value might also need to be dynamic based on elapsed time vs total work time
                       strokeWidth: 8,
                       backgroundColor: Colors.white24,
                       valueColor: AlwaysStoppedAnimation<Color>(
@@ -119,45 +115,29 @@ class StatusDetail extends GetView<HomeController> {
                       ),
                     ),
                     Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          RichText(
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            text: TextSpan(
-                              text: '8 ชม.',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: '\n32 นาที',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
+                      child: Obx(
+                        () => RichText(
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          text: TextSpan(
+                            text: controller.elapsedHoursMinutes.value.split(' ')[0], // Get '8'
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
                             ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: ' ชม.\n${controller.elapsedHoursMinutes.value.split(' ')[1]}', // Get '32 นาที'
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
                           ),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //     Text('8', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
-                          //     Text('ชม.', style: TextStyle(color: Colors.white, fontSize: 12)),
-                          //   ],
-                          // ),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //    Text('32', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
-                          //     Text('นาที', style: TextStyle(color: Colors.white, fontSize: 12)),
-                          // ])
-                        ],
+                        ),
                       ),
                     ),
                   ],
@@ -174,33 +154,28 @@ class StatusDetail extends GetView<HomeController> {
                       style: TextStyle(color: Colors.white70),
                     ),
                     const SizedBox(height: 4),
-                    RichText(
-                      text: const TextSpan(
-                        text: '08:32:52',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '         คงเหลือ 24:58',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                            ),
+                    Obx(
+                      () => RichText(
+                        text: TextSpan(
+                          text: controller.currentWorkTimeFormatted.value,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
+                          children: [
+                            TextSpan(
+                              text: '         คงเหลือ ${controller.remainingWorkTimeFormatted.value}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    // Row(
-                    //   children: const [
-                    //     Text('08:32:52', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-                    //     SizedBox(width: 20),
-                    //     Text('คงเหลือ 24:58', style: TextStyle(color: Colors.white70, fontSize: 16)),
-                    //   ],
-                    // ),
                     const SizedBox(height: 16),
 
                     // --- ส่วนล่าง: ลงเวลาเข้า/ออก ---
@@ -208,18 +183,20 @@ class StatusDetail extends GetView<HomeController> {
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               'ลงเวลาเข้า',
                               style: TextStyle(color: Colors.white70),
                             ),
-                            SizedBox(height: 4),
-                            Text(
-                              '08:54:18',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                            const SizedBox(height: 4),
+                            Obx(
+                              () => Text(
+                                controller.workInTimeFormatted.value,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
@@ -227,18 +204,20 @@ class StatusDetail extends GetView<HomeController> {
                         const SizedBox(width: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               'ลงเวลาออก',
                               style: TextStyle(color: Colors.white70),
                             ),
-                            SizedBox(height: 4),
-                            Text(
-                              '17:30:36',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                            const SizedBox(height: 4),
+                            Obx(
+                              () => Text(
+                                controller.workOutTimeFormatted.value,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
