@@ -208,8 +208,8 @@ class AppPages {
       transition: _defaultTransition,
     ),
     GetPage(
-      name: AppRoutes.SALARYDEDAIL,
-      page: () => SalaryDedailPage(),
+      name: AppRoutes.SALARYDEtAIL,
+      page: () => SalaryDetailPage(),
       binding: SalaryDetailBinding(),
       transition: _defaultTransition,
     ),
