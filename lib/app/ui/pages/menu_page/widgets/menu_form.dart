@@ -37,9 +37,9 @@ class MenuForm extends StatelessWidget {
                     onTap: () {
                       Get.toNamed(AppRoutes.PROFILE);
                     },
-                    leading: const CircleAvatar(
+                    leading: CircleAvatar(
                       radius: 12.0,
-                      backgroundImage: AssetImage('assets/imgs/pic1.jpg'),
+                      backgroundImage: AssetImage(user.imgProfile ),
                     ),
                     title: user.userName,
                   ),
