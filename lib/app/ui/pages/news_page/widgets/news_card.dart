@@ -21,7 +21,7 @@ class NewsCard extends StatelessWidget {
         child: GestureDetector(
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
+            padding: const EdgeInsets.all(12.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -33,7 +33,7 @@ class NewsCard extends StatelessWidget {
                   child: Image.asset(
                     news.imageUrl,
                     fit: BoxFit.cover,
-                    height: 120,
+                    height: 133,
                     width: 166,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(

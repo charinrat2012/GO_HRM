@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+
+import 'package:flutter/material.dart'hide MenuController;
 import 'package:get/get.dart';
 
+import 'menu_controller.dart';
 import 'widgets/menu_form.dart';
 import 'widgets/menu_head.dart';
 
@@ -12,7 +14,7 @@ class MenuPage extends GetView<MenuController> {
     return SafeArea(
       child: Scaffold(
         appBar: MenuHead(), 
-        body: MenuForm()),
+        body: MenuForm(user: controller.currentUser!),),
     );
   }
 }

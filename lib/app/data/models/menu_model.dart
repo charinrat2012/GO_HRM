@@ -3,12 +3,14 @@
 import 'package:flutter/widgets.dart';
 
 class MenuModel {
+  final String iconId;
   final IconData icon;
   final String title;
   final VoidCallback onPressed;
   final String category;
 
   MenuModel({
+    required this.iconId,
     required this.icon,
     required this.title,
     required this.onPressed,
@@ -18,6 +20,7 @@ class MenuModel {
   // Factory constructor สำหรับแปลง Map เป็น MenuModel
   factory MenuModel.fromMap(Map<String, dynamic> map) {
     return MenuModel(
+      iconId: map['iconId'] as String,
       icon: map['icon'] as IconData,
       title: map['title'] as String,
       onPressed: map['onPressed'] as VoidCallback,

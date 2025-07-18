@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../data/models/user_model.dart';
 import '../../../../routes/app_routes.dart';
 
 class MenuForm extends StatelessWidget {
-  const MenuForm({super.key});
+  final UserModel user;
+  const MenuForm({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class MenuForm extends StatelessWidget {
                       radius: 12.0,
                       backgroundImage: AssetImage('assets/imgs/pic1.jpg'),
                     ),
-                    title: 'ณัฐดนย์ ธวัชผ่องศรี',
+                    title: user.userName,
                   ),
                   const SizedBox(height: 12),
                   _buildListTile(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
 
+import '../../../../config/my_colors.dart';
 import '../../../../routes/app_routes.dart';
 import '../../../utils/assets.dart';
 
@@ -20,7 +21,7 @@ class HomeHead extends StatelessWidget {
           onPressed: () => Get.toNamed(AppRoutes.NOTIFICATION),
           icon: const Icon(
             Icons.notifications_none,
-            color: Colors.black,
+            color: MyColors.blue2,
             size: 19.5,
           ),
         ),
