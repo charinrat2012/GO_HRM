@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_hrm/app/data/models/menu_model.dart';
 
+import '../../../data/services/auth_service.dart';
+import '../../../data/services/user_preference_service.dart';
 import '../../global_widgets/datalist.dart';
 
 class FavouriteController extends GetxController {
@@ -10,7 +12,8 @@ class FavouriteController extends GetxController {
   final favoriteItems = <MenuModel>[].obs;
   final allMenuCategories = <MenuCategory>[].obs;
   final int favoriteLimit = 8;
-
+ final AuthService _authService = Get.find<AuthService>();
+  final UserPreferenceService _preferenceService = Get.find<UserPreferenceService>();
   @override
   void onInit() {
     super.onInit();
@@ -35,45 +38,42 @@ class FavouriteController extends GetxController {
     }).toList();
 
     allMenuCategories.assignAll(categories);
-  }
+  } void _prepareDefaultFavorites() {
+    // 2. โหลดรายการโปรดเริ่มต้นจาก Service
+    if (_authService.isLoggedIn) {
+      final String currentUserId = _authService.currentUser.value!.userId;
+      final List<String> favoriteIds = _preferenceService.getFavoriteMenuIds(currentUserId);
 
-  void _prepareDefaultFavorites() {
-    // --- 🛠️ จุดแก้ไขที่ 2: เปลี่ยนตรรกะการดึงข้อมูลโปรดเริ่มต้น ---
-    // ในระบบจริง เราจะใช้ ID ของผู้ใช้ที่ล็อกอินอยู่มาค้นหา
-    // แต่ในตัวอย่างนี้ เราจะใช้ userid: 1 เป็นค่าเริ่มต้น
-    const String currentUserId = '1';
-
-    // 1. ค้นหาข้อมูลเมนูโปรดของผู้ใช้ปัจจุบันจาก `favoriteMenu`
-    final userFavoritesData = DataList.favoriteMenu.firstWhere(
-      (fav) => fav['userid'] == currentUserId,
-      orElse: () => <String, dynamic>{}, // คืนค่า Map ว่างถ้าไม่เจอ
-    );
-
-    // 2. ตรวจสอบว่าเจอข้อมูลและมีรายการ `iconId` หรือไม่
-    if (userFavoritesData.isNotEmpty && userFavoritesData['iconId'] is List) {
-      // 3. ดึง List ของ ID ออกมา
-      final List<String> favoriteIds = List<String>.from(userFavoritesData['iconId']);
-
-      // 4. กรองเมนูจาก `allMenus` ที่มี 'iconId' ตรงกับ ID ที่ดึงมา
       final defaultFavorites = DataList.allMenus
           .where((menu) => favoriteIds.contains(menu['iconId']))
           .map((map) => MenuModel.fromMap(map))
           .toList();
 
-      // 5. จำกัดจำนวนและกำหนดค่าให้ `favoriteItems` (เหมือนเดิม)
-      if (defaultFavorites.length > favoriteLimit) {
-        favoriteItems.assignAll(defaultFavorites.take(favoriteLimit));
-      } else {
-        favoriteItems.assignAll(defaultFavorites);
-      }
-    } else {
-      // กรณีไม่เจอข้อมูลของผู้ใช้ ให้เคลียร์รายการโปรดเป็นค่าว่าง
-      favoriteItems.clear();
+      favoriteItems.assignAll(defaultFavorites);
     }
   }
 
   void toggleEditMode() {
+    // --- 🛠️ จุดแก้ไข: เพิ่มตรรกะการ "บันทึก" ---
+    // ถ้ากำลังจะออกจากโหมดแก้ไข (isEditing กำลังจะเป็น false)
+    if (isEditing.value) {
+      // ให้ทำการบันทึกข้อมูล
+      _saveFavorites();
+    }
     isEditing.value = !isEditing.value;
+  }
+
+  // 3. สร้างฟังก์ชันสำหรับบันทึกข้อมูล
+  void _saveFavorites() {
+    if (_authService.isLoggedIn) {
+      final String currentUserId = _authService.currentUser.value!.userId;
+      // แปลง List<MenuModel> กลับไปเป็น List<String> ของ ID
+      final List<String> newFavoriteIds = favoriteItems.map((item) => item.iconId).toList();
+      // เรียกใช้ Service เพื่ออัปเดตข้อมูล
+      _preferenceService.updateFavoriteMenus(currentUserId, newFavoriteIds);
+
+      Get.snackbar('สำเร็จ', 'บันทึกรายการโปรดเรียบร้อยแล้ว');
+    }
   }
 
   // เปลี่ยนการเปรียบเทียบจาก `title` เป็น `id`
