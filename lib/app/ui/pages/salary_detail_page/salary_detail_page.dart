@@ -5,7 +5,7 @@ import 'salary_dedail_controller.dart';
 import 'widgets/salart_detail_head.dart';
 
 class SalaryDetailPage extends GetView<SalaryDedailController> {
-  const SalaryDedailPage({super.key});
+  const SalaryDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class SalaryDetailPage extends GetView<SalaryDedailController> {
         body: CustomScrollView(
           slivers: [
             //หัวappbar
-            SalartDetailHead(),
+            SalaryDetailHead(),
             const SliverToBoxAdapter(child: SizedBox(height: 20.0)),
             
             SliverPadding(
