@@ -13,7 +13,7 @@ class ImageDots extends GetView<NewsController> {
       () => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
-          controller.imgcard.length,
+          controller.newscard.length,
           (index) =>
               Indicator(isActive: controller.currentPageIndex.value == index),
         ),

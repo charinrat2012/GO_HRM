@@ -10,6 +10,8 @@ class DataList {
     {'imageUrl': 'assets/imgs/pic4.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
     {'imageUrl': 'assets/imgs/pic5.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
     {'imageUrl': 'assets/imgs/pic6.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
+    {'imageUrl': 'assets/imgs/pic6.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
+    {'imageUrl': 'assets/imgs/pic6.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
   ].obs;
   static final List<Map<String, dynamic>> newsData = [
     {

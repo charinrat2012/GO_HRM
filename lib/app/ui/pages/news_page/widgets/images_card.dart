@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_hrm/app/data/models/news_card_model.dart';
 
-import '../../../../data/models/images_card_model.dart';
+
 
 class ImagesCard extends StatelessWidget {
-  final ImageCardModel imgcard;
+  final NewsCardModel imgcard;
   final VoidCallback? onTap;
 
   const ImagesCard({super.key, required this.imgcard, this.onTap});

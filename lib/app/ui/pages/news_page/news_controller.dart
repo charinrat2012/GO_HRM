@@ -11,7 +11,7 @@ class NewsController extends GetxController {
 
   final currentPageIndex = 1.obs;
 
-  final RxList<ImageCardModel> imgcard = <ImageCardModel>[].obs;
+  final RxList<NewsCardModel> imgcard = <NewsCardModel>[].obs;
   final RxList<NewsCardModel> newscard = <NewsCardModel>[].obs;
 
   Timer? _timer; // เพิ่ม Timer
@@ -49,8 +49,8 @@ class NewsController extends GetxController {
   }
 
   void loadPosts() {
-    final List<ImageCardModel> picData = DataList.picData.map((map) {
-      return ImageCardModel.fromMap(map);
+    final List<NewsCardModel> picData = DataList.newsData.map((map) {
+      return NewsCardModel.fromMap(map);
     }).toList();
 
     imgcard.assignAll(picData);
@@ -60,6 +60,9 @@ class NewsController extends GetxController {
     }).toList();
 
     newscard.assignAll(newsData);
+
+    final newsIm = picData.take(5).toList();
+    imgcard.assignAll(newsIm);
 
     currentPageIndex.value = pageController.page?.round() ?? 1;
 

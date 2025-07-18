@@ -9,60 +9,62 @@ class FavouritePage extends GetView<FavouriteController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      // เราจะไม่ใช้ appBar ปกติ แต่จะใช้ CustomScrollView แทน
-      body: CustomScrollView(
-        slivers: [
-          // 1. เปลี่ยนจาก AppBar เป็น SliverAppBar
-          SliverAppBar(
-            centerTitle: true,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
-              onPressed: () => Get.back(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.grey[100],
+        // เราจะไม่ใช้ appBar ปกติ แต่จะใช้ CustomScrollView แทน
+        body: CustomScrollView(
+          slivers: [
+            // 1. เปลี่ยนจาก AppBar เป็น SliverAppBar
+            SliverAppBar(
+              centerTitle: true,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+                onPressed: () => Get.back(),
+              ),
+              title: const Text('เมนู',
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+              backgroundColor: Colors.white,
+              elevation: 0,
+              pinned: false,   // ทำให้ AppBar ปักหมุดอยู่ด้านบนเสมอ
+              floating: false, // ทำให้ AppBar ปรากฏขึ้นเมื่อเลื่อนลงเล็กน้อย
+      
             ),
-            title: const Text('เมนู',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.white,
-            elevation: 0,
-            pinned: false,   // ทำให้ AppBar ปักหมุดอยู่ด้านบนเสมอ
-            floating: false, // ทำให้ AppBar ปรากฏขึ้นเมื่อเลื่อนลงเล็กน้อย
-
-          ),
-          // 2. ใช้ SliverPadding เพื่อคงระยะห่างรอบๆ เหมือนเดิม
-          SliverPadding(
-            padding: const EdgeInsets.all(16.0),
-            // 3. ใช้ SliverList เพื่อจัดเรียง Widget ที่เหลือในแนวตั้ง
-            sliver: SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  _buildCategorySection(
-                    title: 'รายการโปรด',
-                    isFavoriteSection: true,
-                  ),
-                  const SizedBox(height: 16),
-                  // ใช้ Obx หุ้ม Column ที่แสดงหมวดหมู่ทั้งหมด
-                  Obx(
-                    () => Column(
-                      // สร้าง list ของ widget โดยไม่ต้องมี ... (spread operator)
-                      children: controller.allMenuCategories.map((category) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: _buildCategorySection(
-                            title: category.title,
-                            items: category.items,
-                          ),
-                        );
-                      }).toList(),
+            // 2. ใช้ SliverPadding เพื่อคงระยะห่างรอบๆ เหมือนเดิม
+            SliverPadding(
+              padding: const EdgeInsets.all(16.0),
+              // 3. ใช้ SliverList เพื่อจัดเรียง Widget ที่เหลือในแนวตั้ง
+              sliver: SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    _buildCategorySection(
+                      title: 'รายการโปรด',
+                      isFavoriteSection: true,
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    // ใช้ Obx หุ้ม Column ที่แสดงหมวดหมู่ทั้งหมด
+                    Obx(
+                      () => Column(
+                        // สร้าง list ของ widget โดยไม่ต้องมี ... (spread operator)
+                        children: controller.allMenuCategories.map((category) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: _buildCategorySection(
+                              title: category.title,
+                              items: category.items,
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: const SizedBox(height: 60),)
-        ],
+            SliverToBoxAdapter(
+              child: const SizedBox(height: 60),)
+          ],
+        ),
       ),
     );
   }

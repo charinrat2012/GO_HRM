@@ -35,19 +35,14 @@ class SlideImage extends GetView<NewsController> {
               },
               child: ImagesCard(
                 imgcard: controller.imgcard[index],
+                
                 onTap: () {
-                  // --- จุดแก้ไข ---
-                  // ตรวจสอบว่า index ของรูปภาพไม่เกินจำนวนข่าวที่มี
-                  if (index < controller.newscard.length) {
-                    // ดึงข้อมูลข่าวจาก newscard ณ ตำแหน่งเดียวกัน
-                    final newsItem = controller.newscard[index];
-
-                    // ส่งข้อมูลข่าว (NewsCardModel) ไปยังหน้า NEWS_DETAILS
+                  final news = controller.imgcard[index];
                     Get.toNamed(
                       AppRoutes.NEWS_DETAILS,
-                      arguments: newsItem, // ส่งข้อมูลที่ถูกต้อง
+                      arguments: news, // ส่งข้อมูลที่ถูกต้อง
                     );
-                  }
+                  
                 },
               ),
             );
