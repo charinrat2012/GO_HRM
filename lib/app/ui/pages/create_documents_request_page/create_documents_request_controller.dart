@@ -9,8 +9,6 @@ import '../../../data/models/doc_model.dart';
 import '../../global_widgets/datalist.dart';
 
 class CreateDocumentRequestController extends GetxController {
-  
-
   final RxList<DocModel> docItems = <DocModel>[].obs;
 
   final Rx<DocModel?> selectedDoc = Rx(null);
@@ -48,8 +46,11 @@ class CreateDocumentRequestController extends GetxController {
     super.onClose();
   }
 
-  // ฟังก์ชันสำหรับเลือกวันที่และเวลา 
-  Future<void> selectDateTime(BuildContext context, TextEditingController controller) async {
+  // ฟังก์ชันสำหรับเลือกวันที่และเวลา
+  Future<void> selectDateTime(
+    BuildContext context,
+    TextEditingController controller,
+  ) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -76,11 +77,9 @@ class CreateDocumentRequestController extends GetxController {
     }
   }
 
-
   final RxList<File> pickedFiles = <File>[].obs;
-  
 
-Future<void> pickMultipleFiles() async {
+  Future<void> pickMultipleFiles() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,

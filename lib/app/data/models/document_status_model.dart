@@ -1,11 +1,9 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:go_hrm/app/config/my_colors.dart';
 
 enum DocumentStatus { approved, pending, rejected }
-
 
 class DocumentHistoryModel {
   final String title = 'ออกใบลา';
@@ -26,15 +24,15 @@ class DocumentHistoryModel {
     required this.status,
     this.attachedFiles,
   });
-      factory DocumentHistoryModel.fromMap(Map<String, dynamic> map) {
+  factory DocumentHistoryModel.fromMap(Map<String, dynamic> map) {
     return DocumentHistoryModel(
       leaveType: map['leaveType'] ?? '',
-      employeeName: map['employeeName'] ?? '', 
-      leaveCategory: map['leaveCategory']?? '',
-      requestDateTime: map['requestDateTime']?? '',
-      note: map['note']?? '',
-      status: map['status']?? '',
-      attachedFiles: map['attachedFiles']?? [],
+      employeeName: map['employeeName'] ?? '',
+      leaveCategory: map['leaveCategory'] ?? '',
+      requestDateTime: map['requestDateTime'] ?? '',
+      note: map['note'] ?? '',
+      status: map['status'] ?? '',
+      attachedFiles: map['attachedFiles'] ?? [],
     );
   }
 

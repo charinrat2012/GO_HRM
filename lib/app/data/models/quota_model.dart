@@ -1,5 +1,3 @@
-// lib/app/data/models/leave_quota_model.dart
-
 class QuotaModel {
   final String type;
   final int remaining;
@@ -25,7 +23,6 @@ class QuotaModel {
       type: map['type'] ?? '',
       remaining: map['remaining'] ?? 0,
       total: map['total'] ?? 0,
-
     );
   }
 }

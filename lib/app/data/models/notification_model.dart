@@ -4,7 +4,7 @@ class NotificationModel {
   final String type;
   final String title;
   final String date;
-  final RxBool isExpanded;// ตัวแปรสถานะการขยาย/ยุบของการ์ดแจ้งเตือน
+  final RxBool isExpanded; // ตัวแปรสถานะการขยาย/ยุบของการ์ดแจ้งเตือน
 
   NotificationModel({
     required this.type,
