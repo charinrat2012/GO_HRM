@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'salary_dedail_controller.dart';
-import 'widgets/salart_detail_head.dart';
+import 'salary_detail_controller.dart';
+
+import 'widgets/salary_detail_head.dart';
 
 class SalaryDetailPage extends GetView<SalaryDetailController> {
   const SalaryDetailPage({super.key});
@@ -16,7 +17,7 @@ class SalaryDetailPage extends GetView<SalaryDetailController> {
             //หัวappbar
             SalaryDetailHead(),
             const SliverToBoxAdapter(child: SizedBox(height: 20.0)),
-            
+
             SliverPadding(
               padding: const EdgeInsets.all(16.0),
               sliver: SliverToBoxAdapter(

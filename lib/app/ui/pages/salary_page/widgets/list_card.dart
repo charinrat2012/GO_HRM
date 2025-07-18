@@ -16,7 +16,7 @@ class ListCard extends StatelessWidget {
           month: 'ฟฤษภาคม',
           payDate: 'วันที่จ่าย 25/06/2025 เวลา 12.08 น.',
           onTap: () {
-            Get.toNamed(AppRoutes.SALARYDEDAIL);
+            Get.toNamed(AppRoutes.SALARYDETAIL);
           },
         ),
         _buildSalaryCardItem(

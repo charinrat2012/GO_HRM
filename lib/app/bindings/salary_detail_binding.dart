@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../ui/pages/salary_detail_page/salary_dedail_controller.dart';
+import '../ui/pages/salary_detail_page/salary_detail_controller.dart';
 
 class SalaryDetailBinding implements Bindings {
   @override

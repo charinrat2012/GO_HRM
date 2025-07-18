@@ -41,7 +41,8 @@ import '../ui/pages/news_page/news_page.dart';
 import '../ui/pages/notification_page/notification_page.dart';
 import '../ui/pages/profile_page/profile_page.dart';
 import '../ui/pages/quota_page/quota_page.dart';
-import '../ui/pages/salary_detail_page/salary_dedail_page.dart';
+
+import '../ui/pages/salary_detail_page/salary_detail_page.dart';
 import '../ui/pages/salary_page/salary_page.dart';
 import '../ui/pages/splash_page/splash_page.dart';
 import '../ui/pages/timetable_page/timetable_page.dart';
