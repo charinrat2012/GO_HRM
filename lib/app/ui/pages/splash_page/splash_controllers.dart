@@ -3,7 +3,10 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../data/models/user_model.dart';
+import '../../../data/services/auth_service.dart';
 import '../../../routes/app_routes.dart';
+import '../../global_widgets/datalist.dart';
 
 class SplashController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -16,20 +19,15 @@ class SplashController extends GetxController
   late Animation<Offset> slideboxAnimation;
   late Animation<double> fadeboxAnimation;
   late Animation<Offset> slidehead1Animation;
+
+
   var rememberMe = false.obs;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _obscureText = true.obs;
     get obscureText => _obscureText.value;
   set obscureText(value) => _obscureText.value = value;
-  List<String> userid = ['1', '2', '3'];
-  List<String> names = ['Admin', 'User', 'User2'];
-  List<String> emails = [
-    'admin@gmail.com',
-    'user@gmail.com',
-    'user2@gmail.com',
-  ];
-  List<String> passwords = ['123456', '654321', '654321'];
+
   @override
   void onInit() {
     super.onInit();
@@ -182,48 +180,41 @@ class SplashController extends GetxController
       rememberMe.value = value;
     }
   }
-
-  void fetchLogin() {
+ void fetchLogin() {
     final String inputEmail = emailController.text.trim();
     final String inputPassword = passwordController.text.trim();
-    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      Get.closeCurrentSnackbar();
-      Get.snackbar(
-        'System',
-        'กรุณากรอกข้อมูลให้ครบถ้วน',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.black.withValues(alpha: 0.1),
-        colorText: Colors.black,
-        duration: const Duration(milliseconds: 900),
-      );
 
+    // --- 1. การตรวจสอบ Input พื้นฐาน (เหมือนเดิม) ---
+    if (inputEmail.isEmpty || inputPassword.isEmpty) {
+      Get.snackbar('System', 'กรุณากรอกข้อมูลให้ครบถ้วน');
       return;
-    } else if (!emailController.text.isEmail) {
-      Get.closeCurrentSnackbar();
-      Get.snackbar(
-        'System',
-        'กรุณากรอกอีเมลให้ถูกต้อง',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.black.withValues(alpha: 0.1),
-        colorText: Colors.black,
-        duration: const Duration(milliseconds: 900),
-      );
-
+    } else if (!GetUtils.isEmail(inputEmail)) {
+      Get.snackbar('System', 'กรุณากรอกอีเมลให้ถูกต้อง');
       return;
     }
-    final int userIndex = emails.indexOf(inputEmail);
 
-    // --- 4. ตรวจสอบว่ามีผู้ใช้งานและรหัสผ่านถูกต้องหรือไม่ ---
-    // เช็คว่า userIndex ไม่ใช่ -1 (เจอผู้ใช้) และรหัสผ่านตรงกัน
-    if (userIndex != -1 && passwords[userIndex] == inputPassword) {
-      // --- กรณี Login สำเร็จ ---
-      final String userName = names[userIndex]; // ดึงชื่อผู้ใช้จากตำแหน่งที่เจอ
+
+   final userMap = DataList.userData.firstWhere(
+      (user) => user['email'] == inputEmail && user['password'] == inputPassword,
+      orElse: () => <String, dynamic>{},
+    );
+
+    if (userMap.isNotEmpty) {
+ 
+      final loggedInUser = UserModel.fromMap(userMap);
+
+  
+      final authService = Get.find<AuthService>();
+
+     
+      authService.login(loggedInUser);
 
       emailController.clear();
       passwordController.clear();
-      FocusScope.of(Get.context!).unfocus(); // ซ่อนคีย์บอร์ด
+      FocusScope.of(Get.context!).unfocus();
 
-      Get.offAllNamed(AppRoutes.NAVIGATION);
+      // นำทางไปยังหน้าหลัก
+      Get.offAllNamed(AppRoutes.NAVIGATION,);
     } else {
       // --- กรณี Login ไม่สำเร็จ ---
       Get.snackbar(

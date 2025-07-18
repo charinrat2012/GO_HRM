@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_hrm/app/data/models/user_model.dart';
 
 class DetailsProfile extends StatelessWidget {
-  const DetailsProfile({super.key});
-
+  final UserModel user;
+  const DetailsProfile({super.key, required this.user});
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -18,85 +18,78 @@ class DetailsProfile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // เปลี่ยนจาก hardcoded text มาใช้ข้อมูลจาก `user` object
               _buildProfileTextField(
                 label: 'ชื่อผู้ใช้งาน',
-                filledText: 'ณัฐดนย์ ธวัชผ่องศรี',
+                filledText: user.userName,
               ),
               const SizedBox(height: 16),
               _buildProfileTextField(
                 label: 'รหัสพนักงาน',
-                filledText: '20500423546',
+                filledText: user.employeeId,
               ),
               const SizedBox(height: 16),
               _buildProfileTextFieldRow(
                 labelLeft: 'เลขบัตรประชาชน',
-                filledTextLeft: '1102200213456  ',
+                filledTextLeft: user.idCard,
                 labelRight: 'แผนก',
-                filledTextRight: 'ยูไอดีไซนเนอร์',
+                filledTextRight: user.section,
               ),
-
               const SizedBox(height: 16),
               _buildProfileTextFieldRow(
                 labelLeft: 'คำนำหน้าชื่อ',
-                filledTextLeft: 'นาย',
+                filledTextLeft: user.nameTitle,
                 labelRight: 'ชื่อเล่น',
-                filledTextRight: 'ดริว',
+                filledTextRight: user.nickName,
               ),
-
               const SizedBox(height: 16),
               _buildProfileTextFieldRow(
                 labelLeft: 'ชื่อจริง (ไทย)',
-                filledTextLeft: 'ณัฐดนย์',
+                filledTextLeft: user.firstNameTH,
                 labelRight: 'นามสกุล (ไทย)',
-                filledTextRight: 'ธวัชผ่องศรี',
+                filledTextRight: user.lastNameTH,
               ),
-
               const SizedBox(height: 16),
               _buildProfileTextFieldRow(
                 labelLeft: 'ชื่อจริง (อังกฤษ)',
-                filledTextLeft: 'Natthadol',
+                filledTextLeft: user.firstNameEN,
                 labelRight: 'นามสกุล (อังกฤษ)',
-                filledTextRight: 'Thavachpongsri',
+                filledTextRight: user.lastNameEN,
               ),
-
               const SizedBox(height: 16),
               _buildProfileTextFieldRow(
                 labelLeft: 'เพศ',
-                filledTextLeft: 'ชาย',
+                filledTextLeft: user.sex,
                 labelRight: 'วันเดือนปีเกิด',
-                filledTextRight: '09/09/2025',
+                filledTextRight: user.birthday,
               ),
-
               const SizedBox(height: 16),
-
               _buildProfileTextFieldRow(
                 labelLeft: 'สถานที่เกิด',
-                filledTextLeft: 'กรุงเทพ',
+                filledTextLeft: user.birthplace,
                 labelRight: 'อายุ',
-                filledTextRight: '21 ปี',
+                filledTextRight: user.age,
               ),
               const SizedBox(height: 16),
               _buildProfileTextField(
                 label: 'อีเมล',
-                filledText: 'tester.pgm@gmail.com',
+                filledText: user.email,
               ),
               const SizedBox(height: 16),
               _buildProfileTextField(
                 label: 'เบอร์โทรศัพท์มือถือ',
-                filledText: '0888888888',
+                filledText: user.phone,
               ),
               const SizedBox(height: 16),
               _buildProfileTextField(
                 label: 'ที่อยู่ (ไทย)',
-                filledText:
-                    '22 ซอย เพชรเกษม 47/2 แขวงบางแค บางแค กรุงเทพมหานคร 10160',
+                filledText: user.addressTH,
                 maxLines: 2,
               ),
               const SizedBox(height: 16),
               _buildProfileTextField(
                 label: 'ที่อยู่ (อังกฤษ)',
-                filledText:
-                    '22 Soi Petchkasem 47/2, Bang Khae Office, Bang Khae, Bangkok 10160',
+                filledText: user.addressEN,
                 maxLines: 2,
               ),
             ],
@@ -132,6 +125,20 @@ class DetailsProfile extends StatelessWidget {
             color: Colors.black,
             fontWeight: FontWeight.w400,
           ),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.grey),
+            
+            )),
 
         ),
       ],

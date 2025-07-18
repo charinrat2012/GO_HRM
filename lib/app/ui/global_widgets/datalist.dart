@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_hrm/app/ui/utils/assets.dart';
 
 import '../../routes/app_routes.dart';
 
 class DataList {
-  static final List<Map<String, String>> picData = [
-    {'imageUrl': 'assets/imgs/pic2.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
-    {'imageUrl': 'assets/imgs/pic3.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
-    {'imageUrl': 'assets/imgs/pic4.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
-    {'imageUrl': 'assets/imgs/pic5.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
-    {'imageUrl': 'assets/imgs/pic6.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
-    {'imageUrl': 'assets/imgs/pic6.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
-    {'imageUrl': 'assets/imgs/pic6.jpg', 'title': 'บริษัทกำลังจะเจ๊งในปี 2025'},
-  ].obs;
   static final List<Map<String, dynamic>> newsData = [
     {
       'newsId': '1',
@@ -429,55 +421,53 @@ class DataList {
       ],
     },
   ].obs;
-
-  static final List<Map<String, dynamic>> defaultFavoriteMenus = [
+  static final List<Map<String, dynamic>> userData = [
     {
-      'icon': Icons.description_outlined,
-      'title': 'ขอใบลา',
-      'onPressed': () => Get.toNamed(AppRoutes.LEAVE),
-      'category': 'รายการโปรด',
+      'userId': '1',
+      // 'imgProfile': '',
+      'userName': 'ณัฐดนย์ ธวัชผ่องศรี',
+      'employeeId': '20500423546',
+      'idCard': '1102200213456',
+      'section': 'ยูไอดีไซนเนอร์',
+      'nameTitle': 'นาย',
+      'nickName': 'ดริว',
+      'firstNameTH': 'ณัฐดนย์',
+      'lastNameTH': 'ธวัชผ่องศรี',
+      'firstNameEN': 'Natthadol',
+      'lastNameEN': 'Thavachpongsri',
+      'sex': 'ชาย',
+      'birthday': '09/09/2025',
+      'birthplace': 'กรุงเทพ',
+      'age': '21 ปี',
+      'email': 'admin@gmail.com',
+      'phone': '0888888888',
+      'addressTH': '22 ซอย เพชรเกษม 47/2 แขวงบางแค บางแค กรุงเทพมหานคร 10160',
+      'addressEN':
+          '22 Soi Petchkasem 47/2, Bang Khae Office, Bang Khae, Bangkok 10160',
+      'password': '123456',
     },
     {
-      'icon': Icons.note_add_outlined,
-      'title': 'ขอเอกสาร',
-      'onPressed': () => Get.toNamed(AppRoutes.DOCUMENTS),
-      'category': 'รายการโปรด',
-    },
-    {
-      'icon': Icons.access_time,
-      'title': 'ตารางเวลา',
-      'onPressed': () => Get.toNamed(AppRoutes.TIMETABLE),
-      'category': 'รายการโปรด',
-    },
-    {
-      'icon': Icons.monetization_on_outlined,
-      'title': 'เงินเดือน',
-      'onPressed': () => Get.toNamed(AppRoutes.SALARY),
-      'category': 'รายการโปรด',
-    },
-    {
-      'icon': Icons.account_circle,
-      'title': 'ข้อมูลพนักงาน',
-      'onPressed': () {},
-      'category': 'รายการโปรด',
-    },
-    {
-      'icon': Icons.insert_chart_outlined_outlined,
-      'title': 'ร้องเรียน',
-      'onPressed': () {},
-      'category': 'รายการโปรด',
-    },
-    {
-      'icon': Icons.dashboard,
-      'title': 'จัดการเวลา',
-      'onPressed': () {},
-      'category': 'รายการโปรด',
-    },
-    {
-      'icon': Icons.more_horiz,
-      'title': 'อื่นๆ',
-      'onPressed': () {},
-      'category': 'รายการโปรด',
+      'userId': '2',
+      'imgProfile': 'assets/imgs/pic2.jpg',
+      'userName': 'สมหญิง ยิ่งเจริญ',
+      'employeeId': '20500123456',
+      'idCard': '1102200987654',
+      'section': 'การตลาด',
+      'nameTitle': 'นางสาว',
+      'nickName': 'หญิง',
+      'firstNameTH': 'สมหญิง',
+      'lastNameTH': 'ยิ่งเจริญ',
+      'firstNameEN': 'Somying',
+      'lastNameEN': 'Yingcharoen',
+      'sex': 'หญิง',
+      'birthday': '10/10/2000',
+      'placeOfBirth': 'เชียงใหม่',
+      'age': '25 ปี',
+      'email': 'user@gmail.com',
+      'phone': '0812345678',
+      'addressTH': '123 ถนนนิมมานเหมินท์ อำเภอเมือง เชียงใหม่ 50200',
+      'addressEN': '123 Nimmanhaemin Rd, Mueang, Chiang Mai 50200',
+      'password': '654321',
     },
   ];
 
@@ -485,18 +475,21 @@ class DataList {
   static final List<Map<String, dynamic>> allMenus = [
     // หมวด: งานเอกสาร
     {
+      'iconId': '1',
       'icon': Icons.description_outlined,
       'title': 'ขอใบลา',
       'onPressed': () => Get.toNamed(AppRoutes.LEAVE),
       'category': 'งานเอกสาร', // จัดเข้าหมวดหมู่นี้
     },
     {
+      'iconId': '2',
       'icon': Icons.note_add_outlined,
       'title': 'ขอเอกสาร',
       'onPressed': () => Get.toNamed(AppRoutes.DOCUMENTS),
       'category': 'งานเอกสาร',
     },
     {
+      'iconId': '3',
       'icon': Icons.edit_document,
       'title': 'เอกสารของฉัน',
       'onPressed': () {},
@@ -504,6 +497,7 @@ class DataList {
     },
     // หมวด: การเงิน
     {
+      'iconId': '4',
       'icon': Icons.monetization_on_outlined,
       'title': 'เงินเดือน',
       'onPressed': () => Get.toNamed(AppRoutes.SALARY),
@@ -511,18 +505,21 @@ class DataList {
     },
     // หมวด: พนักงาน
     {
+      'iconId': '5',
       'icon': Icons.account_circle,
       'title': 'ข้อมูลพนักงาน',
       'onPressed': () {},
       'category': 'พนักงาน',
     },
     {
+      'iconId': '6',
       'icon': Icons.person_search_outlined,
       'title': 'ค้นหาพนักงาน',
       'onPressed': () {},
       'category': 'พนักงาน',
     },
     {
+      'iconId': '7',
       'icon': Icons.group_add_outlined,
       'title': 'ทีมของฉัน',
       'onPressed': () {},
@@ -530,18 +527,21 @@ class DataList {
     },
     // หมวด: ตารางเวลา
     {
+      'iconId': '8',
       'icon': Icons.access_time,
       'title': 'ตารางเวลา',
       'onPressed': () => Get.toNamed(AppRoutes.TIMETABLE),
       'category': 'ตารางเวลา',
     },
     {
+      'iconId': '9',
       'icon': Icons.dashboard,
       'title': 'จัดการเวลา',
       'onPressed': () {},
       'category': 'ตารางเวลา',
     },
     {
+      'iconId': '10',
       'icon': Icons.schedule_outlined,
       'title': 'ปฏิทิน',
       'onPressed': () => Get.toNamed(AppRoutes.CALENDER),
@@ -549,12 +549,14 @@ class DataList {
     },
     // หมวด: กิจกรรม
     {
+      'iconId': '11',
       'icon': Icons.more_horiz, // ควรเปลี่ยนไอคอนให้สื่อความหมาย
       'title': 'กิจกรรม',
       'onPressed': () => Get.toNamed(AppRoutes.ACTIVITYDETAIL),
       'category': 'กิจกรรม', // สร้างหมวดหมู่ใหม่
     },
     {
+      'iconId': '12',
       'icon': Icons.more_horiz, // ควรเปลี่ยนไอคอนให้สื่อความหมาย
       'title': 'รายละเอียดกิจกรรม',
       'onPressed': () => Get.toNamed(AppRoutes.MEETINGDETAIL),
@@ -562,12 +564,14 @@ class DataList {
     },
     // หมวด: อื่นๆ
     {
+      'iconId': '13',
       'icon': Icons.insert_chart_outlined_outlined,
       'title': 'ร้องเรียน',
       'onPressed': () {},
       'category': 'อื่นๆ', // สร้างหมวดหมู่ใหม่
     },
     {
+      'iconId': '14',
       'icon': Icons.more_horiz,
       'title': 'อื่นๆ',
       'onPressed': () {},
@@ -575,35 +579,48 @@ class DataList {
     },
   ];
 
-  // --- defaultFavoriteMenus จะใช้สำหรับกำหนด "ค่าเริ่มต้น" เท่านั้น ---
+  // --- defaultFavoriteMenus จะใช้สำหรับกำหนด 'ค่าเริ่มต้น' เท่านั้น ---
   // เราจะดึงข้อมูลจาก allMenus มาใช้
-  static final List<String> defaultFavoriteTitles = [
-    'ขอใบลา',
-    'ขอเอกสาร',
-    'ตารางเวลา',
-    'เงินเดือน',
-    'ข้อมูลพนักงาน',
-    'ร้องเรียน',
-    'จัดการเวลา',
-    'อื่นๆ',
-    // 'กิจกรรม', // ถ้าต้องการให้เป็นค่าเริ่มต้น ก็เอา comment ออก
-    // 'รายละเอียดกิจกรรม',
+  static final List<Map<String, dynamic>> favoriteMenu = [
+    {
+      'userId': '1',
+      'iconId': ['1', '2', '8', '4', '5', '13', '9', '14'],
+    },
+    {
+      'userId': '2',
+      'iconId': ['1', '2', '8', '4'],
+    },
   ];
 
   static final List<Map<String, dynamic>> quotasData = [
-    {'type': 'ลากิจ (ได้รับค่าจ้าง)', 'remaining': 2, 'total': 10},
-    {'type': 'ลากิจ (ไม่ได้รับค่าจ้าง)', 'remaining': 5, 'total': 10},
-    {'type': 'ลาป่วย', 'remaining': 10, 'total': 10},
-    {'type': 'ลาคลอด (ได้รับค่าจ้าง)', 'remaining': 10, 'total': 10},
-    {'type': 'ลาคลอด (ไม่ได้รับค่าจ้าง)', 'remaining': 10, 'total': 10},
-    {'type': 'ลาพักร้อน', 'remaining': 10, 'total': 10},
-    {'type': 'ขาดงาน ', 'remaining': 10, 'total': 10},
+    {'typeId': '1', 'type': 'ลากิจ (ได้รับค่าจ้าง)', 'remaining': 2, 'total': 10},
+    {
+      'typeId': '2',
+      'type': 'ลากิจ (ไม่ได้รับค่าจ้าง)',
+      'remaining': 5,
+      'total': 10,
+    },
+    {'typeId': '3', 'type': 'ลาป่วย', 'remaining': 10, 'total': 10},
+    {
+      'typeId': '4',
+      'type': 'ลาคลอด (ได้รับค่าจ้าง)',
+      'remaining': 10,
+      'total': 10,
+    },
+    {
+      'typeId': '5',
+      'type': 'ลาคลอด (ไม่ได้รับค่าจ้าง)',
+      'remaining': 10,
+      'total': 10,
+    },
+    {'typeId': '6', 'type': 'ลาพักร้อน', 'remaining': 10, 'total': 10},
+    {'typeId': '7', 'type': 'ขาดงาน ', 'remaining': 10, 'total': 10},
   ].obs;
 
   static final List<Map<String, dynamic>> docTypes = [
-    {'type': 'ขอโอทีล่วงหน้า'},
-    {'type': 'ขอใบรับรอง'},
-    {'type': 'ขอเอกสาร'},
+    {'doctypeId': '1', 'type': 'ขอโอทีล่วงหน้า'},
+    {'doctypeId': '2', 'type': 'ขอใบรับรอง'},
+    {'doctypeId': '3', 'type': 'ขอเอกสาร'},
   ].obs;
 
   // เพิ่มข้อมูลเงินเดือนพร้อมเดือนและวันที่จ่าย

@@ -13,6 +13,8 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
+              floating: false,
+              pinned: false,
               leading: IconButton(
                 icon: const Icon(
                   Icons.arrow_back_ios,
@@ -32,7 +34,7 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
                 ),
               ),
               centerTitle: true,
-              pinned: true,
+
               backgroundColor: Colors.white,
               elevation: 0,
             ),
@@ -94,7 +96,7 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
                       '1.7. "บริการเสริมสมาชิกมือถือเอง"',
                       'หมายถึง บริการต่างๆ ที่คุณสามารถใช้เนื้อหาผ่านระบบหรือบริการที่บริษัทกำหนดได้ภายในระยะเวลาที่กำหนด โดยการชำระค่าธรรมเนียมคงที่',
                     ),
-//-----------------------------------------------
+                    //-----------------------------------------------
                     _buildSectionTitle('1. บทนำ'),
                     const SizedBox(height: 20),
                     const Text(
@@ -134,9 +136,9 @@ class PrivacyPolicyPage extends GetView<PrivacyPolicyController> {
                       'หมายถึง บริการต่างๆ ที่คุณสามารถใช้เนื้อหาผ่านระบบหรือบริการที่บริษัทกำหนดได้ภายในระยะเวลาที่กำหนด โดยการชำระค่าธรรมเนียมคงที่',
                     ),
                     //---------------------------------------------
-                     _buildSectionTitle('2.การใช้บริการ'),
+                    _buildSectionTitle('2.การใช้บริการ'),
                     const SizedBox(height: 20),
-                     _buildListItem(
+                    _buildListItem(
                       '2.1. ในการใช้บริการ"',
                       'คุณจะต้องยอมรับข้อกำหนดการใช้งานในเอกสารฉบับนี้ โดยไม่ว่าจะมีการเรียกเก็บเงินหรือไม่ หรือจำเป็นต้องลงทะเบียนบัญชีหรือไม่ก็ตาม',
                     ),

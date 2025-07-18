@@ -39,8 +39,8 @@ class FormPassword extends GetView<SplashController> {
               suffixIcon: IconButton(
                 icon: Icon(
                   controller.obscureText
-                      ? Icons.visibility
-                      : Icons.visibility_off,
+                      ? Icons.visibility_off
+                      : Icons.visibility,
                   color: Colors.grey,
                 ),
                 onPressed: () {

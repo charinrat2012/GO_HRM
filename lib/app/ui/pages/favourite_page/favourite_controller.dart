@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_hrm/app/data/models/menu_model.dart';
@@ -18,11 +19,9 @@ class FavouriteController extends GetxController {
   }
 
   void _prepareMenuData() {
-    // แปลง List<Map> จาก Datalist เป็น List<MenuModel>
     final allMenus =
         DataList.allMenus.map((map) => MenuModel.fromMap(map)).toList();
 
-    // จัดกลุ่มเมนูตาม category
     final Map<String, List<MenuModel>> groupedMenus = {};
     for (var menu in allMenus) {
       if (groupedMenus[menu.category] == null) {
@@ -31,7 +30,6 @@ class FavouriteController extends GetxController {
       groupedMenus[menu.category]!.add(menu);
     }
 
-    // สร้าง List<MenuCategory> จากข้อมูลที่จัดกลุ่มแล้ว
     final categories = groupedMenus.entries.map((entry) {
       return MenuCategory(title: entry.key, items: entry.value);
     }).toList();
@@ -40,17 +38,37 @@ class FavouriteController extends GetxController {
   }
 
   void _prepareDefaultFavorites() {
-    // ดึงข้อมูลจาก allMenus ที่มี title ตรงกับใน defaultFavoriteTitles
-    final defaultFavorites = DataList.allMenus
-        .where((menu) => DataList.defaultFavoriteTitles.contains(menu['title']))
-        .map((map) => MenuModel.fromMap(map))
-        .toList();
+    // --- 🛠️ จุดแก้ไขที่ 2: เปลี่ยนตรรกะการดึงข้อมูลโปรดเริ่มต้น ---
+    // ในระบบจริง เราจะใช้ ID ของผู้ใช้ที่ล็อกอินอยู่มาค้นหา
+    // แต่ในตัวอย่างนี้ เราจะใช้ userid: 1 เป็นค่าเริ่มต้น
+    const String currentUserId = '1';
 
-    // จำกัดจำนวนโปรดเริ่มต้นไม่ให้เกิน limit
-    if (defaultFavorites.length > favoriteLimit) {
-      favoriteItems.assignAll(defaultFavorites.take(favoriteLimit));
+    // 1. ค้นหาข้อมูลเมนูโปรดของผู้ใช้ปัจจุบันจาก `favoriteMenu`
+    final userFavoritesData = DataList.favoriteMenu.firstWhere(
+      (fav) => fav['userid'] == currentUserId,
+      orElse: () => <String, dynamic>{}, // คืนค่า Map ว่างถ้าไม่เจอ
+    );
+
+    // 2. ตรวจสอบว่าเจอข้อมูลและมีรายการ `iconId` หรือไม่
+    if (userFavoritesData.isNotEmpty && userFavoritesData['iconId'] is List) {
+      // 3. ดึง List ของ ID ออกมา
+      final List<String> favoriteIds = List<String>.from(userFavoritesData['iconId']);
+
+      // 4. กรองเมนูจาก `allMenus` ที่มี 'iconId' ตรงกับ ID ที่ดึงมา
+      final defaultFavorites = DataList.allMenus
+          .where((menu) => favoriteIds.contains(menu['iconId']))
+          .map((map) => MenuModel.fromMap(map))
+          .toList();
+
+      // 5. จำกัดจำนวนและกำหนดค่าให้ `favoriteItems` (เหมือนเดิม)
+      if (defaultFavorites.length > favoriteLimit) {
+        favoriteItems.assignAll(defaultFavorites.take(favoriteLimit));
+      } else {
+        favoriteItems.assignAll(defaultFavorites);
+      }
     } else {
-      favoriteItems.assignAll(defaultFavorites);
+      // กรณีไม่เจอข้อมูลของผู้ใช้ ให้เคลียร์รายการโปรดเป็นค่าว่าง
+      favoriteItems.clear();
     }
   }
 
@@ -58,12 +76,12 @@ class FavouriteController extends GetxController {
     isEditing.value = !isEditing.value;
   }
 
+  // เปลี่ยนการเปรียบเทียบจาก `title` เป็น `id`
   bool isFavorite(MenuModel item) {
-    return favoriteItems.any((favItem) => favItem.title == item.title);
+    return favoriteItems.any((favItem) => favItem.iconId == item.iconId);
   }
 
   void addToFavorites(MenuModel item) {
-    // ตรวจสอบว่ารายการโปรดเต็มแล้วหรือยัง
     if (favoriteItems.length >= favoriteLimit) {
       Get.snackbar(
         'เพิ่มรายการโปรดไม่ได้',
@@ -73,18 +91,16 @@ class FavouriteController extends GetxController {
         colorText: Colors.white,
         margin: const EdgeInsets.all(12),
       );
-      return; // ออกจากฟังก์ชัน ไม่ต้องทำอะไรต่อ
+      return;
     }
 
-    // ถ้ายังไม่เต็ม ก็เพิ่มรายการตามปกติ
     if (!isFavorite(item)) {
       favoriteItems.add(item);
     }
   }
 
+  // เปลี่ยนการเปรียบเทียบจาก `title` เป็น `id`
   void removeFromFavorites(MenuModel item) {
-    // แค่ลบออกจาก list โปรดก็เพียงพอแล้ว
-    // เพราะ UI จะวาดใหม่และไปหาเมนูตัวนี้เจอใน allMenuCategories เอง
-    favoriteItems.removeWhere((favItem) => favItem.title == item.title);
+    favoriteItems.removeWhere((favItem) => favItem.iconId == item.iconId);
   }
 }

@@ -2,6 +2,22 @@
 class Assets {
   Assets._();
   
+  /// Assets for assetsIcsEmail
+  /// assets/ics/email.png
+  static const String assetsIcsEmail = "assets/ics/email.png";
+
+  /// Assets for assetsIcsMeet
+  /// assets/ics/meet.png
+  static const String assetsIcsMeet = "assets/ics/meet.png";
+
+  /// Assets for assetsIcsPdf
+  /// assets/ics/pdf.png
+  static const String assetsIcsPdf = "assets/ics/pdf.png";
+
+  /// Assets for assetsImgsApplogo
+  /// assets/imgs/applogo.png
+  static const String assetsImgsApplogo = "assets/imgs/applogo.png";
+
   /// Assets for assetsImgsGoHrmLogo
   /// assets/imgs/go_hrm_logo.svg
   static const String assetsImgsGoHrmLogo = "assets/imgs/go_hrm_logo.svg";
@@ -13,6 +29,10 @@ class Assets {
   /// Assets for assetsImgsHrmLogo
   /// assets/imgs/hrm_logo.svg
   static const String assetsImgsHrmLogo = "assets/imgs/hrm_logo.svg";
+
+  /// Assets for assetsImgsHrmlogo
+  /// assets/imgs/hrmlogo.png
+  static const String assetsImgsHrmlogo = "assets/imgs/hrmlogo.png";
 
   /// Assets for assetsImgsLogoAbsolute
   /// assets/imgs/logo_absolute.png

@@ -22,6 +22,16 @@ class NavigationController extends GetxController {
     // สั่งให้ PageView เลื่อนไปยังหน้าที่ตรงกับ index
     pageController.jumpToPage(index);
   }
+  void resetToHome() {
+    
+    // 1. เปลี่ยนค่า tabIndex ที่เป็น Observable กลับไปเป็น 0 (หน้า Home)
+    tabIndex.value = 0;
+    // 2. ตรวจสอบว่า PageController พร้อมใช้งานหรือไม่
+    if (pageController.hasClients) {
+      // 3. สั่งให้ PageView เลื่อนกลับไปที่หน้าแรก
+      pageController.jumpToPage(0);
+    }
+  }
 
   @override
   void onClose() {

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../data/models/user_model.dart';
+import '../../../../data/services/auth_service.dart';
 import '../../../../routes/app_routes.dart';
+import '../../navigation_page/navigation_controller.dart';
 
 class MenuForm extends StatelessWidget {
-  const MenuForm({super.key});
+  final UserModel user;
+  const MenuForm({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +39,11 @@ class MenuForm extends StatelessWidget {
                     onTap: () {
                       Get.toNamed(AppRoutes.PROFILE);
                     },
-                    leading: const CircleAvatar(
+                    leading: CircleAvatar(
                       radius: 12.0,
-                      backgroundImage: AssetImage('assets/imgs/pic1.jpg'),
+                      backgroundImage: AssetImage(user.imgProfile),
                     ),
-                    title: 'ณัฐดนย์ ธวัชผ่องศรี',
+                    title: user.userName,
                   ),
                   const SizedBox(height: 12),
                   _buildListTile(
@@ -58,9 +62,7 @@ class MenuForm extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   _buildListTile(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.PRIVACY_POLICY);
-                    },
+                    onTap: () {},
                     leading: const Icon(
                       Icons.lock_outline,
                       color: Colors.black,
@@ -78,7 +80,15 @@ class MenuForm extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   _buildListTile(
-                    onTap: () {},
+                    onTap: () {
+                      final authService = Get.find<AuthService>();
+
+                      // 2. เรียกใช้ฟังก์ชัน logout()
+                      authService.logout();
+                      final navigationController =
+                          Get.find<NavigationController>();
+                      3.seconds.delay().then((_) => navigationController.resetToHome());
+                    },
                     leading: const Icon(Icons.login, color: Colors.black),
                     title: 'ออกจากระบบ',
                     trailing: false,
