@@ -24,7 +24,7 @@ class HomeController extends GetxController {
   void loadData() {
     // ---  ดึง userId จาก AuthService ---
     
-    if (authService.isLoggedIn) {
+    if (authService.isLoggedIn) { 
       final String currentUserId = authService.currentUser.value!.userId;
 
       // 3. ดึง ID เมนูโปรดล่าสุดจาก Service
