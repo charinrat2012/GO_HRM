@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'salary_dedail_controller.dart';
 import 'widgets/salart_detail_head.dart';
 
-class SalaryDetailPage extends GetView<SalaryDedailController> {
+class SalaryDetailPage extends GetView<SalaryDetailController> {
   const SalaryDetailPage({super.key});
 
   @override
