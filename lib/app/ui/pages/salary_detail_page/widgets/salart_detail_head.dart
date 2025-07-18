@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SalartDetailHead extends StatelessWidget {
-  const SalartDetailHead({super.key});
+class SalaryDetailHead extends StatelessWidget {
+  const SalaryDetailHead({super.key});
 
   @override
   Widget build(BuildContext context) {
