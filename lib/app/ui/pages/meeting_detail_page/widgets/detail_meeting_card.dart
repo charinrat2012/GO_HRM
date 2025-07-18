@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../config/my_colors.dart';
+
 class DetailMeetingCard extends StatelessWidget {
   const DetailMeetingCard({super.key});
 
@@ -15,7 +17,7 @@ class DetailMeetingCard extends StatelessWidget {
           children: [
             const Text(
               'ประเภทการเข้าประชุม',
-              style: TextStyle(fontSize: 12, color: Colors.black87),
+              style: TextStyle(fontSize: 12, color: Colors.black),
             ),
             const SizedBox(height: 8),
             GestureDetector(
@@ -25,6 +27,7 @@ class DetailMeetingCard extends StatelessWidget {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
+                side: const BorderSide(color: Color.fromRGBO(204, 218, 255, 1) )  
                 ),
                 margin: EdgeInsets.zero,
                 child: ListTile(
@@ -37,7 +40,7 @@ class DetailMeetingCard extends StatelessWidget {
                     'เข้าร่วมโดย Google Meet',
                     style: TextStyle(color: Colors.black, ),
                   ),
-                  trailing: const Icon(Icons.link, color: Colors.grey),
+                  trailing: const Icon(Icons.link,   color: MyColors.blue,),
                 ),
               ),
             ),

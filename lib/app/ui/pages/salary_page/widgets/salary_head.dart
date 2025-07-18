@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/my_colors.dart';
+
 class SalaryHead extends StatelessWidget {
   const SalaryHead({super.key});
 
@@ -27,7 +29,9 @@ class SalaryHead extends StatelessWidget {
       centerTitle: true,
       actions: [
         IconButton(
-          icon: const Icon(Icons.save_alt, color: Colors.black, size: 18.0),
+          icon: const Icon(Icons.save_alt,
+        color: MyColors.blue,
+           size: 20.0),
           onPressed: () {},
         ),
       ],

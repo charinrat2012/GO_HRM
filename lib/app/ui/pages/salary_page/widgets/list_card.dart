@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../routes/app_routes.dart';
-
+import '../../../global_widgets/datalist.dart';
 
 class ListCard extends StatelessWidget {
   const ListCard({super.key});
@@ -10,51 +10,27 @@ class ListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverList(
-      delegate: SliverChildListDelegate([
-      
-        _buildSalaryCardItem(
-          month: 'ฟฤษภาคม',
-          payDate: 'วันที่จ่าย 25/06/2025 เวลา 12.08 น.',
-          onTap: () {
-            Get.toNamed(AppRoutes.SALARYDETAIL);
-          },
-        ),
-        _buildSalaryCardItem(
-          month: 'มิถุนายน',
-          payDate: 'วันที่จ่าย 25/06/2025 เวลา 12.08 น.',
-          onTap: () {
-            // ใส่การทำงานตอนกด
-          },
-        ),
-        _buildSalaryCardItem(
-          month: 'มิถุนายน',
-          payDate: 'วันที่จ่าย 25/06/2025 เวลา 12.08 น.',
-          onTap: () {
-            // ใส่การทำงานตอนกด
-          },
-        ),
-        _buildSalaryCardItem(
-          month: 'มิถุนายน',
-          payDate: 'วันที่จ่าย 25/06/2025 เวลา 12.08 น.',
-          onTap: () {
-            // ใส่การทำงานตอนกด
-          },
-        ),
-        _buildSalaryCardItem(
-          month: 'มิถุนายน',
-          payDate: 'วันที่จ่าย 25/06/2025 เวลา 12.08 น.',
-          onTap: () {
-            // ใส่การทำงานตอนกด
-          },
-        ),
-        _buildSalaryCardItem(
-          month: 'มิถุนายน',
-          payDate: 'วันที่จ่าย 25/06/2025 เวลา 12.08 น.',
-          onTap: () {
-            // ใส่การทำงานตอนกด
-          },
-        ),
-      ]),
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          final salaryItem = DataList.salaryData[index];
+          return _buildSalaryCardItem(
+            month: salaryItem['month']!,
+            payDate: salaryItem['datePaid']!,
+            onTap: () {
+              Get.toNamed(
+                AppRoutes.SALARYDETAIL,
+                arguments: {
+                  'month': salaryItem['month'],
+                  'datePaid': salaryItem['datePaid'],
+                },
+              );
+            },
+          );
+        },
+        childCount: DataList
+            .salaryData
+            .length, // มีจำนวนรายการทั้งหมดกี่รายการที่จะต้องสร้าง ใช้ข้อมูลจาก salaryData
+      ),
     );
   }
 
@@ -66,10 +42,10 @@ class ListCard extends StatelessWidget {
     VoidCallback? onTap,
   }) {
     return Padding(
-      // ใช้ Padding ตรงนี้แทน SliverPadding เมื่ออยู่ภายใน SliverList
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: GestureDetector(
-        onTap: onTap ?? () {},
+        onTap:
+            onTap ?? () {}, //ถ้าแตะจะลิ้งไปหน้าที่กำหนดถ้าไม่แตะก็จะไม่ลิ้งไป
         child: Card(
           elevation: 0,
           margin: EdgeInsets.zero,

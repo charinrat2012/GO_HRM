@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../config/my_colors.dart';
 import 'salary_detail_controller.dart';
-
 import 'widgets/salary_detail_head.dart';
 
 class SalaryDetailPage extends GetView<SalaryDetailController> {
@@ -10,6 +10,11 @@ class SalaryDetailPage extends GetView<SalaryDetailController> {
 
   @override
   Widget build(BuildContext context) {
+    // พยายามดึงค่า เดือน วันที่จ่าย จากหน้าจอก่อนหน้า ถ้าหาไม่เจอหรือไม่ได้รับค่ามา จะแสดง "ไม่ระบุเดือน" หรือ "ไม่ระบุวันที่จ่าย" 
+    final Map<String, dynamic> args = Get.arguments ?? {};
+    final String month = args['month'] ?? 'ไม่ระบุเดือน';
+    final String datePaid = args['datePaid'] ?? 'ไม่ระบุวันที่จ่าย';
+
     return SafeArea(
       child: Scaffold(
         body: CustomScrollView(
@@ -40,16 +45,16 @@ class SalaryDetailPage extends GetView<SalaryDetailController> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'พฤษภาคม',
+                              Text(
+                                month, // แสดงเดือนที่รับมา
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                 ),
                               ),
                               const SizedBox(height: 2.0),
-                              const Text(
-                                'วันที่จ่าย 25/06/2025 เวลา 12.08 น.',
+                              Text(
+                                'วันที่จ่าย $datePaid', // แสดงวันที่จ่ายที่รับมา
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.black,
@@ -60,8 +65,8 @@ class SalaryDetailPage extends GetView<SalaryDetailController> {
                           IconButton(
                             icon: const Icon(
                               Icons.save_alt,
-                              color: Colors.black,
-                              size: 25.0,
+                             color: MyColors.blue,
+                              size: 20.0,
                             ),
                             onPressed: () {},
                           ),

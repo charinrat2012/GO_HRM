@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/my_colors.dart';
+
 class ProfileHead extends StatelessWidget {
   const ProfileHead({super.key});
 
@@ -26,7 +28,7 @@ class ProfileHead extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.edit, color: Colors.black),
+          icon: const Icon(Icons.edit,color: MyColors.blue,),
           onPressed: () {},
         ),
       ],

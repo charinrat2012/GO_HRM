@@ -430,7 +430,7 @@ class DataList {
     },
   ].obs;
 
-static final List<Map<String, dynamic>> defaultFavoriteMenus = [
+  static final List<Map<String, dynamic>> defaultFavoriteMenus = [
     {
       'icon': Icons.description_outlined,
       'title': 'ขอใบลา',
@@ -479,11 +479,9 @@ static final List<Map<String, dynamic>> defaultFavoriteMenus = [
       'onPressed': () {},
       'category': 'รายการโปรด',
     },
-
   ];
 
-
-    // หมวด: งานเอกสาร
+  // หมวด: งานเอกสาร
   static final List<Map<String, dynamic>> allMenus = [
     // หมวด: งานเอกสาร
     {
@@ -505,7 +503,7 @@ static final List<Map<String, dynamic>> defaultFavoriteMenus = [
       'category': 'งานเอกสาร',
     },
     // หมวด: การเงิน
-     {
+    {
       'icon': Icons.monetization_on_outlined,
       'title': 'เงินเดือน',
       'onPressed': () => Get.toNamed(AppRoutes.SALARY),
@@ -537,7 +535,7 @@ static final List<Map<String, dynamic>> defaultFavoriteMenus = [
       'onPressed': () => Get.toNamed(AppRoutes.TIMETABLE),
       'category': 'ตารางเวลา',
     },
-     {
+    {
       'icon': Icons.dashboard,
       'title': 'จัดการเวลา',
       'onPressed': () {},
@@ -592,7 +590,6 @@ static final List<Map<String, dynamic>> defaultFavoriteMenus = [
     // 'รายละเอียดกิจกรรม',
   ];
 
-
   static final List<Map<String, dynamic>> quotasData = [
     {'type': 'ลากิจ (ได้รับค่าจ้าง)', 'remaining': 2, 'total': 10},
     {'type': 'ลากิจ (ไม่ได้รับค่าจ้าง)', 'remaining': 5, 'total': 10},
@@ -607,5 +604,21 @@ static final List<Map<String, dynamic>> defaultFavoriteMenus = [
     {'type': 'ขอโอทีล่วงหน้า'},
     {'type': 'ขอใบรับรอง'},
     {'type': 'ขอเอกสาร'},
+  ].obs;
+
+  // เพิ่มข้อมูลเงินเดือนพร้อมเดือนและวันที่จ่าย
+  static final List<Map<String, dynamic>> salaryData = [
+    {'month': 'มกราคม', 'datePaid': '25/01/2025 เวลา 12.00 น.'},
+    {'month': 'กุมภาพันธ์', 'datePaid': '25/02/2025 เวลา 12.00 น.'},
+    {'month': 'มีนาคม', 'datePaid': '25/03/2025 เวลา 12.00 น.'},
+    {'month': 'เมษายน', 'datePaid': '25/04/2025 เวลา 12.00 น.'},
+    {'month': 'พฤษภาคม', 'datePaid': '25/05/2025 เวลา 12.08 น.'},
+    {'month': 'มิถุนายน', 'datePaid': '25/06/2025 เวลา 12.00 น.'},
+    {'month': 'กรกฎาคม', 'datePaid': '25/07/2025 เวลา 12.00 น.'},
+    {'month': 'สิงหาคม', 'datePaid': '25/08/2025 เวลา 12.00 น.'},
+    {'month': 'กันยายน', 'datePaid': '25/09/2025 เวลา 12.00 น.'},
+    {'month': 'ตุลาคม', 'datePaid': '25/10/2025 เวลา 12.00 น.'},
+    {'month': 'พฤศจิกายน', 'datePaid': '25/11/2025 เวลา 12.00 น.'},
+    {'month': 'ธันวาคม', 'datePaid': '25/12/2025 เวลา 12.00 น.'},
   ].obs;
 }

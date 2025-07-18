@@ -53,7 +53,7 @@ class TimetableForm extends GetView<TimetableController> {
                 schedule
                     .isExpanded
                     .value // ตรวจสอบสถานะการขยายจากการ์ดเอง
-                ? Border.all(color: MyColors.blue)
+                ? Border.all(color: Color.fromRGBO(204, 218, 255, 1))
                 : Border.all(color: Colors.transparent),
           ),
           child: Column(

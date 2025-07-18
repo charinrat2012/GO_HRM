@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../config/my_colors.dart';
+
 class AttendeeCard extends StatelessWidget {
   const AttendeeCard({super.key});
 
@@ -13,7 +15,7 @@ class AttendeeCard extends StatelessWidget {
           children: [
             const Text(
               'ผู้เข้าร่วม',
-              style: TextStyle(fontSize: 12, color: Colors.black87),
+              style: TextStyle(fontSize: 12, color: Colors.black),
             ),
             const SizedBox(height: 8),
             Card(
@@ -21,6 +23,7 @@ class AttendeeCard extends StatelessWidget {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
+                side: const BorderSide(color: Color.fromRGBO(204, 218, 255, 1)),
               ),
               margin: EdgeInsets.zero,
               child: Column(
@@ -82,7 +85,7 @@ class AttendeeCard extends StatelessWidget {
           ),
           trailing: const Icon(
             Icons.mail_outline,
-            color: Colors.grey,
+            color: MyColors.blue,
             size: 20,
           ),
         ),

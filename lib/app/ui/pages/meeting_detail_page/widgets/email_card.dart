@@ -23,6 +23,7 @@ class EmailCard extends StatelessWidget {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
+                 side: const BorderSide(color: Color.fromRGBO(204, 218, 255, 1)),
               ),
               margin: EdgeInsets.zero,
               child: ListTile(

@@ -15,7 +15,7 @@ class UpdateCard extends StatelessWidget {
           children: [
             const Text(
               'อัปเดต',
-              style: TextStyle(fontSize: 12, color: Colors.black87),
+              style: TextStyle(fontSize: 12, color: Colors.black),
             ),
             const SizedBox(height: 8),
             Card(
@@ -23,6 +23,7 @@ class UpdateCard extends StatelessWidget {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
+                  side: const BorderSide(color: Color.fromRGBO(204, 218, 255, 1)),
               ),
               margin: EdgeInsets.zero,
               child: Column(

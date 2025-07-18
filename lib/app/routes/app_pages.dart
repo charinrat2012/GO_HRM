@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+
 import '../bindings/activity_detail_binding.dart';
 import '../bindings/calender_binding.dart';
 import '../bindings/chats_binding.dart';
@@ -16,6 +17,7 @@ import '../bindings/navigation_binding.dart';
 import '../bindings/news_binding.dart';
 import '../bindings/news_details_binding.dart';
 import '../bindings/notification_binding.dart';
+import '../bindings/privacy_policy_binding.dart';
 import '../bindings/profile_binding.dart';
 import '../bindings/quota_binding.dart';
 import '../bindings/salary_binding.dart';
@@ -39,9 +41,9 @@ import '../ui/pages/navigation_page/navigation_page.dart';
 import '../ui/pages/news_details_page/news_details_page.dart';
 import '../ui/pages/news_page/news_page.dart';
 import '../ui/pages/notification_page/notification_page.dart';
+import '../ui/pages/privacy_policy_page/privacy_policy_page.dart';
 import '../ui/pages/profile_page/profile_page.dart';
 import '../ui/pages/quota_page/quota_page.dart';
-
 import '../ui/pages/salary_detail_page/salary_detail_page.dart';
 import '../ui/pages/salary_page/salary_page.dart';
 import '../ui/pages/splash_page/splash_page.dart';
@@ -121,18 +123,10 @@ class AppPages {
       transition: _defaultTransition,
     ),
 
-    // GetPage(
-    //   name: AppRoutes.NEWS_DETAILS,
-    //   page: () => NewsDetailsPage(),
-    //   binding: NewsDetailsBinding(),
-    //   transition: _defaultTransition,
-    // ),
     GetPage(
       name: AppRoutes.NEWS_DETAILS,
       page: () {
-        // <--- แก้ไขตรงนี้: ดึง arguments แล้วส่งไปให้ NewsDetailsPage
         final NewsCardModel news = Get.arguments as NewsCardModel;
-        
         return NewsDetailsPage(news: news);
       },
       binding: NewsDetailsBinding(),
@@ -178,24 +172,24 @@ class AppPages {
       binding: SalaryBinding(),
       transition: _defaultTransition,
     ),
-     GetPage(
-       name: AppRoutes.DOCUMENTS,
-       page: () => DocumentsPage(),
-       binding: DocumentsBinding(),
-       transition: _defaultTransition,
-     ),
-     GetPage(
-       name: AppRoutes.CREATE_DOCUMENT_REQUEST,
-       page: () => CreateDocumentsRequestPage(),
-       binding: CreateDocumentRequestBinding(),
-       transition: _defaultTransition,
-     ),
-     GetPage( // <-- เพิ่ม GetPage ใหม่นี้
-       name: AppRoutes.FAVOURITE_SETTINGS,
-       page: () => FavouritePage(),
-       binding: FavouriteBinding(),
-       transition: _defaultTransition,
-     ),
+    GetPage(
+      name: AppRoutes.DOCUMENTS,
+      page: () => DocumentsPage(),
+      binding: DocumentsBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.CREATE_DOCUMENT_REQUEST,
+      page: () => CreateDocumentsRequestPage(),
+      binding: CreateDocumentRequestBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.FAVOURITE_SETTINGS,
+      page: () => FavouritePage(),
+      binding: FavouriteBinding(),
+      transition: _defaultTransition,
+    ),
     GetPage(
       name: AppRoutes.DOCUMENTS,
       page: () => DocumentsPage(),
@@ -212,6 +206,12 @@ class AppPages {
       name: AppRoutes.SALARYDETAIL,
       page: () => SalaryDetailPage(),
       binding: SalaryDetailBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.PRIVACY_POLICY,
+      page: () => PrivacyPolicyPage(),
+      binding: PrivacyPolicyBinding(),
       transition: _defaultTransition,
     ),
   ];

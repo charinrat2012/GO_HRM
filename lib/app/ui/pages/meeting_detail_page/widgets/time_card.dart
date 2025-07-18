@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../config/my_colors.dart';
+
 class TimeCard extends StatelessWidget {
   const TimeCard({super.key});
 
@@ -15,7 +17,7 @@ class TimeCard extends StatelessWidget {
           children: [
             const Text(
               'เริ่มเวลา',
-              style: TextStyle(fontSize: 12, color: Colors.black87),
+              style: TextStyle(fontSize: 12, color: Colors.black),
             ),
             const SizedBox(height: 8),
             Card(
@@ -23,14 +25,15 @@ class TimeCard extends StatelessWidget {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
+                side: const BorderSide(color: Color.fromRGBO(204, 218, 255, 1)),
               ),
               margin: EdgeInsets.zero,
               child: const ListTile(
                 title: Text(
                   'เข้าร่วมการประชุมก่อน 10 นาที',
-                  style: TextStyle(color: Colors.black, ),
+                  style: TextStyle(color: Colors.black),
                 ),
-                trailing: Icon(Icons.notifications_none, color: Colors.grey),
+                trailing: Icon(Icons.notifications_none,  color: MyColors.blue,),
               ),
             ),
           ],

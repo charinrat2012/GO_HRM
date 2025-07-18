@@ -23,4 +23,5 @@ class AppRoutes {
   static const CREATE_DOCUMENT_REQUEST = '/create_document_request';
   static const FAVOURITE_SETTINGS = '/favourite_settings';
   static const SALARYDETAIL = '/salarydetail';
+  static const PRIVACY_POLICY = '/privacy_policy';
 }

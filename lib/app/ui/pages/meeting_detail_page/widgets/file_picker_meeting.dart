@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../config/my_colors.dart';
 import '../meeting_detail_controller.dart';
 
 class FilePickerMeeting extends GetView<MeetingDetailController> {
@@ -56,16 +57,16 @@ class FilePickerMeeting extends GetView<MeetingDetailController> {
         decoration: BoxDecoration(
           color: Colors.grey[50],
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey[300]!),
+          border: Border.all(color: Color.fromRGBO(204, 218, 255, 1)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.image_outlined, size: 30, color: Colors.grey[400]),
+            Icon(Icons.image_outlined, size: 30, color: MyColors.blue),
             const SizedBox(height: 8),
             Text(
               'อัปโหลดรูปภาพหรือไฟล์',
-              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+              style: TextStyle(fontSize: 12, color: MyColors.blue),
             ),
           ],
         ),
