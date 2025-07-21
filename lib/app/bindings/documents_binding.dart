@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
-import '../ui/pages/document_page.dart/document_controller.dart';
+
+import '../ui/pages/document_page/document_controller.dart';
 
 class DocumentsBinding implements Bindings {
   @override

@@ -21,7 +21,7 @@ class HistoryCardList extends GetView<DocumentsController> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
-            final item = controller.leaveHistory[index];
+            final item = controller.docHistory[index];
             return Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
               // เรียกใช้ Widget ที่แก้ไขใหม่แล้ว
@@ -31,7 +31,7 @@ class HistoryCardList extends GetView<DocumentsController> {
                 isManagerView: controller.selectedViewIndex.value == 1,
               ),
             );
-          }, childCount: controller.leaveHistory.length),
+          }, childCount: controller.docHistory.length),
         ),
       ),
     );
@@ -89,7 +89,7 @@ class HistoryCardList extends GetView<DocumentsController> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                              text: '"${item.leaveCategory}"',
+                              text: '"${item.docCategory}"',
                               style: const TextStyle(
                                 fontWeight: FontWeight.normal,
                               ),
@@ -177,7 +177,7 @@ class HistoryCardList extends GetView<DocumentsController> {
                   // ถ้ามี ให้วนลูปแสดงรายการไฟล์
                   ...item.attachedFiles!
                       .map((file) => _buildAttachmentItem(file))
-                      .toList()
+                      
                 else
                   // ถ้าไม่มี ให้แสดงข้อความ
                   const Padding(

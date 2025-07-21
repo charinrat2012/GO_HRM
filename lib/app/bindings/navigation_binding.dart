@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:go_hrm/app/ui/pages/chats_page/chats_controller.dart';
 
 import '../ui/pages/calender_page/calender_controller.dart';
 import '../ui/pages/home_page/home_controller.dart';
@@ -17,6 +18,7 @@ class NavigationBinding implements Bindings {
     Get.lazyPut<NewsController>(() => NewsController(), fenix: true);
     Get.lazyPut<CalenderController>(() => CalenderController(), fenix: true);
     Get.lazyPut<MenuController>(() => MenuController(), fenix: true);
+    Get.lazyPut<ChatsController>(() => ChatsController(), fenix: true);
 
     // Controller ของแต่ละหน้าใน Bottom Bar
     // ใช้ fenix: true เพื่อให้ controller ถูกสร้างใหม่ทุกครั้งที่เรียกใช้หน้านั้นๆ

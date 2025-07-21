@@ -46,7 +46,7 @@ class FilterSection extends GetView<LeavePageController> {
             _buildDropdown(
               'สถานะ',
               controller.leaveTypes,
-              controller.selectedLeaveType,
+              controller.selectedLeaveTypes,
             ),
           ],
 

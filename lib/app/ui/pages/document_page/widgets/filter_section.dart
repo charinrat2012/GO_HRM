@@ -45,8 +45,8 @@ class FilterSection extends GetView<DocumentsController> {
 
             _buildDropdown(
               'ประเภทเอกสาร',
-              controller.leaveTypes,
-              controller.selectedLeaveType,
+             controller.docTypes,
+              controller.selectedDocTypes,
             ),
           ],
 

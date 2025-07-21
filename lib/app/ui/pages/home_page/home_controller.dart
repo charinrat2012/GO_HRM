@@ -54,7 +54,7 @@ class HomeController extends GetxController {
   void onReady() {
     super.onReady();
     loadData();
-    ever(preferenceService.favoriteMenu, (_) => loadData());
+    ever(preferenceService.userPreferData, (_) => loadData());
   }
 
   @override
@@ -100,7 +100,7 @@ class HomeController extends GetxController {
     final int minutes = elapsedWorkDuration.value.inMinutes.remainder(60);
     // final int seconds = elapsedWorkDuration.value.inSeconds.remainder(60); // ไม่ได้ใช้ในส่วนนี้
 
-    elapsedHoursMinutes.value = '$hours ชม. $minutes นาที';
+    elapsedHoursMinutes.value = '$hours  $minutes นาที';
 
     // จัดรูปแบบ "08:32:52" สำหรับชั่วโมงเวลาการทำงานปัจจุบัน
     final currentHours = (elapsedWorkDuration.value.inSeconds ~/ 3600).toString().padLeft(2, '0');

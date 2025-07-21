@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_hrm/app/data/models/leave_status_model.dart';
 
 
+import '../../data/models/document_status_model.dart';
 import '../../routes/app_routes.dart';
 
 class DataList {
@@ -567,7 +571,7 @@ class DataList {
       'iconId': '13',
       'icon': Icons.insert_chart_outlined_outlined,
       'title': 'ร้องเรียน',
-      'onPressed': () {},
+      'onPressed': () => Get.toNamed(AppRoutes.APPEAL),
       'category': 'อื่นๆ', // สร้างหมวดหมู่ใหม่
     },
     {
@@ -581,14 +585,18 @@ class DataList {
 
   // --- defaultFavoriteMenus จะใช้สำหรับกำหนด 'ค่าเริ่มต้น' เท่านั้น ---
   // เราจะดึงข้อมูลจาก allMenus มาใช้
-  static final List<Map<String, dynamic>> favoriteMenu = [
+  static final List<Map<String, dynamic>> userPreferData = [
     {
       'userId': '1',
       'iconId': ['1', '2', '8', '4', '5', '13', '9', '14'],
+      'documentId': ['1', '2', '3',],
+      'leaveId': ['1', '2', '3'],
     },
     {
       'userId': '2',
       'iconId': ['1', '2', '8', '4'],
+      'documentId': ['4', '5', '6','10'],
+      'leaveId': ['4', '5', '6'],
     },
   ];
 
@@ -616,11 +624,24 @@ class DataList {
     {'typeId': '6', 'type': 'ลาพักร้อน', 'remaining': 10, 'total': 10},
     {'typeId': '7', 'type': 'ขาดงาน ', 'remaining': 10, 'total': 10},
   ].obs;
+  static final List<Map<String, dynamic>> leaveTypes = [
+    {'doctypeId': '1', 'type': 'ลากิจ'},
+    {'doctypeId': '2', 'type': 'ลาป่วย'},
+    {'doctypeId': '3', 'type': 'ลาพักร้อน'},
+  ].obs;
 
   static final List<Map<String, dynamic>> docTypes = [
-    {'doctypeId': '1', 'type': 'ขอโอทีล่วงหน้า'},
-    {'doctypeId': '2', 'type': 'ขอใบรับรอง'},
-    {'doctypeId': '3', 'type': 'ขอเอกสาร'},
+    {'doctypeId': '1', 'type': 'ภาษี'},
+    {'doctypeId': '2', 'type': 'ประกันสังคม'},
+    {'doctypeId': '3', 'type': 'อื่นๆ'},
+  ].obs;
+
+  static final List<Map<String, dynamic>> appealTypes = [
+    {'doctypeId': '1', 'type': 'รบกวนการทํางาน'},
+    {'doctypeId': '2', 'type': 'การทำร้ายร่างกาย'},
+    {'doctypeId': '3', 'type': 'การขโมย'},
+    {'doctypeId': '4', 'type': 'ความประพฤติไม่เหมาะสม'},
+
   ].obs;
 
   // เพิ่มข้อมูลเงินเดือนพร้อมเดือนและวันที่จ่าย
@@ -638,4 +659,252 @@ class DataList {
     {'month': 'พฤศจิกายน', 'datePaid': '25/11/2025 เวลา 12.00 น.'},
     {'month': 'ธันวาคม', 'datePaid': '25/12/2025 เวลา 12.00 น.'},
   ].obs;
+
+  static final List<Map<String, dynamic>> leaveData = [
+     {
+      'leaveId': '1',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'leaveCategory': 'ลากิจ',
+      'requestDateTime': DateTime(2025, 6, 25, 12, 6),
+      // 'note': 'อนุมัติเรียบร้อย',
+      'status': LeaveStatus.approved,
+      'attachedFiles': [],
+    },
+    {
+      'leaveId': '2',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'leaveCategory': 'ลาป่วย',
+      'requestDateTime': DateTime(2025, 6, 24, 10, 30),
+      // 'note': 'ไม่อนุมัติ',
+      'status': LeaveStatus.rejected,
+      'attachedFiles': [],
+    },
+    {
+      'leaveId': '3',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'leaveCategory': 'ลากิจ',
+      'requestDateTime': DateTime(2025, 6, 25, 12, 6),
+      // 'note': 'อนุมัติเรียบร้อย',
+      'status': LeaveStatus.approved,
+      'attachedFiles': [
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+      ],
+    },
+    {
+      'leaveId': '4',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'leaveCategory': 'ลาป่วย',
+      'requestDateTime': DateTime(2025, 6, 24, 10, 30),
+      // 'note': 'ไม่อนุมัติ',
+      'status': LeaveStatus.rejected,
+      'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
+    },
+    {
+      'leaveId': '5',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'leaveCategory': 'ลากิจ',
+      'requestDateTime': DateTime(2025, 6, 25, 12, 6),
+      // 'note': 'อนุมัติเรียบร้อย',
+      'status': LeaveStatus.approved,
+      'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
+    },
+    {
+      'leaveId': '6',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'leaveCategory': 'ลาป่วย',
+      'requestDateTime': DateTime(2025, 6, 24, 10, 30),
+      // 'note': 'ไม่อนุมัติ',
+      'status': LeaveStatus.rejected,
+      'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
+    },
+    {
+      'leaveId': '7',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'สมชาย ใจดี',
+      'leaveCategory': 'ลากิจ',
+      'requestDateTime': DateTime(2025, 7, 1, 9, 0),
+      // 'note': 'รอการอนุมัติ',
+      'status': LeaveStatus.pending,
+      'attachedFiles': [
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+      ],
+    },
+    {
+      'leaveId': '8',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'สมหญิง มุ่งมั่น',
+      'leaveCategory': 'ลาป่วย',
+      'requestDateTime': DateTime(2025, 6, 30, 14, 20),
+      // 'note': 'รอการอนุมัติ',
+      'status': LeaveStatus.pending,
+      'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
+    },
+    {
+      'leaveId': '9',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'มานะ อดทน',
+      'leaveCategory': 'ลาพักร้อน',
+      'requestDateTime': DateTime(2025, 6, 28, 16, 5),
+      // 'note': 'รอการอนุมัติ',
+      'status': LeaveStatus.pending,
+      'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
+    },
+    {
+      'leaveId': '10',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'สมชาย ใจดี',
+      'leaveCategory': 'ลากิจ',
+      'requestDateTime': DateTime(2025, 7, 1, 9, 0),
+      // 'note': 'รอการอนุมัติ',
+      'status': LeaveStatus.pending,
+      'attachedFiles': [],
+    },
+    {
+      'leaveId': '11',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'สมหญิง มุ่งมั่น',
+      'leaveCategory': 'ลาป่วย',
+      'requestDateTime': DateTime(2025, 6, 30, 14, 20),
+      // 'note': 'รอการอนุมัติ',
+      'status': LeaveStatus.pending,
+      'attachedFiles': [],
+    },
+    {
+      'leaveId': '12',
+      'leaveType': 'ขอลาพักงาน',
+      'employeeName': 'มานะ อดทน',
+      'leaveCategory': 'ลาพักร้อน',
+      'requestDateTime': DateTime(2025, 6, 28, 16, 5),
+      // 'note': 'รอการอนุมัติ',
+      'status': LeaveStatus.pending,
+      'attachedFiles': [],
+    },
+
+  ].obs;
+
+   static final List<Map<String, dynamic>> documentData = [
+      {
+      'documentId': '1',
+      'docType': 'ขอลาพักงาน',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'docCategory': 'โอทีล่วงหน้า',
+      'requestDateTime': DateTime(2025, 6, 25, 12, 6),
+      'note': 'ต้องการเงินล่วงหน้า',
+      'status': DocumentStatus.approved,
+      'attachedFiles': [],
+    },
+    {
+      'documentId': '2',
+      'doceType': 'ขอลาพักงาน',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'docCategory': 'โอทีล่วงหน้า',
+      'requestDateTime': DateTime(2025, 6, 24, 10, 30),
+      'note': 'เอกสารไม่ครบถ้วน',
+      'status': DocumentStatus.rejected,
+      'attachedFiles': [],
+    },
+     {
+      'documentId': '3',
+      'docType': 'ขอเอกสาร',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'docCategory': 'ขอใบรับรองเงินเดือน',
+      'requestDateTime': DateTime(2025, 5, 20, 15, 0),
+      'note': 'สำหรับยื่นกู้',
+      'status': DocumentStatus.approved,
+      'attachedFiles': [File('/mock/path/doc.pdf')],
+    },
+    {
+      'documentId': '4',
+      'docType': 'ขอลาพักงาน',
+      'employeeName': 'สมชาย ใจดี',
+      'docCategory': 'โอทีล่วงหน้า',
+      'requestDateTime': DateTime(2025, 7, 1, 9, 0),
+      'note': 'ต้องการเงินล่วงหน้า',
+      'status': DocumentStatus.pending,
+       'attachedFiles': [File('/mock/path/doc.pdf')],
+    },
+    {
+      'documentId': '5',
+      'docType': 'ขอลาพักงาน',
+      'employeeName': 'สมหญิง มุ่งมั่น',
+      'docCategory': 'ลาป่วย',
+      'requestDateTime': DateTime(2025, 6, 30, 14, 20),
+      'note': 'อาหารเป็นพิษ',
+      'status': DocumentStatus.pending,
+      'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
+    },
+    {
+      'documentId': '6',
+      'docType': 'ขอลาพักงาน',
+      'employeeName': 'มานะ อดทน',
+      'docCategory': 'ลาพักร้อน',
+      'requestDateTime': DateTime(2025, 6, 28, 16, 5),
+      'note': '',
+      'status': DocumentStatus.pending,
+       'attachedFiles': [],
+    },
+    {
+      'documentId': '7',
+      'docType': 'ขอเอกสาร',
+      'employeeName': 'จิตดี ศรีสวัสดิ์',
+      'docCategory': 'ขอใบรับรอง',
+      'requestDateTime': DateTime(2025, 7, 2, 11, 15),
+      'note': 'ใช้สำหรับทำธุรกรรม',
+      'status': DocumentStatus.pending,
+      'attachedFiles': [],
+    },
+    {
+      'documentId': '8',
+      'docType': 'ขอลาพักงาน',
+      'employeeName': 'วิชัย มีชัย',
+      'docCategory': 'ลาป่วย',
+      'requestDateTime': DateTime(2025, 7, 3, 8, 30),
+      'note': 'มีไข้สูง',
+      'status': DocumentStatus.pending,
+      'attachedFiles': [File('/mock/path/ใบรับรองแพทย์_วิชัย.pdf')],
+    },
+    {
+      'documentId': '9',
+      'docType': 'ขอเอกสาร',
+      'employeeName': 'สมศรี มีสุข',
+      'docCategory': 'ขอโอทีล่วงหน้า',
+      'requestDateTime': DateTime(2025, 7, 4, 17, 0),
+      'note': 'ทำงานโปรเจกต์ด่วน',
+      'status': DocumentStatus.pending,
+      'attachedFiles': [],
+    },
+    {
+      'documentId': '10',
+      'docType': 'ขอลาพักงาน',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข', // เอกสารนี้เป็นของ User 1
+      'docCategory': 'ลาพักร้อน',
+      'requestDateTime': DateTime(2025, 7, 5, 10, 0),
+      'note': 'ไปเที่ยวต่างจังหวัด',
+      'status': DocumentStatus.pending,
+      'attachedFiles': [],
+    },
+    {
+      'documentId': '11',
+      'docType': 'ขอเอกสาร',
+      'employeeName': 'มานี รักไทย',
+      'docCategory': 'ขอใบรับรอง',
+      'requestDateTime': DateTime(2025, 7, 7, 14, 45),
+      'note': 'ใช้สำหรับยื่นวีซ่า',
+      'status': DocumentStatus.pending,
+      'attachedFiles': [
+        File('/mock/path/สำเนาบัตรประชาชน.jpg'),
+        File('/mock/path/สำเนาทะเบียนบ้าน.jpg'),
+      ],
+    },
+  ];
+
 }

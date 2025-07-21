@@ -3,30 +3,33 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_hrm/app/config/my_colors.dart';
 
-enum LeaveStatus { approved, pending, rejected }
+enum AppealStatus { approved, pending, rejected }
+enum AppealTitle { request, report }
 
-class LeaveHistoryModel {
-  final String leaveId;
-  final String title = 'ออกใบลา';
-  final String leaveType;
+class AppealHistoryModel {
+  final String appealId;
+  // final String title ;
+  final AppealTitle appealTitle;
+  final String appealTypes;
   final String employeeName;
-  final String leaveCategory;
+  final String appealCategory;
   final DateTime requestDateTime;
-  // final String? note;
-  final LeaveStatus status;
+  final String? note;
+  final AppealStatus status;
   final List<File>? attachedFiles;
 
-  LeaveHistoryModel({
-    required this.leaveId,
-    required this.leaveType,
+  AppealHistoryModel({
+    required this.appealId,
+    required this.appealTitle,
+    required this.appealTypes,
     required this.employeeName,
-    required this.leaveCategory,
+    required this.appealCategory,
     required this.requestDateTime,
-    // this.note,
+    this.note,
     required this.status,
     this.attachedFiles,
   });
-  factory LeaveHistoryModel.fromMap(Map<String, dynamic> map) {
+  factory AppealHistoryModel.fromMap(Map<String, dynamic> map) {
     //  ดึงข้อมูล List จาก map ออกมาเก็บในตัวแปรชั่วคราว
     final filesData = map['attachedFiles'];
     //  ตรวจสอบว่า `filesData` เป็น `List` หรือไม่ ถ้าใช่ ให้แปลงเป็น `List<File>`
@@ -35,47 +38,56 @@ class LeaveHistoryModel {
         ? List<File>.from(filesData)
         : null;
 
-    return LeaveHistoryModel(
-      leaveId: map['leaveId'] ?? '',
-      leaveType: map['leaveType'] ?? '',
+    return AppealHistoryModel(
+      appealId: map['appealId'] ?? '',
+      appealTitle: map['appealTitle'] ?? AppealTitle.request,
+      appealTypes: map['appealType'] ?? '',
       employeeName: map['employeeName'] ?? '',
-      leaveCategory: map['leaveCategory'] ?? '',
+      appealCategory: map['appealCategory'] ?? '',
       requestDateTime: map['requestDateTime'] ?? DateTime.now(),
-      // note: map['note'] ?? '',
-      status: map['status'] ?? LeaveStatus.pending,
+      note: map['note'] ?? '',
+      status: map['status'] ?? AppealStatus.pending,
       //  ใช้ `files` ที่แปลงชนิดข้อมูลแล้ว หรือถ้าเป็น null ให้ใช้ List ว่างแทน
       attachedFiles: files ?? [],
     );
   }
+  String get titleText {
+    switch (appealTitle) {
+      case AppealTitle.request:
+        return 'ร้องเรียน';
+      case AppealTitle.report:
+        return 'ถูกร้องเรียน';
+    }
+  }
   String get statusText {
     switch (status) {
-      case LeaveStatus.approved:
+      case AppealStatus.approved:
         return 'อนุมัติ';
-      case LeaveStatus.pending:
+      case AppealStatus.pending:
         return 'รออนุมัติ';
-      case LeaveStatus.rejected:
+      case AppealStatus.rejected:
         return 'ไม่อนุมัติ';
     }
   }
 
   Color get statusBadgeColor {
     switch (status) {
-      case LeaveStatus.approved:
+      case AppealStatus.approved:
         return Colors.blue[100]!;
-      case LeaveStatus.pending:
+      case AppealStatus.pending:
         return Colors.grey.withValues(alpha: 0.1);
-      case LeaveStatus.rejected:
+      case AppealStatus.rejected:
         return Colors.red;
     }
   }
 
   Color get statusTextColor {
     switch (status) {
-      case LeaveStatus.approved:
+      case AppealStatus.approved:
         return MyColors.blue2;
-      case LeaveStatus.pending:
+      case AppealStatus.pending:
         return Colors.grey[600]!;
-      case LeaveStatus.rejected:
+      case AppealStatus.rejected:
         return Colors.white;
     }
   }

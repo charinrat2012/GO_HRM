@@ -107,7 +107,7 @@ class StatusDetail extends GetView<HomeController> {
                   fit: StackFit.expand,
                   children: [
                     const CircularProgressIndicator(
-                      value: 0.9, // This value might also need to be dynamic based on elapsed time vs total work time
+                      value: 0.1, // This value might also need to be dynamic based on elapsed time vs total work time
                       strokeWidth: 8,
                       backgroundColor: Colors.white24,
                       valueColor: AlwaysStoppedAnimation<Color>(
@@ -128,7 +128,7 @@ class StatusDetail extends GetView<HomeController> {
                             ),
                             children: <TextSpan>[
                               TextSpan(
-                                text: ' ชม.\n${controller.elapsedHoursMinutes.value.split(' ')[1]}', // Get '32 นาที'
+                                text: ' ชม.\n${controller.elapsedHoursMinutes.value.split(' ')[2]} นาที', // Get '32 นาที'
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,

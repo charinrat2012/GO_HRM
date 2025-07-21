@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../create_documents_request_controller.dart';
+import '../create_appeal_request_controller.dart';
 import 'action_button_request.dart';
 import 'datetime_picker.dart';
 import 'detail_textfield.dart';
@@ -9,7 +9,7 @@ import 'file_picker_request.dart';
 import 'title_textfield.dart';
 import 'type_dropdown_request.dart';
 
-class BodyRequest extends GetView<CreateDocumentRequestController> {
+class BodyRequest extends GetView<CreateAppealRequestController> {
   const BodyRequest({super.key});
 
   @override
@@ -32,7 +32,7 @@ class BodyRequest extends GetView<CreateDocumentRequestController> {
               const SizedBox(height: 24),
               DatetimePicker(
                 label: 'วันที่/เวลา',
-                textController: controller.dateController,
+                textController: controller.DateController,
               ),
 
               const SizedBox(height: 24),

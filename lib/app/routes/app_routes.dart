@@ -24,4 +24,6 @@ class AppRoutes {
   static const FAVOURITE_SETTINGS = '/favourite_settings';
   static const SALARYDETAIL = '/salarydetail';
   static const PRIVACY_POLICY = '/privacy_policy';
+  static const APPEAL = '/appeal';
+    static const CHAT_DETAIL = '/chat_detail';
 }
