@@ -13,6 +13,7 @@ class ActivityDetailBox extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Color.fromRGBO(204, 218, 255, 1)),
             boxShadow: const [
               // BoxShadow(
               //   color: Colors.grey.withAlpha(100), //ความทีบ

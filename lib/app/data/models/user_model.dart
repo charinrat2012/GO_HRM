@@ -22,13 +22,11 @@ class UserModel {
   final String addressTH;
   final String addressEN;
   final String password;
-  
+
   // final List<String> nametitle;
   // final List<String> imagedetails;
- 
 
   UserModel({
-
     required this.userId,
     required this.imgProfile,
     required this.userName,
@@ -102,7 +100,6 @@ class UserModel {
     String? addressTH,
     String? addressEN,
     String? password,
-    
   }) {
     return UserModel(
       userId: userId ?? this.userId,

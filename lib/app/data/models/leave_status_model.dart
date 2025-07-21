@@ -1,11 +1,9 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:go_hrm/app/config/my_colors.dart';
 
 enum LeaveStatus { approved, pending, rejected }
-
 
 class LeaveHistoryModel {
   final String title = 'ออกใบลา';
@@ -26,14 +24,14 @@ class LeaveHistoryModel {
     required this.status,
     this.attachedFiles,
   });
-    factory LeaveHistoryModel.fromMap(Map<String, dynamic> map) {
+  factory LeaveHistoryModel.fromMap(Map<String, dynamic> map) {
     return LeaveHistoryModel(
       leaveType: map['leaveType'] ?? '',
-      employeeName: map['employeeName'] ?? '', 
-      leaveCategory: map['leaveCategory']?? '',
-      requestDateTime: map['requestDateTime']?? '',
-      status: map['status']?? '',
-      attachedFiles: map['attachedFiles']?? [],
+      employeeName: map['employeeName'] ?? '',
+      leaveCategory: map['leaveCategory'] ?? '',
+      requestDateTime: map['requestDateTime'] ?? '',
+      status: map['status'] ?? '',
+      attachedFiles: map['attachedFiles'] ?? [],
     );
   }
 

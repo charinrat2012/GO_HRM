@@ -19,50 +19,55 @@ class FavouritePage extends GetView<FavouriteController> {
             SliverAppBar(
               centerTitle: true,
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black,
+                  size: 20,
+                ),
                 onPressed: () => Get.back(),
               ),
-              title: const Text('เมนู',
-                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+              title: const Text(
+                'เมนู',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               backgroundColor: Colors.white,
               elevation: 0,
-              pinned: false,   // ทำให้ AppBar ปักหมุดอยู่ด้านบนเสมอ
+              pinned: false, // ทำให้ AppBar ปักหมุดอยู่ด้านบนเสมอ
               floating: false, // ทำให้ AppBar ปรากฏขึ้นเมื่อเลื่อนลงเล็กน้อย
-      
             ),
             // 2. ใช้ SliverPadding เพื่อคงระยะห่างรอบๆ เหมือนเดิม
             SliverPadding(
               padding: const EdgeInsets.all(16.0),
               // 3. ใช้ SliverList เพื่อจัดเรียง Widget ที่เหลือในแนวตั้ง
               sliver: SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    _buildCategorySection(
-                      title: 'รายการโปรด',
-                      isFavoriteSection: true,
+                delegate: SliverChildListDelegate([
+                  _buildCategorySection(
+                    title: 'รายการโปรด',
+                    isFavoriteSection: true,
+                  ),
+                  const SizedBox(height: 16),
+                  // ใช้ Obx หุ้ม Column ที่แสดงหมวดหมู่ทั้งหมด
+                  Obx(
+                    () => Column(
+                      // สร้าง list ของ widget โดยไม่ต้องมี ... (spread operator)
+                      children: controller.allMenuCategories.map((category) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: _buildCategorySection(
+                            title: category.title,
+                            items: category.items,
+                          ),
+                        );
+                      }).toList(),
                     ),
-                    const SizedBox(height: 16),
-                    // ใช้ Obx หุ้ม Column ที่แสดงหมวดหมู่ทั้งหมด
-                    Obx(
-                      () => Column(
-                        // สร้าง list ของ widget โดยไม่ต้องมี ... (spread operator)
-                        children: controller.allMenuCategories.map((category) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16.0),
-                            child: _buildCategorySection(
-                              title: category.title,
-                              items: category.items,
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ]),
               ),
             ),
-            SliverToBoxAdapter(
-              child: const SizedBox(height: 60),)
+            SliverToBoxAdapter(child: const SizedBox(height: 60)),
           ],
         ),
       ),
@@ -97,13 +102,15 @@ class FavouritePage extends GetView<FavouriteController> {
                       onTap: controller.toggleEditMode,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 8),
+                          horizontal: 20,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFFF0F0F0),
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: Text(
-                          controller.isEditing.value ? 'บันทึก' : 'แก้ไข',
+                          controller.isEditing.value ? 'บันทึก' : 'เพี่ม',
                           style: const TextStyle(
                             color: MyColors.blue2,
                             fontSize: 14,
@@ -117,14 +124,8 @@ class FavouritePage extends GetView<FavouriteController> {
           ),
           const SizedBox(height: 8),
           isFavoriteSection
-              ? Obx(() => _buildGridView(
-                    controller.favoriteItems,
-                    true,
-                  ))
-              : _buildGridView(
-                  items!,
-                  false,
-                ),
+              ? Obx(() => _buildGridView(controller.favoriteItems, true))
+              : _buildGridView(items!, false),
         ],
       ),
     );
@@ -132,21 +133,23 @@ class FavouritePage extends GetView<FavouriteController> {
 
   Widget _buildGridView(List<MenuModel> items, bool isFavoriteSection) {
     if (items.isEmpty && isFavoriteSection) {
-      return Obx(() => Container(
-            height: 100,
-            alignment: Alignment.center,
-            child: Text(
-              controller.isEditing.value
-                  ? 'เพิ่มเมนูที่ใช้บ่อยโดยการกด +'
-                  : 'ไม่มีรายการโปรด',
-              style: TextStyle(color: Colors.grey[600], fontSize: 15),
-            ),
-          ));
+      return Obx(
+        () => Container(
+          height: 100,
+          alignment: Alignment.center,
+          child: Text(
+            controller.isEditing.value
+                ? 'เพิ่มเมนูที่ใช้บ่อยโดยการกด +'
+                : 'ไม่มีรายการโปรด',
+            style: TextStyle(color: Colors.grey[600], fontSize: 15),
+          ),
+        ),
+      );
     }
     final List<MenuModel> displayItems =
         !isFavoriteSection && controller.isEditing.value
-            ? items.where((item) => !controller.isFavorite(item)).toList()
-            : items;
+        ? items.where((item) => !controller.isFavorite(item)).toList()
+        : items;
     if (displayItems.isEmpty && !isFavoriteSection) {
       return Container(
         height: 100,
@@ -193,7 +196,9 @@ class FavouritePage extends GetView<FavouriteController> {
               ),
               child: Obx(
                 () => IconButton(
-                  onPressed: !controller.isEditing.value ? item.onPressed : () {},
+                  onPressed: !controller.isEditing.value
+                      ? item.onPressed
+                      : () {},
                   icon: Icon(item.icon, color: MyColors.blue2, size: 28),
                 ),
               ),
@@ -231,8 +236,10 @@ class FavouritePage extends GetView<FavouriteController> {
     );
   }
 
-  Widget _buildEditButton(
-      {required IconData icon, required VoidCallback onTap}) {
+  Widget _buildEditButton({
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
     return Positioned(
       top: -4,
       right: 4,

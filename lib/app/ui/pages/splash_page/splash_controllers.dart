@@ -20,12 +20,11 @@ class SplashController extends GetxController
   late Animation<double> fadeboxAnimation;
   late Animation<Offset> slidehead1Animation;
 
-
   var rememberMe = false.obs;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _obscureText = true.obs;
-    get obscureText => _obscureText.value;
+  get obscureText => _obscureText.value;
   set obscureText(value) => _obscureText.value = value;
 
   @override
@@ -180,7 +179,8 @@ class SplashController extends GetxController
       rememberMe.value = value;
     }
   }
- void fetchLogin() {
+
+  void fetchLogin() {
     final String inputEmail = emailController.text.trim();
     final String inputPassword = passwordController.text.trim();
 
@@ -193,20 +193,17 @@ class SplashController extends GetxController
       return;
     }
 
-
-   final userMap = DataList.userData.firstWhere(
-      (user) => user['email'] == inputEmail && user['password'] == inputPassword,
+    final userMap = DataList.userData.firstWhere(
+      (user) =>
+          user['email'] == inputEmail && user['password'] == inputPassword,
       orElse: () => <String, dynamic>{},
     );
 
     if (userMap.isNotEmpty) {
- 
       final loggedInUser = UserModel.fromMap(userMap);
 
-  
       final authService = Get.find<AuthService>();
 
-     
       authService.login(loggedInUser);
 
       emailController.clear();
@@ -214,7 +211,7 @@ class SplashController extends GetxController
       FocusScope.of(Get.context!).unfocus();
 
       // นำทางไปยังหน้าหลัก
-      Get.offAllNamed(AppRoutes.NAVIGATION,);
+      Get.offAllNamed(AppRoutes.NAVIGATION);
     } else {
       // --- กรณี Login ไม่สำเร็จ ---
       Get.snackbar(

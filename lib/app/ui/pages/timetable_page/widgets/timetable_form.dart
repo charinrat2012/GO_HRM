@@ -111,7 +111,7 @@ class TimetableForm extends GetView<TimetableController> {
                 Container(
                   height: 1.0, // ความสูงของเส้น
                   width: 230.0, // ความยาวของเส้น
-                  color: Colors.grey[300], // สีของเส้น
+                  color: Color.fromRGBO(204, 218, 255, 1), // สีของเส้น
                 ),
                 const SizedBox(height: 16),
 

@@ -62,7 +62,7 @@ class MenuForm extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   _buildListTile(
-                    onTap: () {},
+                    onTap: () {Get.toNamed(AppRoutes.PRIVACY_POLICY);},
                     leading: const Icon(
                       Icons.lock_outline,
                       color: Colors.black,
