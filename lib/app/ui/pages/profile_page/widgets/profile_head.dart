@@ -28,7 +28,7 @@ class ProfileHead extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.edit,color: MyColors.blue,),
+          icon: const Icon(Icons.edit, color: MyColors.blue),
           onPressed: () {},
         ),
       ],

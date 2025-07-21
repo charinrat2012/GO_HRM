@@ -20,7 +20,7 @@ class CalenderPage extends GetView<CalenderController> {
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               pinned: false,
               floating: false,
-      
+
               title: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Column(
@@ -37,7 +37,6 @@ class CalenderPage extends GetView<CalenderController> {
                         ),
                         const Spacer(),
                         MenuAnchor(
-                          
                           builder: (context, controller, child) {
                             return IconButton(
                               onPressed: () {
@@ -48,12 +47,15 @@ class CalenderPage extends GetView<CalenderController> {
                                   controller.open(); // ถ้าปิดอยู่ให้เปิด
                                 }
                               },
-                              icon: const Icon(Icons.more_horiz),
+                              icon: const Icon(
+                                Icons.more_horiz,
+                                color: MyColors.blue2,
+                              ),
                               tooltip: 'เปิดเมนู',
                             );
                           },
-                    
-                         //คือรายการเมนูที่จะแสดง
+
+                          //คือรายการเมนูที่จะแสดง
                           menuChildren: [
                             MenuItemButton(
                               onPressed: () {},
@@ -65,17 +67,16 @@ class CalenderPage extends GetView<CalenderController> {
                               leadingIcon: const Icon(Icons.settings_outlined),
                               child: const Text('ตั้งค่า'),
                             ),
-                           
                           ],
                         ),
                       ],
                     ),
-                    Divider(color: Colors.grey[400],),
+                    Divider(color: Colors.grey[400]),
                   ],
                 ),
               ),
             ),
-      
+
             SliverToBoxAdapter(
               child: Column(
                 children: [
@@ -84,13 +85,17 @@ class CalenderPage extends GetView<CalenderController> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: Color.fromRGBO(204, 218, 255, 1),
+                        ),
                         color: Colors.white,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Obx(
                           () => TableCalendar<Event>(
-                            availableGestures: AvailableGestures.horizontalSwipe,
+                            availableGestures:
+                                AvailableGestures.horizontalSwipe,
                             locale: 'th_TH',
                             firstDay: DateTime.utc(2020, 1, 1),
                             lastDay: DateTime.utc(2030, 12, 31),
@@ -127,7 +132,7 @@ class CalenderPage extends GetView<CalenderController> {
                                 color: Colors.grey.withValues(alpha: 0.3),
                                 shape: BoxShape.circle,
                               ),
-      
+
                               selectedDecoration: const BoxDecoration(
                                 color: MyColors.blue,
                                 shape: BoxShape.circle,
@@ -166,10 +171,7 @@ class CalenderPage extends GetView<CalenderController> {
                 'กิจกรรม',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              IconButton(
-                icon: const Icon(Icons.add, color: Colors.black),
-                onPressed: () {},
-              ),
+              IconButton(icon: const Icon(Icons.add), onPressed: () {}),
             ],
           ),
           Obx(() {
