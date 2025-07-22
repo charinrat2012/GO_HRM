@@ -50,7 +50,7 @@ class HomeController extends GetxController {
   void onReady() {
     super.onReady();
     loadData();
-    ever(preferenceService.favoriteMenu, (_) => loadData());
+    ever(preferenceService.userPreferData, (_) => loadData());
   }
 
   @override

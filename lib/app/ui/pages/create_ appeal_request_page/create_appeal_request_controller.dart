@@ -8,13 +8,13 @@ import 'package:intl/intl.dart';
 import '../../../data/models/doc_model.dart';
 import '../../global_widgets/datalist.dart';
 
-class CreateDocumentRequestController extends GetxController {
+class CreateAppealRequestController extends GetxController {
   final RxList<DocModel> docItems = <DocModel>[].obs;
 
   final Rx<DocModel?> selectedDoc = Rx(null);
 
   // สำหรับเก็บข้อมูลวันที่และเวลาที่เลือก
-  final TextEditingController dateController = TextEditingController();
+  final TextEditingController DateController = TextEditingController();
 
   final TextEditingController detailsController = TextEditingController();
 
@@ -41,7 +41,7 @@ class CreateDocumentRequestController extends GetxController {
   @override
   void onClose() {
     // ทำลาย Controller เพื่อป้องกัน Memory Leak
-    dateController.dispose();
+    DateController.dispose();
     detailsController.dispose();
     super.onClose();
   }

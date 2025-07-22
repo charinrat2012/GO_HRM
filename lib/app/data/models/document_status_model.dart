@@ -6,36 +6,45 @@ import 'package:go_hrm/app/config/my_colors.dart';
 enum DocumentStatus { approved, pending, rejected }
 
 class DocumentHistoryModel {
-  final String title = 'ออกใบลา';
-  final String leaveType;
+  final String documentId;
+  final String title = 'ขอเอกสาร';
+  final String docTypes;
   final String employeeName;
-  final String leaveCategory;
+  final String docCategory;
   final DateTime requestDateTime;
   final String? note;
   final DocumentStatus status;
   final List<File>? attachedFiles;
 
   DocumentHistoryModel({
-    required this.leaveType,
+    required this.documentId,
+    required this.docTypes,
     required this.employeeName,
-    required this.leaveCategory,
+    required this.docCategory,
     required this.requestDateTime,
     this.note,
     required this.status,
     this.attachedFiles,
   });
   factory DocumentHistoryModel.fromMap(Map<String, dynamic> map) {
+    //  ดึงข้อมูล List จาก map ออกมาเก็บในตัวแปรชั่วคราว
+    final filesData = map['attachedFiles'];
+    //  ตรวจสอบว่า `filesData` เป็น `List` หรือไม่ ถ้าใช่ ให้แปลงเป็น `List<File>`
+    //    ถ้าไม่ใช่ (เช่นเป็น null) ให้ `files` เป็น null
+    final List<File>? files = filesData is List ? List<File>.from(filesData) : null;
+
     return DocumentHistoryModel(
-      leaveType: map['leaveType'] ?? '',
+      documentId: map['documentId'] ?? '',
+      docTypes: map['leaveType'] ?? '',
       employeeName: map['employeeName'] ?? '',
-      leaveCategory: map['leaveCategory'] ?? '',
-      requestDateTime: map['requestDateTime'] ?? '',
+      docCategory: map['leaveCategory'] ?? '',
+      requestDateTime: map['requestDateTime'] ?? DateTime.now(),
       note: map['note'] ?? '',
-      status: map['status'] ?? '',
-      attachedFiles: map['attachedFiles'] ?? [],
+      status: map['status'] ?? DocumentStatus.pending,
+      //  ใช้ `files` ที่แปลงชนิดข้อมูลแล้ว หรือถ้าเป็น null ให้ใช้ List ว่างแทน
+      attachedFiles: files ?? [],
     );
   }
-
   String get statusText {
     switch (status) {
       case DocumentStatus.approved:

@@ -45,6 +45,8 @@ dependencies:
   font_awesome_flutter:
   flutter_launcher_icons:
   table_calendar:
+  emoji_picker_flutter:
+  permission_handler:
   
 flutter_launcher_icons:
   android: "hrmlogo" # ตั้งชื่อไฟล์ไอคอนสำหรับ Android

@@ -27,4 +27,6 @@ class AppRoutes {
   static const HELP = '/help';
   static const SETTINGS = '/settings';
   static const EDIT_PROFILE = '/edit_profile';
+  static const APPEAL = '/appeal';
+    static const CHAT_DETAIL = '/chat_detail';
 }
