@@ -90,7 +90,8 @@ class LeavePageController extends GetxController {
       //     ? List<String>.from(userPrefs['leaveId'])
       //     : [];
 
-      final  employeeleaves = DataList.leaveData.map((map) => LeaveHistoryModel.fromMap(map))
+      final employeeleaves = DataList.leaveData
+          .map((map) => LeaveHistoryModel.fromMap(map))
           // .where((leave) => !myLeaveIds.contains(leave['leaveId']))
           .where((leave) => leave.status == LeaveStatus.pending)
           // .map((map) => LeaveHistoryModel.fromMap(map))
@@ -98,7 +99,5 @@ class LeavePageController extends GetxController {
 
       leaveHistory.assignAll(employeeleaves);
     }
-
-  
   }
 }

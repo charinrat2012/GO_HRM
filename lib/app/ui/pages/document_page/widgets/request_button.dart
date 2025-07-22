@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../../../routes/app_routes.dart';
 import '../document_controller.dart';
-
 import '../../../../config/my_colors.dart';
 
 class RequestButton extends GetView<DocumentsController> {

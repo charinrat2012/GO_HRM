@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/ui/pages/news_details_page/widgets/news_details_head.dart';
 
 import '../../../data/models/news_card_model.dart';
 import '../../../routes/app_routes.dart';
 import '../news_page/widgets/news_card.dart';
 import 'news_details_controller.dart';
+import 'widgets/news_details_head.dart';
 
 class NewsDetailsPage extends GetView<NewsDetailsController> {
   final NewsCardModel news;
@@ -82,7 +82,7 @@ class NewsDetailsPage extends GetView<NewsDetailsController> {
                           news.deiailstitle,
                           style: const TextStyle(
                             color: Colors.black,
-                            
+
                             fontWeight: FontWeight.bold,
                           ),
                         ),

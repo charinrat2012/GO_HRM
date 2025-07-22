@@ -6,10 +6,11 @@ class Message {
   final String senderImageUrl;
   final String? text;
   final String? imagePath;
-  final String? filePath; // <-- เพิ่ม filePath สำหรับไฟล์ทั่วไป
-  final String? fileName; // <-- เพิ่ม fileName สำหรับแสดงชื่อไฟล์
+  final String? filePath;
+  final String? fileName;
   final String time;
   final bool isMe;
+  final RxBool isPlaying; // เพิ่มบรรทัดนี้: สถานะการเล่นสำหรับข้อความเสียงแต่ละรายการ
 
   Message({
     required this.senderName,
@@ -20,8 +21,35 @@ class Message {
     this.fileName,
     required this.time,
     this.isMe = false,
-  }) : assert(text != null || imagePath != null || filePath != null, 
-        'Message must have either text, an image, or a file.');
+    bool isPlaying = false, // กำหนดค่าเริ่มต้นเป็น false
+  }) : assert(text != null || imagePath != null || filePath != null,
+        'Message must have either text, an image, or a file.'),
+       isPlaying = isPlaying.obs; // ทำให้เป็น Observable
+
+  // เพิ่ม copyWith สำหรับ Message (ถ้าคุณต้องการใช้ในอนาคตเพื่ออัปเดตสถานะ)
+  Message copyWith({
+    String? senderName,
+    String? senderImageUrl,
+    String? text,
+    String? imagePath,
+    String? filePath,
+    String? fileName,
+    String? time,
+    bool? isMe,
+    bool? isPlaying,
+  }) {
+    return Message(
+      senderName: senderName ?? this.senderName,
+      senderImageUrl: senderImageUrl ?? this.senderImageUrl,
+      text: text ?? this.text,
+      imagePath: imagePath ?? this.imagePath,
+      filePath: filePath ?? this.filePath,
+      fileName: fileName ?? this.fileName,
+      time: time ?? this.time,
+      isMe: isMe ?? this.isMe,
+      isPlaying: isPlaying ?? this.isPlaying.value,
+    );
+  }
 }
 
 // Model สำหรับเก็บข้อมูลแชทแต่ละห้อง

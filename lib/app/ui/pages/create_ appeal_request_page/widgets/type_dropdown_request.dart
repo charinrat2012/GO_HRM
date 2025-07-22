@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/data/models/doc_model.dart';
 
 import '../../../../config/my_colors.dart';
+import '../../../../data/models/doc_model.dart';
 import '../create_appeal_request_controller.dart';
 
 class TypeDropdownRequest extends GetView<CreateAppealRequestController> {
@@ -21,20 +21,20 @@ class TypeDropdownRequest extends GetView<CreateAppealRequestController> {
         Obx(
           () => DropdownButtonFormField<DocModel>(
             isDense: true,
-            icon:  const Icon(
+            icon: const Icon(
               Icons.keyboard_arrow_down_rounded,
               color: MyColors.blue2,
             ),
-             dropdownColor: Colors.white,
-             iconEnabledColor:  MyColors.blue2,
-             iconDisabledColor: MyColors.blue2,
+            dropdownColor: Colors.white,
+            iconEnabledColor: MyColors.blue2,
+            iconDisabledColor: MyColors.blue2,
             // value คืออ็อบเจกต์ QuotaModel ที่ถูกเลือกอยู่
             value: controller.selectedDoc.value,
             // items สร้างจาก List ของ Model ใน Controller
             items: controller.docItems.map((DocModel model) {
               return DropdownMenuItem<DocModel>(
                 value: model,
-                child: Text(model.type), 
+                child: Text(model.type),
               );
             }).toList(),
             // เมื่อมีการเลือกค่าใหม่ ให้อัปเดต State ใน Controller
@@ -43,7 +43,6 @@ class TypeDropdownRequest extends GetView<CreateAppealRequestController> {
                 controller.selectedDoc.value = newValue;
               }
             },
-           
           ),
         ),
         const SizedBox(height: 8),

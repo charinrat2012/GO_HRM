@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/data/models/menu_model.dart';
 
+import '../../../data/models/menu_model.dart';
 import '../../../data/services/auth_service.dart';
 import '../../../data/services/user_preference_service.dart';
 import '../../global_widgets/datalist.dart';
@@ -12,8 +11,9 @@ class FavouriteController extends GetxController {
   final favoriteItems = <MenuModel>[].obs;
   final allMenuCategories = <MenuCategory>[].obs;
   final int favoriteLimit = 8;
- final AuthService _authService = Get.find<AuthService>();
-  final UserPreferenceService _preferenceService = Get.find<UserPreferenceService>();
+  final AuthService _authService = Get.find<AuthService>();
+  final UserPreferenceService _preferenceService =
+      Get.find<UserPreferenceService>();
   @override
   void onInit() {
     super.onInit();
@@ -22,8 +22,9 @@ class FavouriteController extends GetxController {
   }
 
   void _prepareMenuData() {
-    final allMenus =
-        DataList.allMenus.map((map) => MenuModel.fromMap(map)).toList();
+    final allMenus = DataList.allMenus
+        .map((map) => MenuModel.fromMap(map))
+        .toList();
 
     final Map<String, List<MenuModel>> groupedMenus = {};
     for (var menu in allMenus) {
@@ -38,11 +39,15 @@ class FavouriteController extends GetxController {
     }).toList();
 
     allMenuCategories.assignAll(categories);
-  } void _prepareDefaultFavorites() {
+  }
+
+  void _prepareDefaultFavorites() {
     // 2. โหลดรายการโปรดเริ่มต้นจาก Service
     if (_authService.isLoggedIn) {
       final String currentUserId = _authService.currentUser.value!.userId;
-      final List<String> favoriteIds = _preferenceService.getFavoriteMenuIds(currentUserId);
+      final List<String> favoriteIds = _preferenceService.getFavoriteMenuIds(
+        currentUserId,
+      );
 
       final defaultFavorites = DataList.allMenus
           .where((menu) => favoriteIds.contains(menu['iconId']))
@@ -68,7 +73,9 @@ class FavouriteController extends GetxController {
     if (_authService.isLoggedIn) {
       final String currentUserId = _authService.currentUser.value!.userId;
       // แปลง List<MenuModel> กลับไปเป็น List<String> ของ ID
-      final List<String> newFavoriteIds = favoriteItems.map((item) => item.iconId).toList();
+      final List<String> newFavoriteIds = favoriteItems
+          .map((item) => item.iconId)
+          .toList();
       // เรียกใช้ Service เพื่ออัปเดตข้อมูล
       _preferenceService.updateFavoriteMenus(currentUserId, newFavoriteIds);
 

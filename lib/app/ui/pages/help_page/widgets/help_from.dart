@@ -51,9 +51,7 @@ class HelpFrom extends StatelessWidget {
             horizontal: 16.0,
             vertical: 4.0,
           ),
-          title: Text(
-            title,
-            style: const TextStyle(color: Colors.black)),
+          title: Text(title, style: const TextStyle(color: Colors.black)),
           trailing: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
         ),
       ),

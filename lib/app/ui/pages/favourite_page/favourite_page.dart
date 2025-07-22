@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/config/my_colors.dart';
-import 'package:go_hrm/app/data/models/menu_model.dart';
+
+import '../../../config/my_colors.dart';
+import '../../../data/models/menu_model.dart';
 import 'favourite_controller.dart';
 
 class FavouritePage extends GetView<FavouriteController> {

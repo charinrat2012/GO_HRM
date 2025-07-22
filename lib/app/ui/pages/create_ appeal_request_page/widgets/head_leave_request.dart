@@ -13,7 +13,7 @@ class HeadLeaveRequest extends StatelessWidget {
       ),
       title: const Text(
         'ย้อนกลับ',
-        style: TextStyle(color: Colors.black, fontSize: 16,),
+        style: TextStyle(color: Colors.black, fontSize: 16),
       ),
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
 

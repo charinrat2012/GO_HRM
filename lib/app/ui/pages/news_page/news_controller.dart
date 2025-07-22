@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../data/models/images_card_model.dart';
 import '../../../data/models/news_card_model.dart';
 import '../../global_widgets/datalist.dart';
 

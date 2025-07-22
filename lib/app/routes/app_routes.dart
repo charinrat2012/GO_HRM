@@ -18,7 +18,6 @@ class AppRoutes {
   static const ACTIVITYDETAIL = '/activitydetail';
   static const MEETINGDETAIL = '/meetingdetail';
   static const SALARY = '/salary';
-  static const ACTIVITYDETAILPAGE = '/activitydetailpage';
   static const DOCUMENTS = '/documents';
   static const CREATE_DOCUMENT_REQUEST = '/create_document_request';
   static const FAVOURITE_SETTINGS = '/favourite_settings';
@@ -28,5 +27,5 @@ class AppRoutes {
   static const SETTINGS = '/settings';
   static const EDIT_PROFILE = '/edit_profile';
   static const APPEAL = '/appeal';
-    static const CHAT_DETAIL = '/chat_detail';
+  static const CHAT_DETAIL = '/chat_detail';
 }

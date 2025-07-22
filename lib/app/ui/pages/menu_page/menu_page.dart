@@ -1,5 +1,4 @@
-
-import 'package:flutter/material.dart'hide MenuController;
+import 'package:flutter/material.dart' hide MenuController;
 import 'package:get/get.dart';
 
 import 'menu_controller.dart';
@@ -12,10 +11,7 @@ class MenuPage extends GetView<MenuController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: MenuHead(), 
-        body: MenuForm(),
-      ),
+      child: Scaffold(appBar: MenuHead(), body: MenuForm()),
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,12 +9,9 @@ import '../../global_widgets/datalist.dart';
 
 class CreateAppealRequestController extends GetxController {
   final RxList<DocModel> docItems = <DocModel>[].obs;
-
   final Rx<DocModel?> selectedDoc = Rx(null);
-
   // สำหรับเก็บข้อมูลวันที่และเวลาที่เลือก
   final TextEditingController DateController = TextEditingController();
-
   final TextEditingController detailsController = TextEditingController();
 
   @override

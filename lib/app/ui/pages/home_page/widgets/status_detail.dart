@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:intl/intl.dart';
 import '../../../../config/my_colors.dart';
 import '../home_controller.dart';
 import 'dia_test.dart';
@@ -103,12 +102,15 @@ class StatusDetail extends GetView<HomeController> {
               SizedBox(
                 width: 108,
                 height: 108,
-                child: Obx( // เพิ่ม Obx เพื่อให้ CircularProgressIndicator อัปเดต
+                child: Obx(
+                  // เพิ่ม Obx เพื่อให้ CircularProgressIndicator อัปเดต
                   () => Stack(
                     fit: StackFit.expand,
                     children: [
                       CircularProgressIndicator(
-                        value: controller.workProgressPercentage.value, // ใช้ค่าจาก Controller
+                        value: controller
+                            .workProgressPercentage
+                            .value, // ใช้ค่าจาก Controller
                         strokeWidth: 8,
                         backgroundColor: Colors.white24,
                         valueColor: const AlwaysStoppedAnimation<Color>(
@@ -121,7 +123,9 @@ class StatusDetail extends GetView<HomeController> {
                             textAlign: TextAlign.center,
                             maxLines: 2,
                             text: TextSpan(
-                              text: controller.elapsedHoursMinutes.value.split(' ')[0],
+                              text: controller.elapsedHoursMinutes.value.split(
+                                ' ',
+                              )[0],
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
@@ -129,7 +133,8 @@ class StatusDetail extends GetView<HomeController> {
                               ),
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: ' ชม.\n${controller.elapsedHoursMinutes.value.split(' ')[2]} นาที',
+                                  text:
+                                      ' ชม.\n${controller.elapsedHoursMinutes.value.split(' ')[2]} นาที',
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
@@ -167,7 +172,8 @@ class StatusDetail extends GetView<HomeController> {
                           ),
                           children: [
                             TextSpan(
-                              text: '         คงเหลือ ${controller.remainingWorkTimeFormatted.value}',
+                              text:
+                                  '         คงเหลือ ${controller.remainingWorkTimeFormatted.value}',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,

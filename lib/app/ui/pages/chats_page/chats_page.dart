@@ -1,9 +1,9 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/config/my_colors.dart';
-import 'package:go_hrm/app/data/models/chat_model.dart';
+
+import '../../../config/my_colors.dart';
+import '../../../data/models/chat_model.dart';
 import 'chats_controller.dart';
 
 class ChatsPage extends GetView<ChatsController> {
@@ -11,39 +11,42 @@ class ChatsPage extends GetView<ChatsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
         backgroundColor: Colors.white,
-        elevation: 1,
-        title: const Text(
-          'แชท',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: false,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.menu, color: Colors.black),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 1,
+          title: const Text(
+            'แชท',
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
-        ],
-      ),
-      body: Column(
-        children: [
-          _buildSearchBar(),
-          _buildFilterTabs(),
-          Expanded(
-            child: Obx(
-              () => ListView.builder(
-                itemCount: controller.filteredChats.length,
-                itemBuilder: (context, index) {
-                  final chat = controller.filteredChats[index];
-                  return _buildChatListItem(chat);
-                },
+          centerTitle: false,
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.menu, color: Colors.black),
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            _buildSearchBar(),
+            _buildFilterTabs(),
+            Expanded(
+              child: Obx(
+                () => ListView.builder(
+                  itemCount: controller.filteredChats.length,
+                  itemBuilder: (context, index) {
+                    final chat = controller.filteredChats[index];
+                    return _buildChatListItem(chat);
+                  },
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -63,7 +66,7 @@ class ChatsPage extends GetView<ChatsController> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0xFFE0E0E0)))
+        border: Border(bottom: BorderSide(color: Color(0xFFE0E0E0))),
       ),
       child: Obx(
         () => Row(
@@ -126,14 +129,14 @@ class ChatsPage extends GetView<ChatsController> {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Obx(() => Text(
-                    chat.lastMessage.value,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
+                  Obx(
+                    () => Text(
+                      chat.lastMessage.value,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.grey.shade600),
                     ),
-                  )),
+                  ),
                 ],
               ),
             ),
@@ -141,31 +144,31 @@ class ChatsPage extends GetView<ChatsController> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Obx(() => Text(
-                  chat.time.value,
-                  style: TextStyle(
-                    color: Colors.grey.shade500,
-                    fontSize: 12,
+                Obx(
+                  () => Text(
+                    chat.time.value,
+                    style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
                   ),
-                )),
+                ),
                 const SizedBox(height: 4),
-                Obx(() => chat.unreadCount.value > 0
-                  ? Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(
-                        color: MyColors.blue2,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        chat.unreadCount.value.toString(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  : const SizedBox(height: 24),
+                Obx(
+                  () => chat.unreadCount.value > 0
+                      ? Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: const BoxDecoration(
+                            color: MyColors.blue2,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            chat.unreadCount.value.toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                      : const SizedBox(height: 24),
                 ),
               ],
             ),

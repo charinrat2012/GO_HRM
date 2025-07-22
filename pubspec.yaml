@@ -47,6 +47,9 @@ dependencies:
   table_calendar:
   emoji_picker_flutter:
   permission_handler:
+  record:  
+  path_provider: 
+  audioplayers: 
   
 flutter_launcher_icons:
   android: "hrmlogo" # ตั้งชื่อไฟล์ไอคอนสำหรับ Android

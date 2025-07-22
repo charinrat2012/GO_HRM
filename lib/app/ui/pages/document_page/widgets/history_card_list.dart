@@ -1,13 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/data/models/document_status_model.dart';
+
 import 'package:intl/intl.dart';
-
 import '../../../../config/my_colors.dart';
-// ตรวจสอบ Path ของ Model และ Controller ให้ถูกต้อง
-
+import '../../../../data/models/document_status_model.dart';
 import '../document_controller.dart';
 
 class HistoryCardList extends GetView<DocumentsController> {
@@ -175,9 +172,9 @@ class HistoryCardList extends GetView<DocumentsController> {
                 if (item.attachedFiles != null &&
                     item.attachedFiles!.isNotEmpty)
                   // ถ้ามี ให้วนลูปแสดงรายการไฟล์
-                  ...item.attachedFiles!
-                      .map((file) => _buildAttachmentItem(file))
-                      
+                  ...item.attachedFiles!.map(
+                    (file) => _buildAttachmentItem(file),
+                  )
                 else
                   // ถ้าไม่มี ให้แสดงข้อความ
                   const Padding(

@@ -1,9 +1,7 @@
-
-
 import 'package:get/get.dart';
 import '../../../data/models/document_status_model.dart';
 import '../../../data/services/auth_service.dart'; // 1. Import AuthService
-import '../../global_widgets/datalist.dart';     // 2. Import DataList
+import '../../global_widgets/datalist.dart'; // 2. Import DataList
 
 class DocumentsController extends GetxController {
   // 3. ดึง AuthService เข้ามาใช้งาน
@@ -17,7 +15,16 @@ class DocumentsController extends GetxController {
   // ... (ตัวแปรสำหรับ Dropdown เหมือนเดิม) ...
   final years = ['2025', '2024', '2023'].obs;
   final RxnString selectedYear = RxnString('2025');
-  final months = ['ทั้งหมด', 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม'].obs;
+  final months = [
+    'ทั้งหมด',
+    'มกราคม',
+    'กุมภาพันธ์',
+    'มีนาคม',
+    'เมษายน',
+    'พฤษภาคม',
+    'มิถุนายน',
+    'กรกฎาคม',
+  ].obs;
   final RxnString selectedMonth = RxnString('ทั้งหมด');
   final RxList<String> docTypes = <String>['ทั้งหมด'].obs;
   // `selectedDocumentType` จะเก็บค่าที่ผู้ใช้เลือกจาก Dropdown
@@ -25,23 +32,26 @@ class DocumentsController extends GetxController {
   final other = ['ค้นหาแบบละเอียด', '1', '2', '3'].obs;
   final RxnString selectedOther = RxnString('ค้นหาแบบละเอียด');
 
-
   @override
   void onInit() {
     super.onInit();
     loadDocHistory();
     setupDocumentTypeFilter();
   }
+
   void setupDocumentTypeFilter() {
     //  ดึงข้อมูลประเภทเอกสาร (ที่เป็น Map) จาก DataList
     final docTypesFromDataList = DataList.docTypes;
 
     //  แปลง List<Map> ให้เป็น List<String> โดยดึงเฉพาะค่า 'type'
-    final types = docTypesFromDataList.map((doc) => doc['type'] as String).toList();
+    final types = docTypesFromDataList
+        .map((doc) => doc['type'] as String)
+        .toList();
 
     //  เพิ่มประเภทเอกสารทั้งหมดเข้าไปใน `documentTypeOptions` ต่อจาก "ทั้งหมด"
     docTypes.addAll(types);
   }
+
   void onViewChanged(int? newIndex) {
     if (newIndex != null && selectedViewIndex.value != newIndex) {
       selectedViewIndex.value = newIndex;
@@ -70,14 +80,16 @@ class DocumentsController extends GetxController {
 
       if (userPrefs.isNotEmpty && userPrefs['documentId'] is List) {
         // 2. ดึงรายการ documentId ของผู้ใช้
-        final List<String> myDocumentIds = List<String>.from(userPrefs['documentId']);
+        final List<String> myDocumentIds = List<String>.from(
+          userPrefs['documentId'],
+        );
 
         // 3. กรองเอกสารทั้งหมด ให้เหลือเฉพาะเอกสารที่ ID ตรงกับของผู้ใช้
         final myDocuments = DataList.documentData
             .where((doc) => myDocumentIds.contains(doc['documentId']))
             .map((map) => DocumentHistoryModel.fromMap(map))
             .toList();
-        
+
         // 4. อัปเดต UI
         docHistory.assignAll(myDocuments);
       } else {
@@ -91,7 +103,7 @@ class DocumentsController extends GetxController {
       //   (pref) => pref['userId'] == currentUserId,
       //   orElse: () => <String, dynamic>{},
       // );
-      
+
       // final List<String> myDocumentIds = userPrefs.isNotEmpty && userPrefs['documentId'] is List
       //     ? List<String>.from(userPrefs['documentId'])
       //     : [];
@@ -104,10 +116,9 @@ class DocumentsController extends GetxController {
 
       // // 3. อัปเดต UI
       // docHistory.assignAll(employeeDocuments);
-      final  employeeDocuments = DataList.documentData.map((map) => DocumentHistoryModel.fromMap(map))
-          
+      final employeeDocuments = DataList.documentData
+          .map((map) => DocumentHistoryModel.fromMap(map))
           .where((doc) => doc.status == DocumentStatus.pending)
-          
           .toList();
 
       docHistory.assignAll(employeeDocuments);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_hrm/app/data/models/news_card_model.dart';
 
-
+import '../../../../data/models/news_card_model.dart';
 
 class ImagesCard extends StatelessWidget {
   final NewsCardModel imgcard;
@@ -19,7 +18,7 @@ class ImagesCard extends StatelessWidget {
         margin: const EdgeInsets.only(left: 8.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16.0),
-        
+
           child: Image.asset(
             imgcard.imageUrl,
             fit: BoxFit.cover,

@@ -12,7 +12,8 @@ class SegmentedControl extends GetView<DocumentsController> {
   Widget build(BuildContext context) {
     return _buildSegmentedControl();
   }
-   Widget _buildSegmentedControl() {
+
+  Widget _buildSegmentedControl() {
     return Obx(
       () => Container(
         width: double.infinity,
@@ -56,5 +57,4 @@ class SegmentedControl extends GetView<DocumentsController> {
       ),
     );
   }
-
 }

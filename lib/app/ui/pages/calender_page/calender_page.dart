@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/config/my_colors.dart';
+
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-
+import '../../../config/my_colors.dart';
 import 'calender_controller.dart';
 
 class CalenderPage extends GetView<CalenderController> {

@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 
 import '../bindings/activity_detail_binding.dart';
-import '../bindings/appeal_binding.dart';
 import '../bindings/calender_binding.dart';
 import '../bindings/chat_detail_binding.dart';
 import '../bindings/chats_binding.dart';
@@ -35,9 +34,7 @@ import '../ui/pages/chat_detail_page/chat_detail_page.dart';
 import '../ui/pages/chats_page/chats_page.dart';
 import '../ui/pages/create_documents_request_page/create_documents_request_page.dart';
 import '../ui/pages/create_leave_request_page/create_leave_request_page.dart';
-
 import '../ui/pages/edit_profile_page/edit_profile_page.dart';
-import '../ui/pages/appeal_page/appeal_page.dart';
 import '../ui/pages/document_page/document_page.dart';
 import '../ui/pages/favourite_page/favourite_page.dart';
 import '../ui/pages/help_page/help_page.dart';
@@ -242,7 +239,7 @@ class AppPages {
       binding: EditprofileBinding(),
       transition: _defaultTransition,
     ),
-     GetPage(
+    GetPage(
       name: AppRoutes.CHAT_DETAIL,
       page: () => ChatDetailPage(),
       binding: ChatDetailBinding(),

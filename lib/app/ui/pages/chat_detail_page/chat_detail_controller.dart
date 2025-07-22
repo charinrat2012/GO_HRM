@@ -1,10 +1,14 @@
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import 'package:record/record.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:audioplayers/audioplayers.dart';
 import '../../../data/models/chat_model.dart';
+import '../chats_page/chats_controller.dart';
 
 class ChatDetailController extends GetxController {
   late final Chat chat;
@@ -12,20 +16,51 @@ class ChatDetailController extends GetxController {
   final ScrollController scrollController = ScrollController();
   final ImagePicker _picker = ImagePicker();
   final FocusNode focusNode = FocusNode();
+  final AudioRecorder _audioRecorder = AudioRecorder();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  Message? _currentPlayingMessage;
+
+  String? _audioPath;
 
   final RxBool isEmojiPickerVisible = false.obs;
+  final RxBool isRecording = false.obs;
+
+  // เพิ่มตัวแปรสำหรับ ChatsController
+  final ChatsController _chatsController = Get.find<ChatsController>();
 
   @override
   void onInit() {
     super.onInit();
+    // รับ chat object จาก arguments
     chat = Get.arguments as Chat;
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         isEmojiPickerVisible.value = false;
       }
     });
+
+    _audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
+      if (state == PlayerState.completed ||
+          state == PlayerState.stopped ||
+          state == PlayerState.paused) {
+        if (_currentPlayingMessage != null) {
+          _currentPlayingMessage!.isPlaying.value = false;
+          _currentPlayingMessage = null;
+        }
+      }
+    });
   }
-  
+
+  @override
+  void onClose() {
+    _audioRecorder.dispose();
+    _audioPlayer.dispose();
+    messageController.dispose();
+    scrollController.dispose();
+    focusNode.dispose();
+    super.onClose();
+  }
+
   void toggleEmojiKeyboard() {
     if (isEmojiPickerVisible.value) {
       isEmojiPickerVisible.value = false;
@@ -39,74 +74,137 @@ class ChatDetailController extends GetxController {
   Future<bool> onWillPop() {
     if (isEmojiPickerVisible.value) {
       isEmojiPickerVisible.value = false;
-      return Future.value(false);
+      return Future.value(true); // อนุญาตให้ย้อนกลับ
     }
-    return Future.value(true);
+    // เมื่อกดปุ่มย้อนกลับ ให้บันทึกการเปลี่ยนแปลงของ chat object กลับไปยัง ChatsController
+    _chatsController.updateChatMessages(chat);
+    return Future.value(true); // อนุญาตให้ย้อนกลับ
   }
 
   void sendTextMessage() {
     final text = messageController.text.trim();
     if (text.isNotEmpty) {
-      _addMessage(Message(
-        senderName: 'Me',
-        senderImageUrl: 'assets/imgs/profile.jpg',
-        text: text,
-        time: _currentTime,
-        isMe: true,
-      ));
+      _addMessage(
+        Message(
+          senderName: 'Me',
+          senderImageUrl: 'assets/imgs/profile.jpg',
+          text: text,
+          time: _currentTime,
+          isMe: true,
+        ),
+      );
       messageController.clear();
     }
   }
 
   Future<void> pickImage(ImageSource source) async {
     try {
-      final XFile? image = await _picker.pickImage(source: source, imageQuality: 70);
+      final XFile? image = await _picker.pickImage(
+        source: source,
+        imageQuality: 70,
+      );
       if (image != null) {
-        _addMessage(Message(
-          senderName: 'Me',
-          senderImageUrl: 'assets/imgs/profile.jpg',
-          imagePath: image.path,
-          time: _currentTime,
-          isMe: true,
-        ));
+        _addMessage(
+          Message(
+            senderName: 'Me',
+            senderImageUrl: 'assets/imgs/profile.jpg',
+            imagePath: image.path,
+            time: _currentTime,
+            isMe: true,
+          ),
+        );
       }
     } catch (e) {
       Get.snackbar('เกิดข้อผิดพลาด', 'ไม่สามารถเลือกรูปภาพได้');
     }
   }
 
-  /// ฟังก์ชันสำหรับเลือกไฟล์จากในเครื่อง
   Future<void> pickFile() async {
     try {
       final result = await FilePicker.platform.pickFiles();
       if (result != null && result.files.single.path != null) {
         final file = result.files.single;
-        _addMessage(Message(
-          senderName: 'Me',
-          senderImageUrl: 'assets/imgs/profile.jpg',
-          filePath: file.path,
-          fileName: file.name,
-          time: _currentTime,
-          isMe: true,
-        ));
+        _addMessage(
+          Message(
+            senderName: 'Me',
+            senderImageUrl: 'assets/imgs/profile.jpg',
+            filePath: file.path,
+            fileName: file.name,
+            time: _currentTime,
+            isMe: true,
+          ),
+        );
       }
     } catch (e) {
       Get.snackbar('เกิดข้อผิดพลาด', 'ไม่สามารถเลือกไฟล์ได้');
     }
   }
 
-  /// ฟังก์ชันสำหรับจัดการปุ่มไมโครโฟน
   Future<void> handleMicrophone() async {
-    var status = await Permission.microphone.request();
-    if (status.isGranted) {
-      Get.snackbar('ขออภัย', 'ฟังก์ชันบันทึกเสียงยังไม่เปิดใช้งาน');
-    } else if (status.isPermanentlyDenied) {
-      openAppSettings();
+    if (await _audioRecorder.hasPermission()) {
+      if (isRecording.value) {
+        final path = await _audioRecorder.stop();
+        isRecording.value = false;
+        if (path != null) {
+          _addMessage(
+            Message(
+              senderName: 'Me',
+              senderImageUrl: 'assets/imgs/profile.jpg',
+              filePath: path,
+              fileName: 'voice_5896559.mp4',
+              time: _currentTime,
+              isMe: true,
+            ),
+          );
+          _audioPath = null;
+        } else {
+          // Get.snackbar('ข้อผิดพลาด', 'ไม่สามารถหยุดบันทึกเสียงได้');
+        }
+      } else {
+        try {
+          final directory = await getApplicationDocumentsDirectory();
+          final path =
+              '${directory.path}/audio_${DateTime.now().millisecondsSinceEpoch}.mp4';
+          await _audioRecorder.start(
+            RecordConfig(encoder: AudioEncoder.aacLc),
+            path: path,
+          );
+          isRecording.value = true;
+          _audioPath = path;
+          // Get.snackbar('บันทึกเสียง', 'เริ่มบันทึกเสียงแล้ว...');
+        } catch (e) {
+          Get.snackbar('เกิดข้อผิดพลาด', 'ไม่สามารถเริ่มบันทึกเสียงได้: $e');
+        }
+      }
     } else {
       Get.snackbar('การอนุญาต', 'จำเป็นต้องได้รับอนุญาตเพื่อใช้ไมโครโฟน');
+      openAppSettings();
     }
   }
-  
+
+  Future<void> playAudio(Message message) async {
+    if (_currentPlayingMessage != null && _currentPlayingMessage != message) {
+      _currentPlayingMessage!.isPlaying.value = false;
+      await _audioPlayer.stop();
+    }
+
+    if (message.isPlaying.value) {
+      await _audioPlayer.pause();
+      message.isPlaying.value = false;
+      _currentPlayingMessage = null;
+    } else {
+      try {
+        await _audioPlayer.play(DeviceFileSource(message.filePath!));
+        message.isPlaying.value = true;
+        _currentPlayingMessage = message;
+      } catch (e) {
+        Get.snackbar('ข้อผิดพลาด', 'ไม่สามารถเล่นไฟล์เสียงได้: $e');
+        message.isPlaying.value = false;
+        _currentPlayingMessage = null;
+      }
+    }
+  }
+
   void showAttachmentOptions() {
     Get.bottomSheet(
       Container(
@@ -123,16 +221,32 @@ class ChatDetailController extends GetxController {
           runSpacing: 20,
           alignment: WrapAlignment.center,
           children: [
-            _buildBottomSheetItem(icon: Icons.description, label: 'ไฟล์', onTap: pickFile),
-            _buildBottomSheetItem(icon: Icons.location_on, label: 'ตำแหน่ง', onTap: () => Get.snackbar('ขออภัย', 'ฟังก์ชันยังไม่เปิดใช้งาน')),
-            _buildBottomSheetItem(icon: Icons.contact_page, label: 'รายชื่อ', onTap: () => Get.snackbar('ขออภัย', 'ฟังก์ชันยังไม่เปิดใช้งาน')),
+            _buildBottomSheetItem(
+              icon: Icons.description,
+              label: 'ไฟล์',
+              onTap: pickFile,
+            ),
+            _buildBottomSheetItem(
+              icon: Icons.location_on,
+              label: 'ตำแหน่ง',
+              onTap: () => Get.snackbar('ขออภัย', 'ฟังก์ชันยังไม่เปิดใช้งาน'),
+            ),
+            _buildBottomSheetItem(
+              icon: Icons.contact_page,
+              label: 'รายชื่อ',
+              onTap: () => Get.snackbar('ขออภัย', 'ฟังก์ชันยังไม่เปิดใช้งาน'),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildBottomSheetItem({required IconData icon, required String label, required VoidCallback onTap}) {
+  Widget _buildBottomSheetItem({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       onTap: () {
         Get.back();
@@ -154,31 +268,27 @@ class ChatDetailController extends GetxController {
   }
 
   void _addMessage(Message message) {
-      chat.messages.add(message);
-      chat.lastMessage.value = message.text ?? (message.imagePath != null ? '[รูปภาพ]' : '[ไฟล์]');
-      chat.time.value = message.time;
+    // เพิ่มข้อความลงใน List ใน Chat object ปัจจุบัน
+    chat.messages.add(message);
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (scrollController.hasClients) {
-          scrollController.animateTo(
-            scrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOut,
-          );
-        }
-      });
+    // อัปเดต lastMessage และ time ใน Chat object
+    chat.lastMessage.value =
+        message.text ?? (message.imagePath != null ? '[รูปภาพ]' : '[ไฟล์]');
+    chat.time.value = message.time;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
   }
 
   String get _currentTime {
     final now = TimeOfDay.now();
     return '${now.hour}:${now.minute.toString().padLeft(2, '0')}';
-  }
-
-   @override
-  void onClose() {
-    messageController.dispose();
-    scrollController.dispose();
-    focusNode.dispose();
-    super.onClose();
   }
 }
