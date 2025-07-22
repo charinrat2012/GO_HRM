@@ -1,13 +1,14 @@
 import 'package:get/get.dart';
 
-
 import '../bindings/activity_detail_binding.dart';
 import '../bindings/calender_binding.dart';
 import '../bindings/chats_binding.dart';
 import '../bindings/create_document_request_binding.dart';
 import '../bindings/create_leave_request_binding.dart';
 import '../bindings/documents_binding.dart';
+import '../bindings/edit_profile_binding.dart';
 import '../bindings/favourite_binding.dart';
+import '../bindings/help_binding.dart';
 import '../bindings/home_binding.dart';
 import '../bindings/leave_binding.dart';
 import '../bindings/login_binging.dart';
@@ -22,6 +23,7 @@ import '../bindings/profile_binding.dart';
 import '../bindings/quota_binding.dart';
 import '../bindings/salary_binding.dart';
 import '../bindings/salary_detail_binding.dart';
+import '../bindings/settings_binding.dart';
 import '../bindings/splash_binding.dart';
 import '../bindings/timetable_binding.dart';
 import '../data/models/news_card_model.dart';
@@ -31,7 +33,9 @@ import '../ui/pages/chats_page/chats_page.dart';
 import '../ui/pages/create_documents_request_page/create_documents_request_page.dart';
 import '../ui/pages/create_leave_request_page/create_leave_request_page.dart';
 import '../ui/pages/document_page.dart/document_page.dart';
+import '../ui/pages/edit_profile_page/edit_profile_page.dart';
 import '../ui/pages/favourite_page/favourite_page.dart';
+import '../ui/pages/help_page/help_page.dart';
 import '../ui/pages/home_page/home_page.dart';
 import '../ui/pages/leave_page.dart/leave_page.dart';
 import '../ui/pages/login_page/login_page.dart';
@@ -46,6 +50,7 @@ import '../ui/pages/profile_page/profile_page.dart';
 import '../ui/pages/quota_page/quota_page.dart';
 import '../ui/pages/salary_detail_page/salary_detail_page.dart';
 import '../ui/pages/salary_page/salary_page.dart';
+import '../ui/pages/settings_page/settings_page.dart';
 import '../ui/pages/splash_page/splash_page.dart';
 import '../ui/pages/timetable_page/timetable_page.dart';
 import '../ui/pages/unknown_route_page/unknown_route_page.dart';
@@ -212,6 +217,24 @@ class AppPages {
       name: AppRoutes.PRIVACY_POLICY,
       page: () => PrivacyPolicyPage(),
       binding: PrivacyPolicyBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.HELP,
+      page: () => HelpPage(),
+      binding: HelpBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.SETTINGS,
+      page: () => SettingsPage(),
+      binding: SettingsBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.EDIT_PROFILE,
+      page: () => EditprofilePage(),
+      binding: EditprofileBinding(),
       transition: _defaultTransition,
     ),
   ];

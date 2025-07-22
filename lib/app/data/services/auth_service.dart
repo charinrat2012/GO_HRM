@@ -1,5 +1,3 @@
-
-
 // GetxService จะถูกสร้างขึ้นครั้งเดียวและคงอยู่ตลอดการใช้งานแอป
 import 'package:get/get.dart';
 
@@ -23,5 +21,10 @@ class AuthService extends GetxService {
   void logout() {
     currentUser.value = null;
     Get.offAllNamed(AppRoutes.SPLASH);
+  }
+
+  // เมธอดใหม่สำหรับอัปเดตข้อมูลผู้ใช้
+  void updateUserProfile(UserModel updatedUser) {
+    currentUser.value = updatedUser;
   }
 }

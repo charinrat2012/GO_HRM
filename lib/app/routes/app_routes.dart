@@ -24,4 +24,7 @@ class AppRoutes {
   static const FAVOURITE_SETTINGS = '/favourite_settings';
   static const SALARYDETAIL = '/salarydetail';
   static const PRIVACY_POLICY = '/privacy_policy';
+  static const HELP = '/help';
+  static const SETTINGS = '/settings';
+  static const EDIT_PROFILE = '/edit_profile';
 }

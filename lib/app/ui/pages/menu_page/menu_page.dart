@@ -14,7 +14,8 @@ class MenuPage extends GetView<MenuController> {
     return SafeArea(
       child: Scaffold(
         appBar: MenuHead(), 
-        body: MenuForm(user: controller.currentUser!),),
+        body: MenuForm(),
+      ),
     );
   }
 }

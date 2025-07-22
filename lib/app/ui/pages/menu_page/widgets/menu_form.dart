@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide MenuController;
 import 'package:get/get.dart';
+import 'dart:io';
 
-import '../../../../data/models/user_model.dart';
 import '../../../../data/services/auth_service.dart';
 import '../../../../routes/app_routes.dart';
+import '../../../utils/assets.dart';
 import '../../navigation_page/navigation_controller.dart';
+import '../menu_controller.dart';
 
-class MenuForm extends StatelessWidget {
-  final UserModel user;
-  const MenuForm({super.key, required this.user});
+class MenuForm extends GetView<MenuController> {
+  const MenuForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class MenuForm extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 8),
-                Divider(color: Colors.grey),
+                Divider(color: Colors.grey), //เส้นแบ่ง
                 SizedBox(height: 8),
               ],
             ),
@@ -35,19 +36,43 @@ class MenuForm extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _buildListTile(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.PROFILE);
-                    },
-                    leading: CircleAvatar(
-                      radius: 12.0,
-                      backgroundImage: AssetImage(user.imgProfile),
-                    ),
-                    title: user.userName,
-                  ),
+                  Obx(() {
+                    final currentUser = controller.currentUser;
+                    if (currentUser == null) {
+                      return const SizedBox.shrink();
+                    } //ตรวจสอบว่ารูปภาพมาจากassets หรือไม่ //ถ้าใช่แสดงว่ารูปภาพนี้เป็น Asset ที่มาพร้อมกับแอปพลิเคชัน
+                    ImageProvider avatarImage;
+                    if (currentUser.imgProfile.startsWith('assets/')) {
+                      avatarImage = AssetImage(currentUser.imgProfile);
+                    } else {
+                      //ถ้าไม่ใชแสดงว่าเป็นเส้นทางของไฟล์รูปภาพที่ผู้ใช้เลือกมาจากแกลเลอรีบนโทรศัพท์
+                      final File imageFile = File(currentUser.imgProfile);
+                      if (imageFile.existsSync()) {
+                        //ตรวจสอบว่าได้โหลดไฟล์ได้หรือไม่ถ้าไม่ให้ใช่รูปเดิม
+                        avatarImage = FileImage(imageFile);
+                      } else {
+                        avatarImage = AssetImage(Assets.assetsImgsProfile);
+                      }
+                    }
+                    return _buildListTile(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.PROFILE);
+                      },
+                      leading: CircleAvatar(
+                        radius: 12.0,
+                        backgroundImage: avatarImage, //รูปภาพ
+                        onBackgroundImageError: (exception, stackTrace) {
+                          print('Error loading background image: $exception');
+                        }, //ตรวจสอบว่ารูปภาพโหลดสำเร็จหรือไม่
+                      ),
+                      title: currentUser.userName,//ชื่อผู้ใช้จะเปลี่ยนถ้าเราแก้ไข
+                    );
+                  }),
                   const SizedBox(height: 12),
                   _buildListTile(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.SETTINGS);
+                    },
                     leading: const Icon(Icons.settings, color: Colors.black),
                     title: 'การตั้งค่า',
                   ),
@@ -62,7 +87,9 @@ class MenuForm extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   _buildListTile(
-                    onTap: () {Get.toNamed(AppRoutes.PRIVACY_POLICY);},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.PRIVACY_POLICY);
+                    },
                     leading: const Icon(
                       Icons.lock_outline,
                       color: Colors.black,
@@ -71,7 +98,9 @@ class MenuForm extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   _buildListTile(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.HELP);
+                    },
                     leading: const Icon(
                       Icons.help_outline,
                       color: Colors.black,
@@ -82,12 +111,12 @@ class MenuForm extends StatelessWidget {
                   _buildListTile(
                     onTap: () {
                       final authService = Get.find<AuthService>();
-
-                      // 2. เรียกใช้ฟังก์ชัน logout()
                       authService.logout();
                       final navigationController =
                           Get.find<NavigationController>();
-                      3.seconds.delay().then((_) => navigationController.resetToHome());
+                      3.seconds.delay().then(
+                        (_) => navigationController.resetToHome(),
+                      );
                     },
                     leading: const Icon(Icons.login, color: Colors.black),
                     title: 'ออกจากระบบ',

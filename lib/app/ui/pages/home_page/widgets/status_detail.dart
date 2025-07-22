@@ -103,44 +103,46 @@ class StatusDetail extends GetView<HomeController> {
               SizedBox(
                 width: 108,
                 height: 108,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    const CircularProgressIndicator(
-                      value: 0.9, // This value might also need to be dynamic based on elapsed time vs total work time
-                      strokeWidth: 8,
-                      backgroundColor: Colors.white24,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Color.fromRGBO(251, 188, 5, 1),
+                child: Obx( // เพิ่ม Obx เพื่อให้ CircularProgressIndicator อัปเดต
+                  () => Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      CircularProgressIndicator(
+                        value: controller.workProgressPercentage.value, // ใช้ค่าจาก Controller
+                        strokeWidth: 8,
+                        backgroundColor: Colors.white24,
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                          Color.fromRGBO(251, 188, 5, 1),
+                        ),
                       ),
-                    ),
-                    Center(
-                      child: Obx(
-                        () => RichText(
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          text: TextSpan(
-                            text: controller.elapsedHoursMinutes.value.split(' ')[0], // Get '8'
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: ' ชม.\n${controller.elapsedHoursMinutes.value.split(' ')[1]}', // Get '32 นาที'
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                      Center(
+                        child: Obx(
+                          () => RichText(
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            text: TextSpan(
+                              text: controller.elapsedHoursMinutes.value.split(' ')[0],
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: ' ชม.\n${controller.elapsedHoursMinutes.value.split(' ')[2]} นาที',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: 32),

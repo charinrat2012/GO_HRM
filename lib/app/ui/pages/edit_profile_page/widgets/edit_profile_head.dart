@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../config/my_colors.dart';
-import '../../../../routes/app_routes.dart';
-
-class ProfileHead extends StatelessWidget {
-  const ProfileHead({super.key});
+class EditProfileHead extends StatelessWidget {
+  const EditProfileHead({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +17,13 @@ class ProfileHead extends StatelessWidget {
         onPressed: Get.back,
       ),
       title: const Text(
-        'โปรไฟล์',
+        'แก้ไขโปรไฟล์',
         style: TextStyle(
           color: Colors.black,
           fontSize: 15.0,
           fontWeight: FontWeight.bold,
         ),
       ),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.edit, color: MyColors.blue),
-          onPressed: () {
-            Get.offAndToNamed(AppRoutes.EDIT_PROFILE);},
-        ),
-      ],
     );
   }
 }

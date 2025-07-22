@@ -1,6 +1,6 @@
-import 'dart:async'; // เพิ่ม import นี้
+import 'dart:async';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart'; // เพิ่ม import นี้
+import 'package:intl/intl.dart';
 
 import '../../../data/models/menu_model.dart';
 import '../../../data/models/quota_model.dart';
@@ -16,16 +16,14 @@ class HomeController extends GetxController {
   final AuthService authService = Get.find<AuthService>();
   final UserPreferenceService preferenceService = Get.find<UserPreferenceService>();
 
-  // เพิ่มตัวแปร Reactive สำหรับแสดงเวลา
   final currentTime = DateTime.now().obs;
   final elapsedWorkDuration = Duration.zero.obs;
   final remainingWorkDuration = Duration.zero.obs;
+  final RxDouble workProgressPercentage = 0.00.obs; // เพิ่มตัวแปรนี้
 
-  // กำหนดเวลาทำงานมาตรฐาน
   late final DateTime workStartTime;
   late final DateTime workEndTime;
 
-  // String ที่จัดรูปแบบแล้วสำหรับ UI
   RxString currentDateFormatted = ''.obs;
   RxString elapsedHoursMinutes = ''.obs;
   RxString currentWorkTimeFormatted = ''.obs;
@@ -38,13 +36,11 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // กำหนด workStartTime และ workEndTime โดยใช้วันที่ปัจจุบัน
     final now = DateTime.now();
     workStartTime = DateTime(now.year, now.month, now.day, 8, 30);
     workEndTime = DateTime(now.year, now.month, now.day, 17, 30);
 
-    _updateTime(); // อัปเดตเวลาทันทีที่เริ่มต้น Controller
-    // ตั้งเวลาให้ Timer อัปเดตเวลาทุกวินาที
+    _updateTime();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _updateTime();
     });
@@ -59,7 +55,7 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {
-    _timer?.cancel(); // ยกเลิก Timer เมื่อ Controller ถูกปิด
+    _timer?.cancel();
     super.onClose();
   }
 
@@ -69,71 +65,76 @@ class HomeController extends GetxController {
 
     _calculateWorkDurations();
     _formatWorkDurations();
+    _calculateWorkProgress(); // เรียกใช้ฟังก์ชันใหม่นี้
   }
 
   void _calculateWorkDurations() {
     final now = currentTime.value;
 
-    // คำนวณชั่วโมงเวลาการทำงานที่ผ่านไป
     if (now.isAfter(workStartTime)) {
       if (now.isBefore(workEndTime)) {
         elapsedWorkDuration.value = now.difference(workStartTime);
       } else {
-        // หากเลยเวลาเลิกงานแล้ว ให้แสดงระยะเวลาทำงานเต็มวัน
         elapsedWorkDuration.value = workEndTime.difference(workStartTime);
       }
     } else {
-      elapsedWorkDuration.value = Duration.zero; // ยังไม่ถึงเวลาเริ่มงาน
+      elapsedWorkDuration.value = Duration.zero;
     }
 
-    // คำนวณเวลาที่เหลือในการทำงาน
     if (now.isBefore(workEndTime)) {
       remainingWorkDuration.value = workEndTime.difference(now);
     } else {
-      remainingWorkDuration.value = Duration.zero; // หมดเวลาทำงานแล้ว
+      remainingWorkDuration.value = Duration.zero;
     }
   }
 
   void _formatWorkDurations() {
-    // จัดรูปแบบ "8 ชม. 32 นาที"
     final int hours = elapsedWorkDuration.value.inHours;
     final int minutes = elapsedWorkDuration.value.inMinutes.remainder(60);
-    // final int seconds = elapsedWorkDuration.value.inSeconds.remainder(60); // ไม่ได้ใช้ในส่วนนี้
 
-    elapsedHoursMinutes.value = '$hours ชม. $minutes นาที';
+    elapsedHoursMinutes.value = '$hours  $minutes นาที';
 
-    // จัดรูปแบบ "08:32:52" สำหรับชั่วโมงเวลาการทำงานปัจจุบัน
     final currentHours = (elapsedWorkDuration.value.inSeconds ~/ 3600).toString().padLeft(2, '0');
     final currentMinutes = ((elapsedWorkDuration.value.inSeconds % 3600) ~/ 60).toString().padLeft(2, '0');
     final currentSeconds = (elapsedWorkDuration.value.inSeconds % 60).toString().padLeft(2, '0');
     currentWorkTimeFormatted.value = '$currentHours:$currentMinutes:$currentSeconds';
 
-
-    // จัดรูปแบบ "คงเหลือ 24:58"
     final int remainingHours = remainingWorkDuration.value.inHours;
     final int remainingMinutes = remainingWorkDuration.value.inMinutes.remainder(60);
     remainingWorkTimeFormatted.value =
         '${remainingHours.toString().padLeft(2, '0')}:${remainingMinutes.toString().padLeft(2, '0')}';
 
-    // เวลาเข้างานและเลิกงานตามที่ผู้ใช้กำหนด (8.30 และ 17.30)
     workInTimeFormatted.value = DateFormat('HH:mm:ss').format(workStartTime);
     workOutTimeFormatted.value = DateFormat('HH:mm:ss').format(workEndTime);
   }
 
+  // ฟังก์ชันใหม่สำหรับคำนวณเปอร์เซ็นต์ความคืบหน้า
+  void _calculateWorkProgress() {
+    final totalWorkDuration = workEndTime.difference(workStartTime);
+    if (totalWorkDuration.inSeconds > 0) {
+      final now = currentTime.value;
+      if (now.isAfter(workStartTime)) {
+        if (now.isBefore(workEndTime)) {
+          workProgressPercentage.value = elapsedWorkDuration.value.inSeconds / totalWorkDuration.inSeconds;
+        } else {
+          workProgressPercentage.value = 1.00; // หากเลยเวลาเลิกงาน ถือว่าครบ 100%
+        }
+      } else {
+        workProgressPercentage.value = 0.00; // ยังไม่ถึงเวลาเริ่มงาน
+      }
+    } else {
+      workProgressPercentage.value = 0.00; // ป้องกันหารด้วยศูนย์
+    }
+  }
+
   void loadData() {
-    // --- ดึง userId จาก AuthService ---
     if (authService.isLoggedIn) {
       final String currentUserId = authService.currentUser.value!.userId;
-
-      // 3. ดึง ID เมนูโปรดล่าสุดจาก Service
       final List<String> favoriteIds = preferenceService.getFavoriteMenuIds(currentUserId);
-
-      // 4. กรองและแสดงผลเมนูตาม ID ที่ได้มา
       final List<MenuModel> favoriteMenuData = DataList.allMenus
           .where((menu) => favoriteIds.contains(menu['iconId']))
           .map((map) => MenuModel.fromMap(map))
           .toList();
-
       menuitems.assignAll(favoriteMenuData);
     } else {
       menuitems.clear();
@@ -151,12 +152,9 @@ class HomeController extends GetxController {
   }
 
   void handleClockIn() async {
-    // --- ส่วนของ Logic การลงเวลาของคุณ ---
     bool success = true;
-
-    // --- หลังจากลงเวลาสำเร็จ ---
     if (success) {
-      showSuccessDialog(); // เรียกใช้ Dialog ที่เราสร้างไว้
+      showSuccessDialog();
     } else {
       // จัดการกรณีที่ลงเวลาไม่สำเร็จ
     }
