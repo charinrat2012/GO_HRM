@@ -2,39 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../routes/app_routes.dart';
-import '../../../global_widgets/datalist.dart';
+import '../salary_controller.dart'; 
 
-class ListCard extends StatelessWidget {
+class ListCard extends GetView<SalaryController> { 
   const ListCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          final salaryItem = DataList.salaryData[index];
-          return _buildSalaryCardItem(
-            month: salaryItem['month']!,
-            payDate: salaryItem['datePaid']!,
-            onTap: () {
-              Get.toNamed(
-                AppRoutes.SALARYDETAIL,
-                arguments: {
-                  'month': salaryItem['month'],
-                  'datePaid': salaryItem['datePaid'],
-                },
-              );
-            },
-          );
-        },
-        childCount: DataList
-            .salaryData
-            .length, // มีจำนวนรายการทั้งหมดกี่รายการที่จะต้องสร้าง ใช้ข้อมูลจาก salaryData
+    // --- ใช้ Obx เพื่อ re-build รายการเมื่อข้อมูลใน controller เปลี่ยน ---
+    return Obx(
+      () => SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            // --- ดึงข้อมูลจาก salaryHistory ใน controller ---
+            final salaryItem = controller.salaryHistory[index]; 
+            return _buildSalaryCardItem(
+              month: salaryItem['month']!,
+              payDate: salaryItem['datePaid']!,
+              onTap: () {
+                Get.toNamed(
+                  AppRoutes.SALARYDETAIL,
+                  arguments: {
+                    'month': salaryItem['month'],
+                    'datePaid': salaryItem['datePaid'],
+                  },
+                );
+              },
+            );
+          },
+          // --- [แก้ไข] ใช้ความยาวของ salaryHistory ---
+          childCount: controller.salaryHistory.length, 
+        ),
       ),
     );
   }
 
-  // เมธอดนี้สร้างรายการการ์ดแต่ละรายการ ซึ่งจะถูกห่อหุ้มด้วย Padding
   Widget _buildSalaryCardItem({
     required String month,
     required String payDate,
@@ -44,8 +46,7 @@ class ListCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: GestureDetector(
-        onTap:
-            onTap ?? () {}, //ถ้าแตะจะลิ้งไปหน้าที่กำหนดถ้าไม่แตะก็จะไม่ลิ้งไป
+        onTap: onTap ?? () {},
         child: Card(
           elevation: 0,
           margin: EdgeInsets.zero,

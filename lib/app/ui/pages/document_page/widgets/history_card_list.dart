@@ -17,14 +17,29 @@ class HistoryCardList extends GetView<DocumentsController> {
   Widget build(BuildContext context) {
     // ส่วนนี้ถูกต้องแล้ว ไม่ต้องแก้ไข
     return Obx(
-      () => SliverPadding(
+      () {
+      if (controller.docHistory.isEmpty) {
+        return const SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 48.0),
+            child: Center(
+              child: Text(
+                'ไม่มีข้อมูล',
+                style: TextStyle(color: Colors.grey, fontSize: 16),
+              ),
+            ),
+          ),
+        );
+      }
+      
+      return SliverPadding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
             final item = controller.docHistory[index];
             return Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
-              // เรียกใช้ Widget ที่แก้ไขใหม่แล้ว
+              
               child: _buildHistoryCard(
                 item,
                 index,
@@ -33,8 +48,9 @@ class HistoryCardList extends GetView<DocumentsController> {
             );
           }, childCount: controller.docHistory.length),
         ),
-      ),
-    );
+      );
+    
+  });
   }
 
   Widget _buildHistoryCard(

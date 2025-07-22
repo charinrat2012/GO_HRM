@@ -2,39 +2,57 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../data/models/timetable_model.dart';
+import '../../global_widgets/datalist.dart';
 
 class TimetableController extends GetxController {
-  final years = ['2025', '2024', '2023', '2022'].obs;
-  final RxnString selectedYear = RxnString(
-    '2025',
-  ); //กำหนดเป็นค่าเริ่มต้นไว้ปี2025
+  // final years = ['2025', '2024', '2023', '2022'].obs;
+  // final RxnString selectedYear = RxnString(
+  //   '2025',
+  // ); //กำหนดเป็นค่าเริ่มต้นไว้ปี2025
 
-  final months = [
-    'ทั้งหมด',
-    'มกราคม',
-    'กุมภาพันธ์',
-    'มีนาคม',
-    'เมษายน',
-    'พฤษภาคม',
-    'มิถุนายน',
-    'กรกฎาคม',
-    'สิงหาคม',
-    'กันยายน',
-    'ตุลาคม',
-    'พฤศจิกายน',
-    'ธันวาคม',
-  ].obs;
-  final RxnString selectedMonth = RxnString('กรกฎาคม');
+  // final months = [
+  //   'ทั้งหมด',
+  //   'มกราคม',
+  //   'กุมภาพันธ์',
+  //   'มีนาคม',
+  //   'เมษายน',
+  //   'พฤษภาคม',
+  //   'มิถุนายน',
+  //   'กรกฎาคม',
+  //   'สิงหาคม',
+  //   'กันยายน',
+  //   'ตุลาคม',
+  //   'พฤศจิกายน',
+  //   'ธันวาคม',
+  // ].obs;
+  // final RxnString selectedMonth = RxnString('กรกฎาคม');
   //ถ้ามีข้อมูลมีการเปลี่ยนเมื่อไหร่ อัปเดตตามทันทีโดยอัตโนมัติ
   final RxList<TimetableModel> schedules = <TimetableModel>[].obs;
 
   // ตัวแปรสำหรับติดตาม index ของการ์ดที่กำลังขยายอยู่ (เริ่มต้นที่ -1 คือไม่มีการ์ดใดขยาย)
   final RxInt _currentlyExpandedIndex = (-1).obs;
+  
+      final months = <String>['ทั้งหมด'].obs;
+  final years = <String>[].obs;
+
+    final RxnString selectedYear = RxnString('2025');
+  final RxnString selectedMonth = RxnString('ทั้งหมด');
 
   @override
   void onInit() {
     super.onInit();
     loadTimetableData();
+    setupData();
+  }
+void setupData() {
+    final monthNames = DataList.months.map((m) => m['month'] as String).toList();
+    months.addAll(monthNames);
+
+    final yearNumbers = DataList.years.map((y) => y['year'] as String).toList();
+    yearNumbers.sort((a, b) => b.compareTo(a));
+    years.assignAll(yearNumbers);
+    
+    // ไม่ต้องกำหนดค่าเริ่มต้น selectedYear ที่นี่ เพราะกำหนดไว้แล้ว
   }
 
   void loadTimetableData() {

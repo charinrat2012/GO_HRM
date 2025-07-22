@@ -95,6 +95,7 @@ class FilterSection extends GetView<DocumentsController> {
           }).toList(),
           onChanged: (newValue) {
             selectedItem.value = newValue;
+            controller.loadDocHistory();
           },
         ),
       ],

@@ -2,33 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../routes/app_routes.dart';
-import '../../../global_widgets/datalist.dart'; 
+import '../salary_controller.dart'; 
 
-class CurrentCard extends StatelessWidget {
+class CurrentCard extends GetView<SalaryController> { 
   const CurrentCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // ดึงข้อมูลสำหรับ current card (เช่น รายการแรกสุดของ salaryData)
-    final currentSalary = DataList.salaryData.isNotEmpty ? DataList.salaryData[0] : {'month': 'ไม่มีข้อมูล', 'datePaid': 'ไม่มีข้อมูล'};
-
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       sliver: SliverToBoxAdapter(
-        child: _buildSalaryCard(
-          month: currentSalary['month']!,
-          payDate: currentSalary['datePaid']!,
-          icon: Icons.arrow_forward_ios,
-          onTap: () {
-            Get.toNamed(
-              AppRoutes.SALARYDETAIL,
-              arguments: {
-                'month': currentSalary['month'],
-                'datePaid': currentSalary['datePaid'],
-              },
-            );
-          },
-        ),
+        // --- ใช้ Obx เพื่อ re-build เมื่อข้อมูลใน controller เปลี่ยน ---
+        child: Obx(() {
+          // --- ดึงข้อมูลเงินเดือนล่าสุดจาก controller ---
+          final currentSalary = controller.currentSalary.value;
+
+          // --- หากไม่มีข้อมูลสำหรับปีที่เลือก ให้แสดงข้อความ ---
+          if (currentSalary == null) {
+            return const Center(child: Text('ไม่มีข้อมูลสำหรับปีที่เลือก'));
+          }
+          
+          // --- หากมีข้อมูล ให้สร้างการ์ด ---
+          return _buildSalaryCard(
+            month: currentSalary['month']!,
+            payDate: currentSalary['datePaid']!,
+            icon: Icons.arrow_forward_ios,
+            onTap: () {
+              Get.toNamed(
+                AppRoutes.SALARYDETAIL,
+                arguments: {
+                  'month': currentSalary['month'],
+                  'datePaid': currentSalary['datePaid'],
+                },
+              );
+            },
+          );
+        }),
       ),
     );
   }

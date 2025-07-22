@@ -13,8 +13,10 @@ class ChatDetailPage extends GetView<ChatDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: controller.onWillPop,
+    return PopScope(
+      // onWillPop: controller.onWillPop,
+      // onWillPop: () => controller.onWillPop(),
+      
       child: Scaffold(
         backgroundColor: const Color(0xFFF0F4F8),
         appBar: AppBar(
@@ -199,10 +201,10 @@ class ChatDetailPage extends GetView<ChatDetailController> {
       child: SafeArea(
         child: Row(
           children: [
-            IconButton(icon: const Icon(Icons.add, color: MyColors.blue2), onPressed: controller.showAttachmentOptions),
-            IconButton(icon: const Icon(Icons.camera_alt_outlined, color: MyColors.blue2), onPressed: () => controller.pickImage(ImageSource.camera)),
-            IconButton(icon: const Icon(Icons.image_outlined, color: MyColors.blue2), onPressed: () => controller.pickImage(ImageSource.gallery)),
-            IconButton(icon: const Icon(Icons.mic_none, color: MyColors.blue2), onPressed: controller.handleMicrophone),
+            IconButton(icon: const Icon(Icons.add, color: MyColors.blue2), onPressed: controller.showAttachmentOptions,style: ButtonStyle(visualDensity: VisualDensity.compact, ),),
+            IconButton(icon: const Icon(Icons.camera_alt_outlined, color: MyColors.blue2), onPressed: () => controller.pickImage(ImageSource.camera),style: ButtonStyle(visualDensity: VisualDensity.compact, ),),
+            IconButton(icon: const Icon(Icons.image_outlined, color: MyColors.blue2), onPressed: () => controller.pickImage(ImageSource.gallery),style: ButtonStyle(visualDensity: VisualDensity.compact, ),),
+            IconButton(icon: const Icon(Icons.mic_none, color: MyColors.blue2), onPressed: controller.handleMicrophone,style: ButtonStyle(visualDensity: VisualDensity.compact, ),),
             Expanded(
               child: TextField(
                 focusNode: controller.focusNode,
@@ -221,7 +223,8 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                     icon: Obx(() => Icon(
                       controller.isEmojiPickerVisible.value ? Icons.keyboard : Icons.emoji_emotions_outlined,
                       color: Colors.grey.shade600,
-                    )),
+                      
+                    )),style: ButtonStyle(visualDensity: VisualDensity.compact, ),
                   ),
                 ),
               ),

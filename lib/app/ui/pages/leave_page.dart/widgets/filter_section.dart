@@ -95,6 +95,7 @@ class FilterSection extends GetView<LeavePageController> {
           }).toList(),
           onChanged: (newValue) {
             selectedItem.value = newValue;
+            controller.loadLeaveHistory();
           },
         ),
       ],
