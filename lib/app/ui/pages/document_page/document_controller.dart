@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import '../../../data/models/document_status_model.dart';
-import '../../../data/services/auth_service.dart'; // 1. Import AuthService
-import '../../global_widgets/datalist.dart'; // 2. Import DataList
+import '../../../data/services/auth_service.dart';
+import '../../global_widgets/datalist.dart';
 
 class DocumentsController extends GetxController {
   // 3. ดึง AuthService เข้ามาใช้งาน
@@ -13,42 +13,53 @@ class DocumentsController extends GetxController {
   final expandedCardIndex = Rxn<int>();
 
   // ... (ตัวแปรสำหรับ Dropdown เหมือนเดิม) ...
-  final years = ['2025', '2024', '2023'].obs;
-  final RxnString selectedYear = RxnString('2025');
-  final months = [
-    'ทั้งหมด',
-    'มกราคม',
-    'กุมภาพันธ์',
-    'มีนาคม',
-    'เมษายน',
-    'พฤษภาคม',
-    'มิถุนายน',
-    'กรกฎาคม',
-  ].obs;
-  final RxnString selectedMonth = RxnString('ทั้งหมด');
+  // final years = ['2025', '2024', '2023'].obs;
+  // final RxnString selectedYear = RxnString('2025');
+  // final months = ['ทั้งหมด', 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม'].obs;
+  // final RxnString selectedMonth = RxnString('ทั้งหมด');
   final RxList<String> docTypes = <String>['ทั้งหมด'].obs;
   // `selectedDocumentType` จะเก็บค่าที่ผู้ใช้เลือกจาก Dropdown
   final RxnString selectedDocTypes = RxnString('ทั้งหมด');
   final other = ['ค้นหาแบบละเอียด', '1', '2', '3'].obs;
   final RxnString selectedOther = RxnString('ค้นหาแบบละเอียด');
 
+  final months = <String>['ทั้งหมด'].obs;
+  final years = <String>[].obs;
+
+  final RxnString selectedYear = RxnString('2025');
+  final RxnString selectedMonth = RxnString('ทั้งหมด');
+
   @override
   void onInit() {
     super.onInit();
     loadDocHistory();
     setupDocumentTypeFilter();
+    setupFilterData();
+  }
+
+  void setupFilterData() {
+    // --- ดึงข้อมูลปีและเรียงลำดับ ---
+    final yearNumbers = DataList.years.map((y) => y['year'] as String).toList();
+    yearNumbers.sort((a, b) => b.compareTo(a)); // เรียงปีล่าสุดขึ้นก่อน
+    years.assignAll(yearNumbers);
+
+    // --- ตั้งค่าปีเริ่มต้นที่เลือก ---
+    if (years.isNotEmpty) {
+      selectedYear.value = years.first;
+    }
+
+    // --- ดึงข้อมูลเดือน ---
+    final monthNames = DataList.months
+        .map((m) => m['month'] as String)
+        .toList();
+    months.addAll(monthNames);
   }
 
   void setupDocumentTypeFilter() {
-    //  ดึงข้อมูลประเภทเอกสาร (ที่เป็น Map) จาก DataList
     final docTypesFromDataList = DataList.docTypes;
-
-    //  แปลง List<Map> ให้เป็น List<String> โดยดึงเฉพาะค่า 'type'
     final types = docTypesFromDataList
         .map((doc) => doc['type'] as String)
         .toList();
-
-    //  เพิ่มประเภทเอกสารทั้งหมดเข้าไปใน `documentTypeOptions` ต่อจาก "ทั้งหมด"
     docTypes.addAll(types);
   }
 
@@ -59,69 +70,60 @@ class DocumentsController extends GetxController {
     }
   }
 
-  // --- 🛠️ จุดแก้ไข: ปรับปรุงตรรกะการโหลดข้อมูลทั้งหมด ---
   void loadDocHistory() {
-    // ตรวจสอบก่อนว่าผู้ใช้ล็อกอินอยู่หรือไม่
     if (!_authService.isLoggedIn) {
-      docHistory.clear(); // ถ้าไม่ ให้เคลียร์ข้อมูล
+      docHistory.clear();
       return;
     }
 
-    // ดึง ID ของผู้ใช้ที่กำลังล็อกอินอยู่
     final String currentUserId = _authService.currentUser.value!.userId;
+    List<DocumentHistoryModel> filteredDocuments = [];
 
-    // --- ตรรกะสำหรับมุมมอง "ของตัวเอง" ---
+    // --- กรองข้อมูลตามมุมมอง (ของตัวเอง / ของพนักงาน) ---
     if (selectedViewIndex.value == 0) {
-      // 1. ค้นหา Preference ของผู้ใช้
       final userPrefs = DataList.userPreferData.firstWhere(
         (pref) => pref['userId'] == currentUserId,
         orElse: () => <String, dynamic>{},
       );
 
       if (userPrefs.isNotEmpty && userPrefs['documentId'] is List) {
-        // 2. ดึงรายการ documentId ของผู้ใช้
         final List<String> myDocumentIds = List<String>.from(
           userPrefs['documentId'],
         );
-
-        // 3. กรองเอกสารทั้งหมด ให้เหลือเฉพาะเอกสารที่ ID ตรงกับของผู้ใช้
-        final myDocuments = DataList.documentData
+        filteredDocuments = DataList.documentData
             .where((doc) => myDocumentIds.contains(doc['documentId']))
             .map((map) => DocumentHistoryModel.fromMap(map))
             .toList();
-
-        // 4. อัปเดต UI
-        docHistory.assignAll(myDocuments);
-      } else {
-        docHistory.clear(); // ถ้าไม่เจอข้อมูล ให้แสดงเป็นค่าว่าง
       }
-    }
-    // --- ตรรกะสำหรับมุมมอง "ของพนักงาน" ---
-    else {
-      // //  ค้นหา Preference ของผู้ใช้ (เพื่อหาว่าเอกสารไหนเป็นของเรา)
-      // final userPrefs = DataList.userPreferData.firstWhere(
-      //   (pref) => pref['userId'] == currentUserId,
-      //   orElse: () => <String, dynamic>{},
-      // );
-
-      // final List<String> myDocumentIds = userPrefs.isNotEmpty && userPrefs['documentId'] is List
-      //     ? List<String>.from(userPrefs['documentId'])
-      //     : [];
-
-      // // กรองเอกสารทั้งหมด ให้เหลือเฉพาะเอกสารที่ "ไม่ใช่" ของเรา
-      // final employeeDocuments = DataList.documentData
-      //     .where((doc) => !myDocumentIds.contains(doc['documentId']))
-      //     .map((map) => DocumentHistoryModel.fromMap(map))
-      //     .toList();
-
-      // // 3. อัปเดต UI
-      // docHistory.assignAll(employeeDocuments);
-      final employeeDocuments = DataList.documentData
+    } else {
+      filteredDocuments = DataList.documentData
           .map((map) => DocumentHistoryModel.fromMap(map))
           .where((doc) => doc.status == DocumentStatus.pending)
           .toList();
-
-      docHistory.assignAll(employeeDocuments);
     }
+
+    // ---  กรองข้อมูลตามปีที่เลือก ---
+    if (selectedYear.value != null) {
+      filteredDocuments = filteredDocuments.where((doc) {
+        return doc.requestDateTime.year.toString() == selectedYear.value;
+      }).toList();
+    }
+
+    // ---  กรองข้อมูลตามเดือนที่เลือก ---
+    if (selectedMonth.value != null && selectedMonth.value != 'ทั้งหมด') {
+      // --- หาเลขเดือนจากชื่อเดือน (เช่น "มกราคม" -> 1) ---
+      final monthIndex = DataList.months.indexWhere(
+        (m) => m['month'] == selectedMonth.value,
+      );
+      if (monthIndex != -1) {
+        final monthNumber = int.parse(DataList.months[monthIndex]['monthId']!);
+        filteredDocuments = filteredDocuments.where((doc) {
+          return doc.requestDateTime.month == monthNumber;
+        }).toList();
+      }
+    }
+
+    // --- อัปเดต UI ด้วยข้อมูลที่กรองแล้ว ---
+    docHistory.assignAll(filteredDocuments);
   }
 }

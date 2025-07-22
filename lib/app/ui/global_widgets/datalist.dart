@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_hrm/app/data/models/leave_status_model.dart';
 
-
 import '../../data/models/document_status_model.dart';
 import '../../routes/app_routes.dart';
 
@@ -589,19 +588,26 @@ class DataList {
     {
       'userId': '1',
       'iconId': ['1', '2', '8', '4', '5', '13', '9', '14'],
-      'documentId': ['1', '2', '3',],
+      'documentId': ['1', '2', '3'],
       'leaveId': ['1', '2', '3'],
+      'salaryId': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'],
     },
     {
       'userId': '2',
       'iconId': ['1', '2', '8', '4'],
-      'documentId': ['4', '5', '6','10'],
+      'documentId': ['4', '5', '6', '10'],
       'leaveId': ['4', '5', '6'],
+      'salaryId': ['1', '2', '3'],
     },
   ];
 
   static final List<Map<String, dynamic>> quotasData = [
-    {'typeId': '1', 'type': 'ลากิจ (ได้รับค่าจ้าง)', 'remaining': 2, 'total': 10},
+    {
+      'typeId': '1',
+      'type': 'ลากิจ (ได้รับค่าจ้าง)',
+      'remaining': 2,
+      'total': 10,
+    },
     {
       'typeId': '2',
       'type': 'ลากิจ (ไม่ได้รับค่าจ้าง)',
@@ -624,6 +630,31 @@ class DataList {
     {'typeId': '6', 'type': 'ลาพักร้อน', 'remaining': 10, 'total': 10},
     {'typeId': '7', 'type': 'ขาดงาน ', 'remaining': 10, 'total': 10},
   ].obs;
+
+  static final List<Map<String, dynamic>> months = [
+    {'monthId': '1', 'month': 'มกราคม'},
+    {'monthId': '2', 'month': 'กุมภาพันธ์'},
+    {'monthId': '3', 'month': 'มีนาคม'},
+    {'monthId': '4', 'month': 'เมษายน'},
+    {'monthId': '5', 'month': 'พฤษภาคม'},
+    {'monthId': '6', 'month': 'มิถุนายน'},
+    {'monthId': '7', 'month': 'กรกฎาคม'},
+    {'monthId': '8', 'month': 'สิงหาคม'},
+    {'monthId': '9', 'month': 'กันยายน'},
+    {'monthId': '10', 'month': 'ตุลาคม'},
+    {'monthId': '11', 'month': 'พฤศจิกายน'},
+    {'monthId': '12', 'month': 'ธันวาคม'},
+  ];
+
+static final List<Map<String, dynamic>> years = [
+  {'yearId': '1', 'year': '2020'},
+  {'yearId': '2', 'year': '2021'},
+  {'yearId': '3', 'year': '2022'},
+  {'yearId': '4', 'year': '2023'},
+  {'yearId': '5', 'year': '2024'},
+  {'yearId': '6', 'year': '2025'},
+];
+
   static final List<Map<String, dynamic>> leaveTypes = [
     {'doctypeId': '1', 'type': 'ลากิจ'},
     {'doctypeId': '2', 'type': 'ลาป่วย'},
@@ -641,27 +672,84 @@ class DataList {
     {'doctypeId': '2', 'type': 'การทำร้ายร่างกาย'},
     {'doctypeId': '3', 'type': 'การขโมย'},
     {'doctypeId': '4', 'type': 'ความประพฤติไม่เหมาะสม'},
-
   ].obs;
 
   // เพิ่มข้อมูลเงินเดือนพร้อมเดือนและวันที่จ่าย
   static final List<Map<String, dynamic>> salaryData = [
-    {'month': 'มกราคม', 'datePaid': '25/01/2025 เวลา 12.00 น.'},
-    {'month': 'กุมภาพันธ์', 'datePaid': '25/02/2025 เวลา 12.00 น.'},
-    {'month': 'มีนาคม', 'datePaid': '25/03/2025 เวลา 12.00 น.'},
-    {'month': 'เมษายน', 'datePaid': '25/04/2025 เวลา 12.00 น.'},
-    {'month': 'พฤษภาคม', 'datePaid': '25/05/2025 เวลา 12.08 น.'},
-    {'month': 'มิถุนายน', 'datePaid': '25/06/2025 เวลา 12.00 น.'},
-    {'month': 'กรกฎาคม', 'datePaid': '25/07/2025 เวลา 12.00 น.'},
-    {'month': 'สิงหาคม', 'datePaid': '25/08/2025 เวลา 12.00 น.'},
-    {'month': 'กันยายน', 'datePaid': '25/09/2025 เวลา 12.00 น.'},
-    {'month': 'ตุลาคม', 'datePaid': '25/10/2025 เวลา 12.00 น.'},
-    {'month': 'พฤศจิกายน', 'datePaid': '25/11/2025 เวลา 12.00 น.'},
-    {'month': 'ธันวาคม', 'datePaid': '25/12/2025 เวลา 12.00 น.'},
+    {
+      'salaryId': '1',
+      'month': 'มกราคม',
+      'datePaid': '25/01/2025 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '2',
+      'month': 'กุมภาพันธ์',
+      'datePaid': '25/02/2025 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '3',
+      'month': 'มีนาคม',
+      'datePaid': '25/03/2025 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '4',
+      'month': 'เมษายน',
+      'datePaid': '25/04/2025 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '5',
+      'month': 'พฤษภาคม',
+      'datePaid': '25/05/2025 เวลา 12.08 น.',
+    },
+    {
+      'salaryId': '6',
+      'month': 'มิถุนายน',
+      'datePaid': '25/06/2025 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '7',
+      'month': 'กรกฎาคม',
+      'datePaid': '25/07/2025 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '8',
+      'month': 'สิงหาคม',
+      'datePaid': '25/08/2022 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '9',
+      'month': 'กันยายน',
+      'datePaid': '25/09/2023 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '10',
+      'month': 'ตุลาคม',
+      'datePaid': '25/10/2025 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '11',
+      'month': 'พฤศจิกายน',
+      'datePaid': '25/11/2025 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '12',
+      'month': 'ธันวาคม',
+      'datePaid': '25/12/2025 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '13',
+      'month': 'ธันวาคม',
+      'datePaid': '25/12/2024 เวลา 12.00 น.',
+    },
+    {
+      'salaryId': '14',
+      'month': 'พฤศจิกายน',
+      'datePaid': '25/11/2024 เวลา 12.00 น.',
+    },
   ].obs;
 
   static final List<Map<String, dynamic>> leaveData = [
-     {
+    {
       'leaveId': '1',
       'leaveType': 'ขอลาพักงาน',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
@@ -788,11 +876,10 @@ class DataList {
       'status': LeaveStatus.pending,
       'attachedFiles': [],
     },
-
   ].obs;
 
-   static final List<Map<String, dynamic>> documentData = [
-      {
+  static final List<Map<String, dynamic>> documentData = [
+    {
       'documentId': '1',
       'docType': 'ขอลาพักงาน',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
@@ -812,7 +899,7 @@ class DataList {
       'status': DocumentStatus.rejected,
       'attachedFiles': [],
     },
-     {
+    {
       'documentId': '3',
       'docType': 'ขอเอกสาร',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
@@ -830,7 +917,7 @@ class DataList {
       'requestDateTime': DateTime(2025, 7, 1, 9, 0),
       'note': 'ต้องการเงินล่วงหน้า',
       'status': DocumentStatus.pending,
-       'attachedFiles': [File('/mock/path/doc.pdf')],
+      'attachedFiles': [File('/mock/path/doc.pdf')],
     },
     {
       'documentId': '5',
@@ -850,7 +937,7 @@ class DataList {
       'requestDateTime': DateTime(2025, 6, 28, 16, 5),
       'note': '',
       'status': DocumentStatus.pending,
-       'attachedFiles': [],
+      'attachedFiles': [],
     },
     {
       'documentId': '7',
@@ -906,5 +993,4 @@ class DataList {
       ],
     },
   ];
-
 }

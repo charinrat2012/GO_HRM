@@ -1,4 +1,4 @@
-# go_hrm
+# GO HRM
 
 A new Flutter project.
 

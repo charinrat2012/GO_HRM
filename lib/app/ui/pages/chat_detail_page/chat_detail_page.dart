@@ -1,12 +1,11 @@
-// ในไฟล์ lib/app/ui/pages/chat_detail_page/chat_detail_page.dart
-
 import 'dart:io';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/config/my_colors.dart';
-import 'package:go_hrm/app/data/models/chat_model.dart';
+
 import 'package:image_picker/image_picker.dart';
+import '../../../config/my_colors.dart';
+import '../../../data/models/chat_model.dart';
 import 'chat_detail_controller.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
@@ -15,92 +14,94 @@ class ChatDetailPage extends GetView<ChatDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: PopScope(
-        // onWillPop: controller.onWillPop,
-        // onWillPop: () => controller.onWillPop(),
-        child: Scaffold(
-          backgroundColor: const Color(0xFFF0F4F8),
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 1,
-            leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-                size: 20,
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: PopScope(
+          // onWillPop: controller.onWillPop,
+          // onWillPop: () => controller.onWillPop(),
+          child: Scaffold(
+            backgroundColor: const Color(0xFFF0F4F8),
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              elevation: 1,
+              leading: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black,
+                  size: 20,
+                ),
+                onPressed: () => Get.back(),
               ),
-              onPressed: () => Get.back(),
-            ),
-            title: Text(
-              controller.chat.name,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: false,
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.menu, color: Colors.black),
-              ),
-            ],
-          ),
-          body: Column(
-            children: [
-              Expanded(
-                child: Obx(
-                  () => ListView.builder(
-                    controller: controller.scrollController,
-                    padding: const EdgeInsets.all(16.0),
-                    itemCount: controller.chat.messages.length,
-                    itemBuilder: (context, index) {
-                      final message = controller.chat.messages[index];
-                      final bool showHeader =
-                          index == 0 ||
-                          controller.chat.messages[index - 1].senderName !=
-                              message.senderName;
-                      return _buildMessageBubble(message, showHeader);
-                    },
-                  ),
+              title: Text(
+                controller.chat.name,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              _buildMessageInputField(),
-              Obx(
-                () => Offstage(
-                  offstage: !controller.isEmojiPickerVisible.value,
-                  child: SizedBox(
-                    height: 250,
-                    child: EmojiPicker(
-                      textEditingController: controller.messageController,
-                      config: Config(
-                        height: 250,
-                        checkPlatformCompatibility: true,
-                        emojiViewConfig: EmojiViewConfig(
-                          emojiSizeMax:
-                              28 *
-                              (foundation.defaultTargetPlatform ==
-                                      TargetPlatform.iOS
-                                  ? 1.20
-                                  : 1.0),
-                          columns: 8,
-                          backgroundColor: const Color(0xFFF2F2F2),
-                        ),
+              centerTitle: false,
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.menu, color: Colors.black),
+                ),
+              ],
+            ),
+            body: Column(
+              children: [
+                Expanded(
+                  child: Obx(
+                    () => ListView.builder(
+                      controller: controller.scrollController,
+                      padding: const EdgeInsets.all(16.0),
+                      itemCount: controller.chat.messages.length,
+                      itemBuilder: (context, index) {
+                        final message = controller.chat.messages[index];
+                        final bool showHeader =
+                            index == 0 ||
+                            controller.chat.messages[index - 1].senderName !=
+                                message.senderName;
+                        return _buildMessageBubble(message, showHeader);
+                      },
+                    ),
+                  ),
+                ),
+                _buildMessageInputField(),
+                Obx(
+                  () => Offstage(
+                    offstage: !controller.isEmojiPickerVisible.value,
+                    child: SizedBox(
+                      height: 250,
+                      child: EmojiPicker(
+                        textEditingController: controller.messageController,
+                        config: Config(
+                          height: 250,
+                          checkPlatformCompatibility: true,
+                          emojiViewConfig: EmojiViewConfig(
+                            emojiSizeMax:
+                                28 *
+                                (foundation.defaultTargetPlatform ==
+                                        TargetPlatform.iOS
+                                    ? 1.20
+                                    : 1.0),
+                            columns: 8,
+                            backgroundColor: const Color(0xFFF2F2F2),
+                          ),
 
-                        // swapCategoryAndBottomBar: false,
-                        skinToneConfig: const SkinToneConfig(),
-                        categoryViewConfig: const CategoryViewConfig(),
-                        bottomActionBarConfig: const BottomActionBarConfig(),
-                        searchViewConfig: const SearchViewConfig(),
+                          // swapCategoryAndBottomBar: false,
+                          skinToneConfig: const SkinToneConfig(),
+                          categoryViewConfig: const CategoryViewConfig(),
+                          bottomActionBarConfig: const BottomActionBarConfig(),
+                          searchViewConfig: const SearchViewConfig(),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -111,7 +112,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
     final isMe = message.isMe;
     // กำหนดว่าเวลาควรอยู่ด้านขวาของข้อความหรือไม่
     // isTimeOnRight จะเป็นจริงก็ต่อเมื่อไม่ใช่ข้อความของเรา (ขาเข้า)
-    final bool isTimeOnRight = !isMe; 
+    final bool isTimeOnRight = !isMe;
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4.0),
@@ -124,7 +125,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
           // ชื่อจะอยู่เหนือกรอบข้อความและมี padding จากด้านซ้าย
           if (showHeader && !isMe && controller.chat.isGroup)
             Padding(
-              padding: const EdgeInsets.only(left: 48.0, bottom: 4.0), 
+              padding: const EdgeInsets.only(left: 48.0, bottom: 4.0),
               child: Text(
                 message.senderName, // ชื่อผู้ส่ง
                 style: TextStyle(
@@ -138,7 +139,8 @@ class ChatDetailPage extends GetView<ChatDetailController> {
             mainAxisAlignment: isMe
                 ? MainAxisAlignment.end
                 : MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end, // จัดเรียงด้านล่างสุดของ Row นี้
+            crossAxisAlignment:
+                CrossAxisAlignment.end, // จัดเรียงด้านล่างสุดของ Row นี้
             children: [
               // รูปโปรไฟล์ (ถ้าไม่ใช่ข้อความของเรา)
               if (!isMe)
@@ -147,7 +149,8 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                   maintainSize: true,
                   maintainAnimation: true,
                   maintainState: true,
-                  child: CircleAvatar( // รูปโปรไฟล์
+                  child: CircleAvatar(
+                    // รูปโปรไฟล์
                     radius: 20,
                     backgroundImage: AssetImage(message.senderImageUrl),
                   ),
@@ -164,16 +167,21 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                   children: [
                     // Row สำหรับกรอบข้อความ + เวลา
                     Row(
-                      mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start, // จัดกรอบข้อความ+เวลาไปซ้าย/ขวา
-                      crossAxisAlignment: CrossAxisAlignment.end, // จัดเรียงเวลาให้อยู่ด้านล่าง
-                      mainAxisSize: MainAxisSize.min, // ทำให้ Row นี้หดตามเนื้อหา
+                      mainAxisAlignment: isMe
+                          ? MainAxisAlignment.end
+                          : MainAxisAlignment
+                                .start, // จัดกรอบข้อความ+เวลาไปซ้าย/ขวา
+                      crossAxisAlignment:
+                          CrossAxisAlignment.end, // จัดเรียงเวลาให้อยู่ด้านล่าง
+                      mainAxisSize:
+                          MainAxisSize.min, // ทำให้ Row นี้หดตามเนื้อหา
                       children: [
                         if (!isMe) // ถ้าเป็นข้อความขาเข้า (เวลาอยู่ขวา)
                           _buildMessageContent(message), // กรอบข้อความ
-                        
+
                         if (!isMe) // ระยะห่างถ้าเวลาอยู่ขวา (ข้อความขาเข้า)
                           const SizedBox(width: 8),
-                        
+
                         if (!isMe) // ถ้าเป็นข้อความขาเข้า (เวลาอยู่ขวา)
                           Text(
                             message.time, // แสดงเวลา
@@ -193,7 +201,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                           ),
                         if (isMe) // ระยะห่างถ้าเวลาอยู่ซ้าย (ข้อความของเรา)
                           const SizedBox(width: 8),
-                        
+
                         if (isMe) // ถ้าเป็นข้อความของเรา (เวลาอยู่ซ้าย)
                           _buildMessageContent(message), // กรอบข้อความ
                       ],
@@ -213,7 +221,12 @@ class ChatDetailPage extends GetView<ChatDetailController> {
     final isMe = message.isMe;
     final color = isMe
         ? MyColors.blue
-        : Color.fromRGBO(213, 243, 246, 0.573); //สีพื้นหลังเจ้าของแชต //สีพื้นหลังไฟล์เสียง
+        : Color.fromRGBO(
+            213,
+            243,
+            246,
+            0.573,
+          ); //สีพื้นหลังเจ้าของแชต //สีพื้นหลังไฟล์เสียง
     final textColor = isMe
         ? Colors.white
         : Colors.black; //สีข้อความเจ้าของแชต //สีข้อความผู้ใช้
@@ -429,7 +442,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
 
                 decoration: InputDecoration(
                   hintText: 'พิมพ์',
-                
+
                   filled: true,
                   fillColor: Colors.grey.shade100,
                   contentPadding: const EdgeInsets.symmetric(
@@ -437,16 +450,22 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                     vertical: 10,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40), 
-                    borderSide: BorderSide(color: Color.fromRGBO(204, 218, 255, 1)), 
+                    borderRadius: BorderRadius.circular(40),
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(204, 218, 255, 1),
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40), 
-                   borderSide: BorderSide(color: Color.fromRGBO(204, 218, 255, 1)), 
+                    borderRadius: BorderRadius.circular(40),
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(204, 218, 255, 1),
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40), 
-                    borderSide: BorderSide(color: Color.fromRGBO(204, 218, 255, 1)), 
+                    borderRadius: BorderRadius.circular(40),
+                    borderSide: BorderSide(
+                      color: Color.fromRGBO(204, 218, 255, 1),
+                    ),
                   ),
                   suffixIcon: IconButton(
                     onPressed: controller.toggleEmojiKeyboard,
@@ -458,7 +477,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                         color: Colors.grey.shade600,
                       ),
                     ),
-                    style: ButtonStyle(visualDensity: VisualDensity.compact,),
+                    style: ButtonStyle(visualDensity: VisualDensity.compact),
                   ),
                 ),
               ),

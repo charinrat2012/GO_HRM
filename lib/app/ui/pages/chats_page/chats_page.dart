@@ -11,41 +11,46 @@ class ChatsPage extends GetView<ChatsController> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
           backgroundColor: Colors.white,
-          elevation: 1,
-          title: const Text(
-            'แชท',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: false,
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.menu, color: Colors.black),
-            ),
-          ],
-        ),
-        body: Column(
-          children: [
-            _buildSearchBar(),
-            _buildFilterTabs(),
-            Expanded(
-              child: Obx(
-                () => ListView.builder(
-                  itemCount: controller.filteredChats.length,
-                  itemBuilder: (context, index) {
-                    final chat = controller.filteredChats[index];
-                    return _buildChatListItem(chat);
-                  },
-                ),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 1,
+            title: const Text(
+              'แชท',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ],
+            centerTitle: false,
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.menu, color: Colors.black),
+              ),
+            ],
+          ),
+          body: Column(
+            children: [
+              _buildSearchBar(),
+              _buildFilterTabs(),
+              Expanded(
+                child: Obx(
+                  () => ListView.builder(
+                    itemCount: controller.filteredChats.length,
+                    itemBuilder: (context, index) {
+                      final chat = controller.filteredChats[index];
+                      return _buildChatListItem(chat);
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
