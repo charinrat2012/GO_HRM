@@ -1,12 +1,18 @@
+// ในไฟล์ lib/app/ui/pages/chat_detail_page/chat_detail_controller.dart
+
+// ... (โค้ดส่วนบนของไฟล์) ...
+
+import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart'; // ตรวจสอบว่าใช้ 'package:image_picker/image_picker.dart'
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:record/record.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:video_player/video_player.dart'; // ตรวจสอบว่า import นี้อยู่แล้ว
 import '../../../data/models/chat_model.dart';
 import '../chats_page/chats_controller.dart';
 
@@ -118,6 +124,28 @@ class ChatDetailController extends GetxController {
       Get.snackbar('เกิดข้อผิดพลาด', 'ไม่สามารถเลือกรูปภาพได้');
     }
   }
+
+  // *** เมธอดใหม่สำหรับเลือก/บันทึกวิดีโอ ***
+  Future<void> pickVideo(ImageSource source) async {
+    try {
+      final XFile? video = await _picker.pickVideo(source: source);
+      if (video != null) {
+        _addMessage(
+          Message(
+            senderName: 'Me',
+            senderImageUrl: 'assets/imgs/profile.jpg',
+            filePath: video.path, // ใช้ filePath สำหรับวิดีโอ
+            fileName: video.name, // ชื่อไฟล์วิดีโอ
+            time: _currentTime,
+            isMe: true,
+          ),
+        );
+      }
+    } catch (e) {
+      Get.snackbar('เกิดข้อผิดพลาด', 'ไม่สามารถเลือกวิดีโอได้: $e');
+    }
+  }
+
 
   Future<void> pickFile() async {
     try {

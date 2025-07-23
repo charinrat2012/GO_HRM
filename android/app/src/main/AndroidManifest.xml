@@ -4,6 +4,7 @@
 <!-- สำหรับการเลือกรูปภาพและวิดีโอ (ถ้ายังไม่มี) -->
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 <uses-permission android:name="android.permission.CAMERA"/>
+<uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:label="go_hrm"

@@ -1,9 +1,12 @@
+// ในไฟล์ lib/app/ui/pages/chat_detail_page/chat_detail_page.dart
+
 import 'dart:io';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart'; // เพิ่ม import นี้
+
 import '../../../config/my_colors.dart';
 import '../../../data/models/chat_model.dart';
 import 'chat_detail_controller.dart';
@@ -125,7 +128,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
           // ชื่อจะอยู่เหนือกรอบข้อความและมี padding จากด้านซ้าย
           if (showHeader && !isMe && controller.chat.isGroup)
             Padding(
-              padding: const EdgeInsets.only(left: 48.0, bottom: 4.0),
+              padding: const EdgeInsets.only(left: 48.0, bottom: 4.0), // Padding เดิม
               child: Text(
                 message.senderName, // ชื่อผู้ส่ง
                 style: TextStyle(
@@ -176,13 +179,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                       mainAxisSize:
                           MainAxisSize.min, // ทำให้ Row นี้หดตามเนื้อหา
                       children: [
-                        if (!isMe) // ถ้าเป็นข้อความขาเข้า (เวลาอยู่ขวา)
-                          _buildMessageContent(message), // กรอบข้อความ
-
-                        if (!isMe) // ระยะห่างถ้าเวลาอยู่ขวา (ข้อความขาเข้า)
-                          const SizedBox(width: 8),
-
-                        if (!isMe) // ถ้าเป็นข้อความขาเข้า (เวลาอยู่ขวา)
+                        if (!isTimeOnRight) // ถ้าเวลาอยู่ซ้าย (ข้อความขาออก)
                           Text(
                             message.time, // แสดงเวลา
                             style: TextStyle(
@@ -190,8 +187,14 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                               fontSize: 12,
                             ),
                           ),
+                        if (!isTimeOnRight) // ระยะห่างถ้าเวลาอยู่ซ้าย
+                          const SizedBox(width: 8),
 
-                        if (isMe) // ถ้าเป็นข้อความของเรา (เวลาอยู่ซ้าย)
+                        _buildMessageContent(message), // กรอบข้อความ
+
+                        if (isTimeOnRight) // ระยะห่างถ้าเวลาอยู่ขวา
+                          const SizedBox(width: 8),
+                        if (isTimeOnRight) // ถ้าเป็นข้อความขาเข้า (เวลาอยู่ขวา)
                           Text(
                             message.time, // แสดงเวลา
                             style: TextStyle(
@@ -199,11 +202,6 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                               fontSize: 12,
                             ),
                           ),
-                        if (isMe) // ระยะห่างถ้าเวลาอยู่ซ้าย (ข้อความของเรา)
-                          const SizedBox(width: 8),
-
-                        if (isMe) // ถ้าเป็นข้อความของเรา (เวลาอยู่ซ้าย)
-                          _buildMessageContent(message), // กรอบข้อความ
                       ],
                     ),
                   ],
@@ -236,6 +234,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
     final double textMessageMaxWidthFraction = 0.7; // สำหรับไฟล์ข้อความ
     final double documentFileMaxWidthFraction = 0.8; // สำหรับไฟล์เอกสารทั่วไป
     final double audioFileFixedWidth = 160.0; //สำหรับกำหนดความกว้างไฟล์เสียง
+    final double videoMessageFixedWidth = 250.0; // *** เพิ่มความกว้างตายตัวสำหรับวิดีโอ ***
 
     if (message.imagePath != null) {
       return _buildImageMessageContent(
@@ -248,15 +247,26 @@ class ChatDetailPage extends GetView<ChatDetailController> {
       final bool isAudio =
           message.filePath!.toLowerCase().endsWith('.mp4') ||
           message.filePath!.toLowerCase().endsWith('.mp3');
+      // *** ตรวจสอบว่าเป็นวิดีโอหรือไม่ (สมมติว่าเป็น .mp4 หรือ .mov) ***
+      final bool isVideo = message.filePath!.toLowerCase().endsWith('.mp4') ||
+                           message.filePath!.toLowerCase().endsWith('.mov');
 
-      if (isAudio) {
+
+      if (isAudio && !isVideo) { // เป็นเสียงแต่ไม่ใช่ "วิดีโอ"
         return _buildAudioMessageContent(
           message,
           color,
           textColor,
           audioFileFixedWidth,
         );
-      } else {
+      } else if (isVideo) { // *** ถ้าเป็นวิดีโอ ***
+        return _buildVideoMessageContent(
+          message,
+          color,
+          textColor,
+          videoMessageFixedWidth,
+        );
+      } else { // เป็นไฟล์เอกสารทั่วไป
         return _buildDocumentMessageContent(
           message,
           color,
@@ -285,7 +295,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
       constraints: BoxConstraints(maxWidth: Get.width * maxWidthFraction),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: Color.fromRGBO(204, 218, 255, 1),
+        color: Color.fromRGBO(204, 213, 246, 0.573), // แก้ไขสีให้เป็นสีเดียวกับด้านล่าง
         borderRadius: BorderRadius.circular(20), //ความมนกรอบ
       ),
       child: ClipRRect(
@@ -335,6 +345,21 @@ class ChatDetailPage extends GetView<ChatDetailController> {
           ),
         ],
       ),
+    );
+  }
+
+  // *** เปลี่ยน _buildVideoMessageContent เป็น StatefulWidget ***
+  Widget _buildVideoMessageContent(
+    Message message,
+    Color color,
+    Color textColor,
+    double fixedWidth,
+  ) {
+    return _VideoMessageContentWidget( // ใช้ Widget ที่สร้างใหม่
+      message: message,
+      bubbleColor: color,
+      textColor: textColor,
+      fixedWidth: fixedWidth,
     );
   }
 
@@ -490,6 +515,117 @@ class ChatDetailPage extends GetView<ChatDetailController> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// *** Widget ย่อยที่จัดการการแสดงผลและควบคุมวิดีโอ (StatefulWidget) ***
+class _VideoMessageContentWidget extends StatefulWidget {
+  final Message message;
+  final Color bubbleColor;
+  final Color textColor;
+  final double fixedWidth;
+
+  const _VideoMessageContentWidget({
+    required this.message,
+    required this.bubbleColor,
+    required this.textColor,
+    required this.fixedWidth,
+  });
+
+  @override
+  State<_VideoMessageContentWidget> createState() => _VideoMessageContentWidgetState();
+}
+
+class _VideoMessageContentWidgetState extends State<_VideoMessageContentWidget> {
+  late VideoPlayerController _videoController;
+  bool _isPlaying = false; // สถานะการเล่นภายใน Widget นี้
+
+  @override
+  void initState() {
+    super.initState();
+    // ตรวจสอบว่า filePath เป็น assets หรือ file
+    if (widget.message.filePath!.startsWith('assets/')) {
+      _videoController = VideoPlayerController.asset(widget.message.filePath!);
+    } else {
+      _videoController = VideoPlayerController.file(File(widget.message.filePath!));
+    }
+
+    _videoController.initialize().then((_) {
+      setState(() {}); // เมื่อ initialize เสร็จสิ้น ให้ rebuild UI
+    });
+
+    // Listener สำหรับอัปเดตสถานะปุ่ม Play/Pause
+    _videoController.addListener(() {
+      if (_isPlaying != _videoController.value.isPlaying) {
+        setState(() {
+          _isPlaying = _videoController.value.isPlaying;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _videoController.dispose(); // สำคัญมาก: ต้อง dispose controller
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widget.fixedWidth, // ความกว้างตายตัวสำหรับวิดีโอ
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: widget.bubbleColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (_videoController.value.isInitialized)
+            AspectRatio(
+              aspectRatio: _videoController.value.aspectRatio,
+              child: VideoPlayer(_videoController),
+            )
+          else
+            Container(
+              height: widget.fixedWidth * (9 / 16), // สัดส่วน 16:9 เป็นมาตรฐาน
+              color: Colors.black,
+              child: Center(
+                child: CircularProgressIndicator(color: widget.textColor),
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.message.fileName ?? 'วิดีโอ',
+                  style: TextStyle(color: widget.textColor, fontSize: 12),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                IconButton(
+                  icon: Icon(
+                    _isPlaying ? Icons.pause_circle_filled : Icons.play_circle_fill, // ใช้ _isPlaying
+                    color: widget.textColor,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    if (_videoController.value.isPlaying) {
+                      _videoController.pause();
+                    } else {
+                      _videoController.play();
+                    }
+                    // ไม่ต้อง setState ตรงนี้ เพราะ listener จะเรียก setState เอง
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
