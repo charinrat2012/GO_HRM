@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ActivityBar extends StatelessWidget {
-  const ActivityBar({super.key});
+class TitleBar extends StatelessWidget {
+  const TitleBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: const Text(
-        'กิจกรรม',
+        'ข่าวด่วน',
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
       ),
       trailing: PopupMenuButton<String>(

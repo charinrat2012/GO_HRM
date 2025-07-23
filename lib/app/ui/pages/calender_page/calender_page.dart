@@ -21,22 +21,16 @@ class CalenderPage extends GetView<CalenderController> {
               pinned: false,
               floating: false,
 
-              title: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          'ปฏิทิน',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                          ),
-                        ),
-                        const Spacer(),
-                        MenuAnchor(
+              title: const Text(
+                'ปฏิทิน',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                ),
+              ),
+              actions: [
+                MenuAnchor(
                           builder: (context, controller, child) {
                             return IconButton(
                               onPressed: () {
@@ -59,22 +53,70 @@ class CalenderPage extends GetView<CalenderController> {
                           menuChildren: [
                             MenuItemButton(
                               onPressed: () {},
-                              leadingIcon: const Icon(Icons.person_outline),
-                              child: const Text('โปรไฟล์'),
-                            ),
-                            MenuItemButton(
-                              onPressed: () {},
                               leadingIcon: const Icon(Icons.settings_outlined),
                               child: const Text('ตั้งค่า'),
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                    Divider(color: Colors.grey[400]),
-                  ],
+              ],
+              bottom: PreferredSize(
+                // --- กำหนดความสูงของพื้นที่เส้นคั่น ---
+                preferredSize: const Size.fromHeight(1.0),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Divider(),
                 ),
               ),
+              
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              //   child: Column(
+              //     children: [
+              //       Row(
+              //         children: [
+              //           const Text(
+              //             'ปฏิทิน',
+              //             style: TextStyle(
+              //               color: Colors.black,
+              //               fontWeight: FontWeight.w600,
+              //               fontSize: 18,
+              //             ),
+              //           ),
+              //           const Spacer(),
+              //           MenuAnchor(
+              //             builder: (context, controller, child) {
+              //               return IconButton(
+              //                 onPressed: () {
+              //                   // เช็คว่าเมนูกำลังเปิดอยู่หรือไม่
+              //                   if (controller.isOpen) {
+              //                     controller.close(); // ถ้าเปิดอยู่ให้ปิด
+              //                   } else {
+              //                     controller.open(); // ถ้าปิดอยู่ให้เปิด
+              //                   }
+              //                 },
+              //                 icon: const Icon(
+              //                   Icons.more_horiz,
+              //                   color: MyColors.blue2,
+              //                 ),
+              //                 tooltip: 'เปิดเมนู',
+              //               );
+              //             },
+
+              //             //คือรายการเมนูที่จะแสดง
+              //             menuChildren: [
+              //               MenuItemButton(
+              //                 onPressed: () {},
+              //                 leadingIcon: const Icon(Icons.settings_outlined),
+              //                 child: const Text('ตั้งค่า'),
+              //               ),
+              //             ],
+              //           ),
+              //         ],
+              //       ),
+              //       Divider(color: Colors.grey[400]),
+              //     ],
+              //   ),
+              // ),
             ),
 
             SliverToBoxAdapter(

@@ -50,6 +50,7 @@ dependencies:
   record:  
   path_provider: 
   audioplayers: 
+  flutter_switch:
   
 flutter_launcher_icons:
   android: "hrmlogo" # ตั้งชื่อไฟล์ไอคอนสำหรับ Android

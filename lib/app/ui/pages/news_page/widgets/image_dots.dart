@@ -12,11 +12,15 @@ class ImageDots extends GetView<NewsController> {
     return Obx(
       () => Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
+        children: controller.isSwitchedOn.value == true
+        ? []
+        :
+        List.generate(
           controller.imgcard.length,
           (index) =>
               Indicator(isActive: controller.currentPageIndex.value == index),
         ),
+
       ),
     );
   }

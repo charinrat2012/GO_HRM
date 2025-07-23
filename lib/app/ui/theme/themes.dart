@@ -16,7 +16,15 @@ class Themes {
      highlightColor: Colors.transparent,
     splashFactory: NoSplash.splashFactory,
     iconTheme: const IconThemeData(color: MyColors.blue2,),
-    
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(
+      foregroundColor: MyColors.blue2,
+    )),
+    popupMenuTheme: PopupMenuThemeData(
+      color: Colors.white,
+      position:  PopupMenuPosition.under,
+      iconColor: MyColors.blue2,
+    ),
     textTheme: GoogleFonts.athitiTextTheme(),
    
     

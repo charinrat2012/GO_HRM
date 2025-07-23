@@ -79,4 +79,18 @@ class NewsController extends GetxController {
     pageController.dispose();
     super.onClose();
   }
+
+
+  final isSwitchedOn = false.obs;
+  void toggleSwitch(bool value) {
+    isSwitchedOn.value = value;
+    // isSwitchedOn.value = !isSwitchedOn.value;
+    // คุณสามารถใส่ Logic เพิ่มเติมตรงนี้ได้
+    // เช่น ถ้าสวิตช์เปิด ให้ทำอะไรบางอย่าง
+    if (value) {
+      print("สวิตช์เปิดแล้ว");
+    } else {
+      print("สวิตช์ปิดแล้ว");
+    }
+  }
 }

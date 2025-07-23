@@ -1,5 +1,6 @@
 class NewsCardModel {
   final String newsId;
+  // final String ownerName;
   final String imageUrl;
   final String title;
   final String description;
@@ -11,6 +12,7 @@ class NewsCardModel {
 
   NewsCardModel({
     required this.newsId,
+    // required this.ownerName,
     required this.imageUrl,
     required this.title,
     required this.description,
@@ -24,6 +26,7 @@ class NewsCardModel {
   factory NewsCardModel.fromMap(Map<String, dynamic> map) {
     return NewsCardModel(
       newsId: map['newsId'] ?? '',
+      // ownerName: map['ownerName'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
       title: map['title'] ?? '',
       description: map['description'] ?? '',
@@ -37,6 +40,7 @@ class NewsCardModel {
   // เมธอด copyWith เพื่อสร้าง Object ใหม่พร้อม Property ที่เปลี่ยนแปลง
   NewsCardModel copyWith({
     String? newsId,
+    // String? ownerName,
     String? imageUrls,
     String? title,
     String? description,
@@ -48,6 +52,7 @@ class NewsCardModel {
   }) {
     return NewsCardModel(
       newsId: newsId ?? this.newsId,
+      // ownerName: ownerName ?? this.ownerName,
       imageUrl: imageUrl ?? this.imageUrl,
       title: title ?? this.title,
       description: description ?? this.description,
