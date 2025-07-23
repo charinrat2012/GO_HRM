@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_hrm/app/ui/pages/login_page/login_controller.dart';
-import 'package:go_hrm/app/ui/pages/splash_page/splash_controllers.dart';
 
 import '../../../../config/my_colors.dart';
+import '../splash_controllers.dart';
 
 class Checkbotandforgot extends GetView<SplashController> {
   const Checkbotandforgot({super.key});
@@ -12,19 +11,23 @@ class Checkbotandforgot extends GetView<SplashController> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    
+
       children: [
         Row(
           children: [
-            Obx( //เมื่อตัวแปร rememberMe เปลี่ยนค่า Checkbox จะอัปเดตตามอัตโนมัติ
+            Obx(
+              //เมื่อตัวแปร rememberMe เปลี่ยนค่า Checkbox จะอัปเดตตามอัตโนมัติ
               () => Checkbox(
-                value: controller.rememberMe.value, //ใช้ค่าจากตัวแปร  rememberMe เพื่อกำหนดสถานะ Checkbox ว่าถูกเลือกอยู่หรือไม่
+                value: controller
+                    .rememberMe
+                    .value, //ใช้ค่าจากตัวแปร  rememberMe เพื่อกำหนดสถานะ Checkbox ว่าถูกเลือกอยู่หรือไม่
                 onChanged: (_) {
-                  controller.rememberMe.toggle(); //มีการแตะจะสลับค่าระหว่าง true กับ false
+                  controller.rememberMe
+                      .toggle(); //มีการแตะจะสลับค่าระหว่าง true กับ false
                 },
                 activeColor: MyColors.blue,
                 checkColor: Colors.white,
-                side: BorderSide(color: Colors.grey[400]!, ),
+                side: BorderSide(color: Colors.grey[400]!),
                 visualDensity: VisualDensity(
                   horizontal: -4, //ลดขนาดพื้นที่รอบๆให้น้อยลง
                   // vertical: -4, //ลดความสูง (ขนาดในแนวตั้ง) ให้น้อยลง
@@ -40,9 +43,7 @@ class Checkbotandforgot extends GetView<SplashController> {
           onPressed: () {
             // TODO: ลืมรหัสผ่าน
           },
-          style: TextButton.styleFrom(
-            padding: EdgeInsets.zero,
-          ), 
+          style: TextButton.styleFrom(padding: EdgeInsets.zero),
           child: const Text(
             "ลืมรหัสผ่าน?",
             style: TextStyle(color: MyColors.blue, fontWeight: FontWeight.bold),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SalaryDetailHead extends StatelessWidget {
-  
   const SalaryDetailHead({super.key});
 
   @override
@@ -26,7 +25,6 @@ class SalaryDetailHead extends StatelessWidget {
         ),
       ),
       centerTitle: true,
-
     );
   }
 }

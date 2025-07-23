@@ -9,9 +9,6 @@ import 'widgets/list_head.dart';
 import 'widgets/salary_head.dart';
 import 'widgets/year_filter.dart';
 
-
-
-
 class SalaryPage extends GetView<SalaryController> {
   const SalaryPage({super.key});
 
