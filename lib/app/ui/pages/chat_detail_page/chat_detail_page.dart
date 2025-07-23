@@ -290,7 +290,9 @@ class ChatDetailPage extends GetView<ChatDetailController> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16), //ความนนรูปภาพ
-        child: Image.file(File(message.imagePath!), fit: BoxFit.cover),
+        child: message.imagePath!.startsWith('assets/')
+            ? Image.asset(message.imagePath!, fit: BoxFit.cover)
+            : Image.file(File(message.imagePath!), fit: BoxFit.cover),
       ),
     );
   }

@@ -69,11 +69,12 @@ class ChatsController extends GetxController {
       // หรือถ้าต้องการ update lastMessage/time ใน ChatsController.chats ด้วย
       chats[index].lastMessage.value = updatedChat.lastMessage.value;
       chats[index].time.value = updatedChat.time.value;
-      chats[index].messages.assignAll(updatedChat.messages); // อัปเดต messages ทั้งหมด
+      chats[index].messages.assignAll(
+        updatedChat.messages,
+      ); // อัปเดต messages ทั้งหมด
       chats.refresh(); // บังคับให้ ListView ใน ChatsPage อัปเดต (ถ้าจำเป็น)
     }
   }
-
 
   void _loadChatsData() {
     chats.assignAll([
@@ -147,6 +148,197 @@ class ChatsController extends GetxController {
             text: 'หัวหน้าลองมาติดบ้างมั้ยคะ?',
             time: '12:04',
             isMe: false,
+          ),
+        ],
+      ),
+      Chat(
+        id: '4',
+        name: 'ชนิตรา ปิติโอภาสพงศ์',
+        imageUrl: 'assets/imgs/pic4.jpg',
+        lastMessage: 'ทำไมวันนี้ไม่เจอกันที่ห้องทำงาน??',
+        time: '7 ม.ค. 2566',
+        unreadCount: 1,
+        messages: [
+          Message(
+            senderName: 'Absolute Management.co.th',
+            senderImageUrl: 'assets/imgs/pic4.jpg',
+            text: 'ทำไมวันนี้ไม่เจอกันที่ห้องทำงาน??',
+            time: '12:04',
+            isMe: false,
+          ),
+        ],
+      ),
+      Chat(
+        id: '5',
+        name: 'แก้วกาล เจริญทิพย์',
+        imageUrl: 'assets/imgs/pic5.jpg',
+        lastMessage: 'แก้วกาล ส่งข้อความเเบบเข้ารหัส',
+        time: '7 ม.ค. 2566',
+        unreadCount: 1,
+        messages: [
+          Message(
+            senderName: 'แก้วกาล เจริญทิพย์',
+            senderImageUrl: 'assets/imgs/pic5.jpg',
+            text: 'แก้วกาล ส่งข้อความเเบบเข้ารหัส',
+            time: '12:04',
+            isMe: false,
+          ),
+        ],
+      ),
+      Chat(
+        id: '6',
+        name: 'กาญจน์ นิธิวรสกุล',
+         imageUrl: 'assets/imgs/pic6.jpg',
+        lastMessage: 'กาญจน์ ส่งรูปภาพ', // *** เปลี่ยนตรงนี้ ***
+        time: '7 ม.ค. 2566',
+        unreadCount: 1,
+        messages: [
+          Message(
+            senderName: 'กาญจน์ นิธิวรสกุล',
+            senderImageUrl: 'assets/imgs/pic6.jpg',
+            text: null, // *** เปลี่ยนตรงนี้เป็น null ***
+            imagePath: 'assets/imgs/pic6.jpg',
+            time: '12:04',
+            isMe: false,
+          ),
+        ],
+      ),
+      Chat(
+        id: '7',
+        name: 'พรพิมล สรพินิจ',
+
+        imageUrl: 'assets/imgs/pic7.jpg',
+        lastMessage: 'คุณ: เจอกันพรุ่งนี้นะครับ',
+        time: '12:04',
+        unreadCount: 0,
+        messages: [
+          Message(
+            senderName: 'พรพิมล สรพินิจ',
+            senderImageUrl: 'assets/imgs/pic7.jpg',
+            text: 'คุณ: เจอกันพรุ่งนี้นะครับ???',
+            time: '12:04',
+            isMe: true,
+          ),
+        ],
+      ),
+      Chat(
+        id: '8',
+        name: 'กาญญา พาณิชวัฒนากูล',
+        imageUrl: 'assets/imgs/pic8.jpg',
+        lastMessage: 'กาญญา ส่งข้อความเสียง',
+        time: '7 ม.ค. 2566',
+        unreadCount: 1,
+        messages: [
+          Message(
+            senderName: 'กาญญา พาณิชวัฒนากูล',
+            senderImageUrl: 'assets/imgs/pic8.jpg',
+            text: 'กาญญา ส่งข้อความเสียง',
+            time: '12:04',
+            isMe: false,
+          ),
+        ],
+      ),
+      Chat(
+        id: '9',
+        name: 'นิชาภรณ์ ศิลาดี',
+        imageUrl: 'assets/imgs/pic9.jpg',
+        lastMessage: 'นิชาภรณี ส่งรูปภาพ',
+        time: '7 ม.ค. 2566',
+        unreadCount: 1,
+        messages: [
+          Message(
+            senderName: 'นิชาภรณ์ ศิลาดี',
+            senderImageUrl: 'assets/imgs/pic9.jpg',
+           text: null,
+            imagePath: 'assets/imgs/pic1.jpg',
+            time: '12:04',
+            isMe: false,
+          ),
+        ],
+      ),
+      Chat(
+        id: '10',
+        name: 'ชลธิมา ฐิติรัตนาวงศ์',
+
+        imageUrl: 'assets/imgs/pic10.jpg',
+        lastMessage: 'คุณ: สวัสดีครับ ทักครับ',
+        time: '12:04',
+        unreadCount: 0,
+        messages: [
+          Message(
+            senderName: 'ชลธิมา ฐิติรัตนาวงศ์',
+            senderImageUrl: 'assets/imgs/pic10.jpg',
+            text: 'คุณ: สวัสดีครับ ทักครับ',
+            time: '12:04',
+            isMe: true,
+          ),
+        ],
+      ),
+      Chat(
+        id: '11',
+        name: 'วลัยพร ขจรเกียรติสกุล',
+        imageUrl: 'assets/imgs/pic11.png',
+        lastMessage: 'วลัยพร ส่งวิดีโอ',
+        time: '7 ม.ค. 2566',
+        unreadCount: 1,
+        messages: [
+          Message(
+            senderName: 'วลัยพร ขจรเกียรติสกุล',
+            senderImageUrl: 'assets/imgs/pic11.png',
+            text: 'วลัยพร ส่งวิดีโอ',
+            time: '12:04',
+            isMe: false,
+          ),
+        ],
+      ),
+      Chat(
+        id: '12',
+        name: 'ไลลา บำรุงกาญจน์',
+        imageUrl: 'assets/imgs/pic1.jpg',
+        lastMessage: 'ทำอะไรอยู่???',
+        time: '7 ม.ค. 2566',
+        unreadCount: 1,
+        messages: [
+          Message(
+            senderName: 'ไลลา บำรุงกาญจน์',
+            senderImageUrl: 'assets/imgs/pic1.jpg',
+            text: 'ทำอะไรอยู่???',
+            time: '12:04',
+            isMe: false,
+          ),
+        ],
+      ),
+      Chat(
+        id: '13',
+        name: 'ชนวรรณ พินิจนันท์',
+        imageUrl: 'assets/imgs/pic2.jpg',
+        lastMessage: 'พรุ่งนี้นัดกันเจอเวลา 10.30 ที่บริษัท นะคะ',
+        time: '7 ม.ค. 2566',
+        unreadCount: 1,
+        messages: [
+          Message(
+            senderName: 'ชนวรรณ พินิจนันท์',
+            senderImageUrl: 'assets/imgs/pic2.jpg',
+            text: 'พรุ่งนี้นัดกันเจอเวลา 10.30 ที่บริษัท นะคะ',
+            time: '12:04',
+            isMe: false,
+          ),
+        ],
+      ),
+      Chat(
+        id: '14',
+        name: 'พรรณวร จันทรทรัพย์',
+        imageUrl: 'assets/imgs/pic3.jpg',
+        lastMessage: 'คุณ: สวัสดีครับ เเผนกไอทีครับ',
+        time: '12:04',
+        unreadCount: 0,
+        messages: [
+          Message(
+            senderName: 'พรรณวร จันทรทรัพย์',
+            senderImageUrl: 'assets/imgs/pic3.jpg',
+            text: 'คุณ: สวัสดีครับ เเผนกไอทีครับ',
+            time: '12:04',
+            isMe: true,
           ),
         ],
       ),

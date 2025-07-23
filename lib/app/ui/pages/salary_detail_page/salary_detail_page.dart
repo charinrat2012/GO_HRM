@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-import '../../../config/my_colors.dart';
 import 'salary_detail_controller.dart';
 import 'widgets/salary_detail_body.dart';
 import 'widgets/salary_detail_card.dart';
@@ -21,13 +19,9 @@ class SalaryDetailPage extends GetView<SalaryDetailController> {
             const SliverToBoxAdapter(child: SizedBox(height: 20.0)),
             SalaryDetailCard(),
             SalaryDetailBody(user: controller.currentUser),
-          
           ],
         ),
       ),
     );
   }
-
-
-
 }
