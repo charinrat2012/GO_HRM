@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../routes/app_routes.dart';
 import '../news_controller.dart';
 import 'images_card.dart';
+import 'images_card2.dart';
 
 class SlideImage extends GetView<NewsController> {
   const SlideImage({super.key});
@@ -11,8 +12,49 @@ class SlideImage extends GetView<NewsController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => SizedBox(
-        height: 219,
+      () => controller.isSwitchedOn.value == true
+       ?  SizedBox(
+        height: 280,
+        child: PageView.builder(
+          controller: controller.pageController,
+          // ใช้ itemCount จาก imgcard เพื่อให้สไลด์แสดงรูปภาพทั้งหมด
+          itemCount: controller.imgcard.length,
+          itemBuilder: (context, index) {
+            return AnimatedBuilder(
+              animation: controller.pageController,
+              builder: (context, child) {
+                double value = 1.0;
+                if (controller.pageController.position.haveDimensions) {
+                  value = controller.pageController.page! - index;
+                  value = (1 - (value.abs() * 0.15)).clamp(0.85, 1.0);
+                }
+                return Center(
+                  child: SizedBox(
+                    height: Curves.easeOut.transform(value) * 2730,
+                    child: child,
+                  ),
+                );
+              },
+              
+            child:  ImagesCard2(
+                imgcard: controller.imgcard[index],
+                
+                onTap: () {
+                  final news = controller.imgcard[index];
+                    Get.toNamed(
+                      AppRoutes.NEWS_DETAILS,
+                      arguments: news, // ส่งข้อมูลที่ถูกต้อง
+                    );
+                  
+                },
+              )
+             
+            );
+          },
+        ),
+      )
+      : SizedBox(
+        height: 220,
         child: PageView.builder(
           controller: controller.pageController,
           // ใช้ itemCount จาก imgcard เพื่อให้สไลด์แสดงรูปภาพทั้งหมด
@@ -48,7 +90,8 @@ class SlideImage extends GetView<NewsController> {
             );
           },
         ),
-      ),
+      )
+     
     );
   }
 }

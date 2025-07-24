@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../routes/app_routes.dart';
 import '../news_controller.dart';
 import 'news_card.dart';
+import 'news_card2.dart';
 
 class NewsFeed extends GetView<NewsController> {
   const NewsFeed({super.key});
@@ -19,9 +20,16 @@ class NewsFeed extends GetView<NewsController> {
               ),
             )
           : SliverList(
+             key: ValueKey(controller.isSwitchedOn.value),
               delegate: SliverChildBuilderDelegate((context, index) {
                 final news = controller.newscard[index];
-                return NewsCard(
+                return controller.isSwitchedOn.value == true
+                ? NewsCard2(
+                  news: news,
+                  onTap: () =>
+                      Get.toNamed(AppRoutes.NEWS_DETAILS, arguments: news),
+                )
+                : NewsCard(
                   news: news,
                   onTap: () =>
                       Get.toNamed(AppRoutes.NEWS_DETAILS, arguments: news),

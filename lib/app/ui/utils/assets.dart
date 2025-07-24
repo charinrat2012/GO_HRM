@@ -32,7 +32,7 @@ class Assets {
 
   /// Assets for assetsImgsHrmlogo
   /// assets/imgs/hrmlogo.png
-  static const String assetsImgsHrmlogo = "assets/imgs/hrmlogo.png";
+  static const String assetsImgsHrmlogopng = "assets/imgs/hrmlogo.png";
 
   /// Assets for assetsImgsLogoAbsolute
   /// assets/imgs/logo_absolute.png

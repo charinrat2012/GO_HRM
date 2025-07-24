@@ -1,18 +1,12 @@
-// ในไฟล์ lib/app/ui/pages/chat_detail_page/chat_detail_controller.dart
-
-// ... (โค้ดส่วนบนของไฟล์) ...
-
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
+import 'package:file_picker/file_picker.dart'; // ตรวจสอบว่ามี import นี้แล้ว
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart'; // ตรวจสอบว่าใช้ 'package:image_picker/image_picker.dart'
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:record/record.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:video_player/video_player.dart'; // ตรวจสอบว่า import นี้อยู่แล้ว
 import '../../../data/models/chat_model.dart';
 import '../chats_page/chats_controller.dart';
 
@@ -146,25 +140,32 @@ class ChatDetailController extends GetxController {
     }
   }
 
-
+  // **** แก้ไขเมธอด pickFile() ที่นี่ ****
   Future<void> pickFile() async {
     try {
-      final result = await FilePicker.platform.pickFiles();
-      if (result != null && result.files.single.path != null) {
-        final file = result.files.single;
-        _addMessage(
-          Message(
-            senderName: 'Me',
-            senderImageUrl: 'assets/imgs/profile.jpg',
-            filePath: file.path,
-            fileName: file.name,
-            time: _currentTime,
-            isMe: true,
-          ),
-        );
+      final result = await FilePicker.platform.pickFiles(
+        allowMultiple: true, // เพิ่มบรรทัดนี้เพื่ออนุญาตให้เลือกหลายไฟล์
+        type: FileType.custom, // กำหนดประเภทไฟล์ (ถ้าต้องการ)
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xlsx', 'pptx'], // เพิ่มนามสกุลที่ต้องการ
+      );
+      if (result != null && result.files.isNotEmpty) { // ตรวจสอบว่ามีไฟล์ถูกเลือกหรือไม่
+        for (final filePlatform in result.files) { // วนลูปเพื่อเพิ่มไฟล์แต่ละไฟล์
+          if (filePlatform.path != null) {
+            _addMessage(
+              Message(
+                senderName: 'Me',
+                senderImageUrl: 'assets/imgs/profile.jpg',
+                filePath: filePlatform.path,
+                fileName: filePlatform.name,
+                time: _currentTime,
+                isMe: true,
+              ),
+            );
+          }
+        }
       }
     } catch (e) {
-      Get.snackbar('เกิดข้อผิดพลาด', 'ไม่สามารถเลือกไฟล์ได้');
+      Get.snackbar('เกิดข้อผิดพลาด', 'ไม่สามารถเลือกไฟล์ได้: $e');
     }
   }
 
@@ -179,7 +180,7 @@ class ChatDetailController extends GetxController {
               senderName: 'Me',
               senderImageUrl: 'assets/imgs/profile.jpg',
               filePath: path,
-              fileName: 'voice_5896559.mp4',
+              fileName: 'voice_5896559.mp3',
               time: _currentTime,
               isMe: true,
             ),

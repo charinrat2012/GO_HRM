@@ -1,5 +1,3 @@
-// ในไฟล์ lib/app/ui/pages/chats_page/chats_controller.dart
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -92,7 +90,7 @@ class ChatsController extends GetxController {
             senderName: 'หัวหน้าที่รัก',
             senderImageUrl: 'assets/imgs/pic2.jpg',
             text: 'ทำไมวันนี้มีแต่คนมาสาย???',
-            time: '12:04',
+            time: '',
             isMe: false,
           ),
           Message(
@@ -111,13 +109,13 @@ class ChatsController extends GetxController {
         isGroup: true,
         lastMessage: 'หัวหน้า: ทำไมวันนี้มีเเต่คนมาสาย!!!',
         time: '7 ม.ค. 2566',
-        unreadCount: 1,
+        unreadCount: 0,
         messages: [
           Message(
             senderName: 'หัวหน้าที่รัก',
             senderImageUrl: 'assets/imgs/logo_absolute.png',
             text: 'ทำไมวันนี้มีเเต่คนมาสาย!!!',
-            time: '12:04',
+            time: '',
             isMe: false,
           ),
           Message(
@@ -131,7 +129,7 @@ class ChatsController extends GetxController {
             senderName: 'บุญนิสา',
             senderImageUrl: 'assets/imgs/pic3.jpg',
             text: 'รถติดมากเลยค่ะ',
-            time: '12:04',
+            time: '',
             isMe: false,
           ),
           Message(
@@ -145,7 +143,7 @@ class ChatsController extends GetxController {
             senderName: 'Me',
             senderImageUrl: 'assets/imgs/pic3.jpg',
             text: 'ผมรู้สึกป่วย กินไม่ได้นอนไม่หลับ',
-            time: '12:04',
+            time: '',
             isMe: true,
           ),
           Message(
@@ -159,7 +157,7 @@ class ChatsController extends GetxController {
             senderName: 'วิวัฒนาศักดิ์',
             senderImageUrl: 'assets/imgs/pic5.jpg',
             text: 'หัวหน้าคะ วันนี้ขอลา เดี๋ยวเอกสารตามไป',
-            time: '12:04',
+            time: '',
             isMe: false,
           ),
           Message(
@@ -204,14 +202,14 @@ class ChatsController extends GetxController {
             senderName: 'บุญนิสา',
             senderImageUrl: 'assets/imgs/pic3.jpg',
             text: 'รถติดมากเลยค่ะ',
-            time: '12:04',
+            time: '',
             isMe: false,
           ),
           Message(
             senderName: 'บุญนิสา',
             senderImageUrl: 'assets/imgs/pic3.jpg',
             text: 'ตอนนี้อยู่แถวสุขุมวิท 14',
-            time: '12:04',
+            time: '',
             isMe: false,
           ),
           Message(
@@ -232,7 +230,7 @@ class ChatsController extends GetxController {
         unreadCount: 1,
         messages: [
           Message(
-            senderName: 'Absolute Management.co.th',
+            senderName: 'ชนิตรา ปิติโอภาสพงศ์',
             senderImageUrl: 'assets/imgs/pic4.jpg',
             text: 'ทำไมวันนี้ไม่เจอกันที่ห้องทำงาน??',
             time: '12:04',
@@ -297,14 +295,17 @@ class ChatsController extends GetxController {
         id: '8',
         name: 'กาญญา พาณิชวัฒนากูล',
         imageUrl: 'assets/imgs/pic8.jpg',
-        lastMessage: 'กาญญา ส่งข้อความเสียง',
+        lastMessage: '[ข้อความเสียง]',
         time: '7 ม.ค. 2566',
         unreadCount: 1,
         messages: [
           Message(
             senderName: 'กาญญา พาณิชวัฒนากูล',
             senderImageUrl: 'assets/imgs/pic8.jpg',
-            text: 'กาญญา ส่งข้อความเสียง',
+            text: null,
+            filePath:
+                'assets/audios/audio.mp4',
+            fileName: 'audio.mp4', 
             time: '12:04',
             isMe: false,
           ),
@@ -358,8 +359,8 @@ class ChatsController extends GetxController {
             senderName: 'วลัยพร ขจรเกียรติสกุล',
             senderImageUrl: 'assets/imgs/pic11.png',
             text: null,
-             filePath: 'assets/vids/video1.mp4', // *** เพิ่ม filePath สำหรับวิดีโอ (สมมติว่ามีไฟล์นี้อยู่) ***
-            fileName: 'sample_video.mp4', // *** เพิ่มชื่อไฟล์ (นามสกุลวิดีโอ) ***
+            filePath: 'assets/vids/video1.mp4',
+            fileName: 'video.mp4',
             time: '12:04',
             isMe: false,
           ),
@@ -628,6 +629,25 @@ class ChatsController extends GetxController {
             senderImageUrl: 'assets/imgs/profile12.png',
             text: 'ไม่สามารถดูข้อความได้',
             time: '26 เม.ย. 2568',
+            isMe: false,
+          ),
+        ],
+      ),
+      Chat(
+        id: '27',
+        name: 'เมริสา วีระพงศ์ศาล',
+        imageUrl: 'assets/imgs/profile5.jpg',
+        lastMessage: '[ข้อความเสียง]',
+        time: '7 ม.ค. 2566',
+        unreadCount: 1,
+        messages: [
+          Message(
+            senderName: 'เมริสา วีระพงศ์ศาล',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: null,
+            filePath: 'assets/audios/audio.mp3',
+            fileName: 'audio.mp3',
+            time: '12:04',
             isMe: false,
           ),
         ],

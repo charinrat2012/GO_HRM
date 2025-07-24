@@ -1,16 +1,15 @@
-// ในไฟล์ lib/app/ui/pages/chat_detail_page/chat_detail_page.dart
-
 import 'dart:io';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:video_player/video_player.dart'; // เพิ่ม import นี้
+import 'package:video_player/video_player.dart';
 
 import '../../../config/my_colors.dart';
 import '../../../data/models/chat_model.dart';
 import 'chat_detail_controller.dart';
 import 'package:flutter/foundation.dart' as foundation;
+import 'widgets/chat_detail_head.dart';
 
 class ChatDetailPage extends GetView<ChatDetailController> {
   const ChatDetailPage({super.key});
@@ -25,33 +24,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
           // onWillPop: () => controller.onWillPop(),
           child: Scaffold(
             backgroundColor: const Color(0xFFF0F4F8),
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 1,
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.black,
-                  size: 20,
-                ),
-                onPressed: () => Get.back(),
-              ),
-              title: Text(
-                controller.chat.name,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              centerTitle: false,
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.menu, color: Colors.black),
-                ),
-              ],
-            ),
+            appBar: ChatDetailHead(),
             body: Column(
               children: [
                 Expanded(
@@ -66,11 +39,14 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                             index == 0 ||
                             controller.chat.messages[index - 1].senderName !=
                                 message.senderName;
-                        return _buildMessageBubble(message, showHeader);
+                        return _MessageBubble(
+                            message: message,
+                            showHeader: showHeader,
+                            isGroupChat: controller.chat.isGroup);
                       },
                     ),
                   ),
-                ),
+                ), 
                 _buildMessageInputField(),
                 Obx(
                   () => Offstage(
@@ -108,307 +84,6 @@ class ChatDetailPage extends GetView<ChatDetailController> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildMessageBubble(Message message, bool showHeader) {
-    final isMe = message.isMe;
-    // กำหนดว่าเวลาควรอยู่ด้านขวาของข้อความหรือไม่
-    // isTimeOnRight จะเป็นจริงก็ต่อเมื่อไม่ใช่ข้อความของเรา (ขาเข้า)
-    final bool isTimeOnRight = !isMe;
-
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Column(
-        crossAxisAlignment: isMe
-            ? CrossAxisAlignment.end
-            : CrossAxisAlignment.start,
-        children: [
-          // *** ส่วนของชื่อผู้ส่ง (ถ้าไม่ใช่ข้อความของเรา และเป็นข้อความใหม่)
-          // ชื่อจะอยู่เหนือกรอบข้อความและมี padding จากด้านซ้าย
-          if (showHeader && !isMe && controller.chat.isGroup)
-            Padding(
-              padding: const EdgeInsets.only(left: 48.0, bottom: 4.0), // Padding เดิม
-              child: Text(
-                message.senderName, // ชื่อผู้ส่ง
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey.shade600, //สีหัวหน้า
-                  fontWeight: FontWeight.bold, // เพิ่มให้ชื่อเด่นขึ้น
-                ),
-              ),
-            ),
-          Row(
-            mainAxisAlignment: isMe
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
-            crossAxisAlignment:
-                CrossAxisAlignment.end, // จัดเรียงด้านล่างสุดของ Row นี้
-            children: [
-              // รูปโปรไฟล์ (ถ้าไม่ใช่ข้อความของเรา)
-              if (!isMe)
-                Visibility(
-                  visible: showHeader,
-                  maintainSize: true,
-                  maintainAnimation: true,
-                  maintainState: true,
-                  child: CircleAvatar(
-                    // รูปโปรไฟล์
-                    radius: 20,
-                    backgroundImage: AssetImage(message.senderImageUrl),
-                  ),
-                ),
-              // ระยะห่างระหว่างรูปโปรไฟล์กับเนื้อหาข้อความ
-              if (!isMe) const SizedBox(width: 8),
-
-              // เนื้อหาข้อความและเวลา (จัดเรียงใน Column)
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: isMe
-                      ? CrossAxisAlignment.end
-                      : CrossAxisAlignment.start,
-                  children: [
-                    // Row สำหรับกรอบข้อความ + เวลา
-                    Row(
-                      mainAxisAlignment: isMe
-                          ? MainAxisAlignment.end
-                          : MainAxisAlignment
-                                .start, // จัดกรอบข้อความ+เวลาไปซ้าย/ขวา
-                      crossAxisAlignment:
-                          CrossAxisAlignment.end, // จัดเรียงเวลาให้อยู่ด้านล่าง
-                      mainAxisSize:
-                          MainAxisSize.min, // ทำให้ Row นี้หดตามเนื้อหา
-                      children: [
-                        if (!isTimeOnRight) // ถ้าเวลาอยู่ซ้าย (ข้อความขาออก)
-                          Text(
-                            message.time, // แสดงเวลา
-                            style: TextStyle(
-                              color: Colors.grey.shade500, // สีเวลา
-                              fontSize: 12,
-                            ),
-                          ),
-                        if (!isTimeOnRight) // ระยะห่างถ้าเวลาอยู่ซ้าย
-                          const SizedBox(width: 8),
-
-                        _buildMessageContent(message), // กรอบข้อความ
-
-                        if (isTimeOnRight) // ระยะห่างถ้าเวลาอยู่ขวา
-                          const SizedBox(width: 8),
-                        if (isTimeOnRight) // ถ้าเป็นข้อความขาเข้า (เวลาอยู่ขวา)
-                          Text(
-                            message.time, // แสดงเวลา
-                            style: TextStyle(
-                              color: Colors.grey.shade500, // สีเวลา
-                              fontSize: 12,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ตัวจัดการหลักที่ทำหน้าที่เลือก Widget ย่อยตามประเภทข้อความ
-  Widget _buildMessageContent(Message message) {
-    final isMe = message.isMe;
-    final color = isMe
-        ? MyColors.blue
-        : Color.fromRGBO(
-            213,
-            243,
-            246,
-            0.573,
-          ); //สีพื้นหลังเจ้าของแชต //สีพื้นหลังไฟล์เสียง
-    final textColor = isMe
-        ? Colors.white
-        : Colors.black; //สีข้อความเจ้าของแชต //สีข้อความผู้ใช้
-
-    // กำหนดความกว้างสูงสุดสำหรับแต่ละประเภทข้อความ (เป็น % ของหน้าจอ)
-    final double imageMaxWidthFraction = 0.50; // สำหรับไฟล์รูปภาพ
-    final double textMessageMaxWidthFraction = 0.7; // สำหรับไฟล์ข้อความ
-    final double documentFileMaxWidthFraction = 0.8; // สำหรับไฟล์เอกสารทั่วไป
-    final double audioFileFixedWidth = 160.0; //สำหรับกำหนดความกว้างไฟล์เสียง
-    final double videoMessageFixedWidth = 250.0; // *** เพิ่มความกว้างตายตัวสำหรับวิดีโอ ***
-
-    if (message.imagePath != null) {
-      return _buildImageMessageContent(
-        message,
-        color,
-        textColor,
-        imageMaxWidthFraction,
-      );
-    } else if (message.filePath != null) {
-      final bool isAudio =
-          message.filePath!.toLowerCase().endsWith('.mp4') ||
-          message.filePath!.toLowerCase().endsWith('.mp3');
-      // *** ตรวจสอบว่าเป็นวิดีโอหรือไม่ (สมมติว่าเป็น .mp4 หรือ .mov) ***
-      final bool isVideo = message.filePath!.toLowerCase().endsWith('.mp4') ||
-                           message.filePath!.toLowerCase().endsWith('.mov');
-
-
-      if (isAudio && !isVideo) { // เป็นเสียงแต่ไม่ใช่ "วิดีโอ"
-        return _buildAudioMessageContent(
-          message,
-          color,
-          textColor,
-          audioFileFixedWidth,
-        );
-      } else if (isVideo) { // *** ถ้าเป็นวิดีโอ ***
-        return _buildVideoMessageContent(
-          message,
-          color,
-          textColor,
-          videoMessageFixedWidth,
-        );
-      } else { // เป็นไฟล์เอกสารทั่วไป
-        return _buildDocumentMessageContent(
-          message,
-          color,
-          textColor,
-          documentFileMaxWidthFraction,
-        );
-      }
-    } else {
-      return _buildTextMessageContent(
-        message,
-        color,
-        textColor,
-        textMessageMaxWidthFraction,
-      );
-    }
-  }
-
-  // Widget ย่อยสำหรับข้อความรูปภาพ
-  Widget _buildImageMessageContent(
-    Message message,
-    Color color,
-    Color textColor,
-    double maxWidthFraction,
-  ) {
-    return Container(
-      constraints: BoxConstraints(maxWidth: Get.width * maxWidthFraction),
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(204, 213, 246, 0.573), // แก้ไขสีให้เป็นสีเดียวกับด้านล่าง
-        borderRadius: BorderRadius.circular(20), //ความมนกรอบ
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16), //ความนนรูปภาพ
-        child: message.imagePath!.startsWith('assets/')
-            ? Image.asset(message.imagePath!, fit: BoxFit.cover)
-            : Image.file(File(message.imagePath!), fit: BoxFit.cover),
-      ),
-    );
-  }
-
-  // Widget ย่อยสำหรับข้อความไฟล์เสียง
-  Widget _buildAudioMessageContent(
-    Message message,
-    Color color,
-    Color textColor,
-    double fixedWidth,
-  ) {
-    return Container(
-      width: fixedWidth, // ใช้ width ตายตัว
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.audiotrack, color: textColor, size: 20),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              message.fileName ?? 'ข้อความเสียง',
-              style: TextStyle(color: textColor),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Obx(
-            () => IconButton(
-              icon: Icon(
-                message.isPlaying.value ? Icons.pause : Icons.play_arrow,
-                color: textColor,
-              ),
-              onPressed: () {
-                controller.playAudio(message);
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // *** เปลี่ยน _buildVideoMessageContent เป็น StatefulWidget ***
-  Widget _buildVideoMessageContent(
-    Message message,
-    Color color,
-    Color textColor,
-    double fixedWidth,
-  ) {
-    return _VideoMessageContentWidget( // ใช้ Widget ที่สร้างใหม่
-      message: message,
-      bubbleColor: color,
-      textColor: textColor,
-      fixedWidth: fixedWidth,
-    );
-  }
-
-  // Widget ย่อยสำหรับข้อความไฟล์เอกสารทั่วไป (ที่ไม่ใช่เสียง)
-  Widget _buildDocumentMessageContent(
-    Message message,
-    Color color,
-    Color textColor,
-    double maxWidthFraction,
-  ) {
-    return Container(
-      constraints: BoxConstraints(maxWidth: Get.width * maxWidthFraction),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.insert_drive_file, color: textColor, size: 20),
-          const SizedBox(width: 8),
-          Flexible(
-            child: Text(
-              message.fileName ?? 'ไฟล์เอกสาร',
-              style: TextStyle(color: textColor),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Widget ย่อยสำหรับข้อความปกติ
-  Widget _buildTextMessageContent(
-    Message message,
-    Color color,
-    Color textColor,
-    double maxWidthFraction,
-  ) {
-    return Container(
-      constraints: BoxConstraints(maxWidth: Get.width * maxWidthFraction),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(message.text ?? '', style: TextStyle(color: textColor)),
     );
   }
 
@@ -520,7 +195,306 @@ class ChatDetailPage extends GetView<ChatDetailController> {
   }
 }
 
-// *** Widget ย่อยที่จัดการการแสดงผลและควบคุมวิดีโอ (StatefulWidget) ***
+// Widget ใหม่สำหรับ Message Bubble
+class _MessageBubble extends GetView<ChatDetailController> {
+  final Message message;
+  final bool showHeader;
+  final bool isGroupChat;
+
+  const _MessageBubble({
+    required this.message,
+    required this.showHeader,
+    required this.isGroupChat,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isMe = message.isMe;
+    final bool isTimeOnRight = !isMe; // เวลาจะอยู่ด้านขวาของข้อความขาเข้า
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Column(
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          if (showHeader && !isMe && isGroupChat)
+            Padding(
+              padding: const EdgeInsets.only(left: 48.0, bottom: 4.0),
+              child: Text(
+                message.senderName,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey.shade600,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          Row(
+            mainAxisAlignment:
+                isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              if (!isMe)
+                Visibility(
+                  visible: showHeader,
+                  maintainSize: true,
+                  maintainAnimation: true,
+                  maintainState: true,
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundImage: AssetImage(message.senderImageUrl),
+                  ),
+                ),
+              if (!isMe) const SizedBox(width: 8),
+              Flexible(
+                child: Row(
+                  mainAxisAlignment:
+                      isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (!isTimeOnRight) ...[
+                      Text(
+                        message.time,
+                        style: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                    _MessageContent(message: message), // ใช้ Widget ใหม่
+                    if (isTimeOnRight) ...[
+                      const SizedBox(width: 8),
+                      Text(
+                        message.time,
+                        style: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Widget ใหม่สำหรับแสดงเนื้อหาข้อความประเภทต่างๆ
+class _MessageContent extends GetView<ChatDetailController> {
+  final Message message;
+
+  const _MessageContent({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    final isMe = message.isMe;
+    final Color bubbleColor = isMe
+        ? MyColors.blue
+        : Color.fromRGBO(213, 243, 246, 0.573);
+    final Color textColor = isMe ? Colors.white : Colors.black;
+
+    // กำหนดความกว้างสูงสุดสำหรับแต่ละประเภทข้อความ (เป็น % ของหน้าจอ)
+    final double imageMaxWidthFraction = 0.50;
+    final double textMessageMaxWidthFraction = 0.7;
+    final double documentFileMaxWidthFraction = 0.8;
+    final double audioFileFixedWidth =180.0; // Adjusted fixed width
+    final double videoMessageFixedWidth = 250.0;
+
+    if (message.imagePath != null) {
+      return _buildImageMessageContent(
+          message, bubbleColor, imageMaxWidthFraction);
+    } else if (message.filePath != null) {
+      final bool isAudio = message.filePath!.toLowerCase().endsWith('.mp4') || 
+          message.filePath!.toLowerCase().endsWith('.mp3');
+      final bool isVideo = message.filePath!.toLowerCase().endsWith('.mp4') ||
+          message.filePath!.toLowerCase().endsWith('.mov'); // เพิ่ม .mov
+
+      if (isAudio && !isVideo) {
+        // โค้ดสำหรับไฟล์เสียง
+        return Container(
+          width: audioFileFixedWidth, // Using the new fixed width
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+          decoration: BoxDecoration(
+            color: bubbleColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.audiotrack, color: textColor, size: 16),
+              const SizedBox(width: 8),
+              Flexible( // Changed from Expanded to Flexible
+                child: Text(
+                  message.fileName ?? 'ข้อความเสียง',
+                  style: TextStyle(color: textColor, fontSize: 10), // ลดขนาด font
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Obx(
+                () => IconButton(
+                  icon: Icon(
+                    message.isPlaying.value ? Icons.pause : Icons.play_arrow,
+                    size: 16, // ลดขนาด icon ปุ่มเล่น
+                    color: textColor,
+                  ),
+                  onPressed: () {
+                    controller.playAudio(message);
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      } else if (isVideo) {
+        // โค้ดสำหรับวิดีโอ (ยังคงเป็น Widget แยก)
+        return _VideoMessageContentWidget(
+            message: message,
+            bubbleColor: bubbleColor,
+            textColor: textColor,
+            fixedWidth: videoMessageFixedWidth);
+      } else {
+        // โค้ดสำหรับไฟล์เอกสารทั่วไป
+        return Container(
+          constraints: BoxConstraints(maxWidth: Get.width * documentFileMaxWidthFraction),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: bubbleColor,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.insert_drive_file, color: textColor, size: 20),
+              const SizedBox(width: 8),
+              Flexible( // Also make this Flexible for consistency
+                child: Text(
+                  message.fileName ?? 'ไฟล์เอกสาร',
+                  style: TextStyle(color: textColor),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    } else if (message.text != null) {
+      // โค้ดสำหรับข้อความธรรมดา
+      return Container(
+        constraints: BoxConstraints(maxWidth: Get.width * textMessageMaxWidthFraction),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: bubbleColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(message.text ?? '', style: TextStyle(color: textColor)),
+      );
+    } else {
+      return const SizedBox.shrink(); // กรณีไม่มี content
+    }
+  }
+
+  Widget _buildImageMessageContent(
+      Message message, Color color, double maxWidthFraction) {
+    return Container(
+      constraints: BoxConstraints(maxWidth: Get.width * maxWidthFraction),
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(204, 213, 246, 0.573),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: message.imagePath!.startsWith('assets/')
+            ? Image.asset(message.imagePath!, fit: BoxFit.cover)
+            : Image.file(File(message.imagePath!), fit: BoxFit.cover),
+      ),
+    );
+  }
+
+  Widget _buildAudioMessageContent(
+      Message message, Color color, Color textColor, double fixedWidth) {
+    return Container(
+      width: fixedWidth,
+      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.audiotrack, color: textColor, size: 16),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              message.fileName ?? 'ข้อความเสียง',
+              style: TextStyle(color: textColor, fontSize: 10), // ลดขนาด font
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Obx(
+            () => IconButton(
+              icon: Icon(
+                message.isPlaying.value ? Icons.pause : Icons.play_arrow,
+                size: 16, // ลดขนาด icon ปุ่มเล่น
+                color: textColor,
+              ),
+              onPressed: () {
+                controller.playAudio(message);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDocumentMessageContent(
+      Message message, Color color, Color textColor, double maxWidthFraction) {
+    return Container(
+      constraints: BoxConstraints(maxWidth: Get.width * maxWidthFraction),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.insert_drive_file, color: textColor, size: 20),
+          const SizedBox(width: 8),
+          Flexible(
+                child: Text(
+                  message.fileName ?? 'ไฟล์เอกสาร',
+                  style: TextStyle(color: textColor),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        );
+  }
+
+  Widget _buildTextMessageContent(
+      Message message, Color color, Color textColor, double maxWidthFraction) {
+    return Container(
+      constraints: BoxConstraints(maxWidth: Get.width * maxWidthFraction),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(message.text ?? '', style: TextStyle(color: textColor)),
+    );
+  }
+}
+
+// Widget ย่อยที่จัดการการแสดงผลและควบคุมวิดีโอ (StatefulWidget)
 class _VideoMessageContentWidget extends StatefulWidget {
   final Message message;
   final Color bubbleColor;
@@ -535,10 +509,12 @@ class _VideoMessageContentWidget extends StatefulWidget {
   });
 
   @override
-  State<_VideoMessageContentWidget> createState() => _VideoMessageContentWidgetState();
+  State<_VideoMessageContentWidget> createState() =>
+      _VideoMessageContentWidgetState();
 }
 
-class _VideoMessageContentWidgetState extends State<_VideoMessageContentWidget> {
+class _VideoMessageContentWidgetState
+    extends State<_VideoMessageContentWidget> {
   late VideoPlayerController _videoController;
   bool _isPlaying = false; // สถานะการเล่นภายใน Widget นี้
 
@@ -549,7 +525,9 @@ class _VideoMessageContentWidgetState extends State<_VideoMessageContentWidget> 
     if (widget.message.filePath!.startsWith('assets/')) {
       _videoController = VideoPlayerController.asset(widget.message.filePath!);
     } else {
-      _videoController = VideoPlayerController.file(File(widget.message.filePath!));
+      _videoController = VideoPlayerController.file(
+        File(widget.message.filePath!),
+      );
     }
 
     _videoController.initialize().then((_) {
@@ -609,7 +587,9 @@ class _VideoMessageContentWidgetState extends State<_VideoMessageContentWidget> 
                 ),
                 IconButton(
                   icon: Icon(
-                    _isPlaying ? Icons.pause_circle_filled : Icons.play_circle_fill, // ใช้ _isPlaying
+                    _isPlaying
+                        ? Icons.pause_circle_filled
+                        : Icons.play_circle_fill, // ใช้ _isPlaying
                     color: widget.textColor,
                     size: 30,
                   ),

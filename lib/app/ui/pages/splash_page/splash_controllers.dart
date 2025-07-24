@@ -1,7 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../data/models/user_model.dart';
 import '../../../data/services/auth_service.dart';
@@ -15,10 +14,8 @@ class SplashController extends GetxController
   late Animation<double> scalelogoAnimation;
   late Animation<Offset> slidelogoAnimation;
   late Animation<Offset> slidecontentAnimation;
-  late Animation<Offset> slideheadAnimation;
-  late Animation<Offset> slideboxAnimation;
-  late Animation<double> fadeboxAnimation;
   late Animation<Offset> slidehead1Animation;
+  late Animation<double> fadeboxAnimation;
 
   var rememberMe = false.obs;
   final emailController = TextEditingController();
@@ -26,18 +23,31 @@ class SplashController extends GetxController
   final _obscureText = true.obs;
   get obscureText => _obscureText.value;
   set obscureText(value) => _obscureText.value = value;
+final isAutoLoginView = false.obs;
+  final box = GetStorage();
+  final AuthService _authService = Get.find<AuthService>();
 
   @override
   void onInit() {
     super.onInit();
 
-    // --- ตั้งค่า Animation Controller ---
+    setAnimations();
+
+  }
+  
+  @override
+  void onReady() {
+    super.onReady();
+    _autoLogin();
+  }
+
+
+  void setAnimations() {
     animationController = AnimationController(
-      vsync: this, // 'this' ในที่นี้หมายถึง GetSingleTickerProviderStateMixin
+      vsync: this,
       duration: const Duration(milliseconds: 5000),
     );
 
-    // --- ตั้งค่า Animation ---
     slidehead1Animation =
         Tween<Offset>(
           begin: const Offset(0.0, 0.0),
@@ -60,7 +70,6 @@ class SplashController extends GetxController
         curve: const Interval(0.1, 0.2, curve: Curves.linear),
       ),
     );
-
     fadelogoAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
@@ -73,26 +82,6 @@ class SplashController extends GetxController
         curve: const Interval(0.3, 0.4, curve: Curves.linear),
       ),
     );
-
-    // logoInitialScaleAnimation = TweenSequence<double>([
-
-    //   TweenSequenceItem(
-    //     tween: Tween<double>(begin: 1, end: 1)
-    //         .chain(CurveTween(curve: Curves.easeOut)),
-    //     weight: 50.0,
-    //   ),
-    //   TweenSequenceItem(
-    //     tween: Tween<double>(begin: 1, end: 0.61017)
-    //         .chain(CurveTween(curve: Curves.easeOut)),
-    //     weight: 50.0,
-    //   ),
-    // ]).animate(
-    //   CurvedAnimation(
-    //     parent: animationController,
-    //     curve: const Interval(0.0, 0.5, curve: Curves.linear),
-    //   ),
-    // );
-
     slidelogoAnimation =
         Tween<Offset>(
           begin: Offset.zero,
@@ -103,26 +92,6 @@ class SplashController extends GetxController
             curve: const Interval(0.4, 0.5, curve: Curves.easeOut),
           ),
         );
-    // hFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-    //   CurvedAnimation(
-    //     parent: animationController,
-    //     curve: const Interval(0.8, 0.8, curve: Curves.easeOut),
-    //   ),
-    // );
-
-    // rFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-    //   CurvedAnimation(
-    //     parent: animationController,
-    //     curve: const Interval(0.7, 0.9, curve: Curves.easeOut),
-    //   ),
-    // );
-
-    // mFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-    //   CurvedAnimation(
-    //     parent: animationController,
-    //     curve: const Interval(0.8, 1.0, curve: Curves.easeOut),
-    //   ),
-    // );
     slidecontentAnimation =
         Tween<Offset>(
           begin: Offset(0, 0.0),
@@ -133,47 +102,57 @@ class SplashController extends GetxController
             curve: const Interval(0.5, 0.6, curve: Curves.easeOut),
           ),
         );
-    // slideheadAnimation = Tween<Offset>(
-    //   begin: Offset(0, 0.0),
-    //   end: const Offset(0, -1.5),
-    // ).animate(
-    //   CurvedAnimation(
-    //     parent: animationController,
-    //     curve: const Interval(0.7, 0.8, curve: Curves.easeOut),
-    //   ),
-    // );
-    slideboxAnimation =
-        Tween<Offset>(
-          begin: Offset(0, 0.25),
-          end: const Offset(0, -1.5),
-        ).animate(
-          CurvedAnimation(
-            parent: animationController,
-            curve: const Interval(0.7, 0.8, curve: Curves.easeOut),
-          ),
-        );
     fadeboxAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
         curve: const Interval(0.7, 0.8, curve: Curves.linear),
       ),
     );
+  }
 
-    // --- สั่งให้แอนิเมชันเริ่มทำงาน และตั้งเวลาเพื่อเปลี่ยนหน้า ---
+  void _autoLogin() {
+    final rememberedEmail = box.read<String>('email');
+
+    if (rememberedEmail != null) {
+      final userMap = DataList.userData.firstWhere(
+        (user) => user['email'] == rememberedEmail,
+        orElse: () => <String, dynamic>{},
+      );
+
+      if (userMap.isNotEmpty) {
+        isAutoLoginView.value = true;
+
+        final userToLogin = UserModel.fromMap(userMap);
+        _authService.login(userToLogin);
+
+        // เมื่อล็อกอินสำเร็จ ให้ไปหน้าหลักเลย
+      7.seconds.delay().then((_) => Get.offAllNamed(AppRoutes.NAVIGATION));
+      //  Get.offAllNamed(AppRoutes.NAVIGATION);
+      } else {
+        // ถ้าไม่เจอข้อมูลผู้ใช้ ให้แสดงหน้าล็อกอินตามปกติ
+        _loadRememberedEmail();
+      }
+    } else {
+      // ถ้าไม่มีอีเมลที่บันทึกไว้ ให้แสดงหน้าล็อกอินตามปกติ
+      _loadRememberedEmail();
+    }
     animationController.forward();
+  }
+
+  void _loadRememberedEmail() {
+    final rememberedEmail = box.read<String>('email');
+    if (rememberedEmail != null) {
+      emailController.text = rememberedEmail;
+      rememberMe.value = true;
+    }
   }
 
   @override
   void onClose() {
-    animationController.dispose(); // ทำลาย Controller เพื่อป้องกัน Memory Leak
+    animationController.dispose();
     super.onClose();
   }
 
-  // ฟังก์ชันสำหรับเปลี่ยนหน้าจอเมื่อแอนิเมชันใกล้จะจบ
-  @override
-  void onReady() {
-    //  3.9.seconds.delay().then((_) => Get.offAllNamed(AppRoutes.LOGIN));
-  }
   void toggleRememberMe(bool? value) {
     if (value != null) {
       rememberMe.value = value;
@@ -184,7 +163,6 @@ class SplashController extends GetxController
     final String inputEmail = emailController.text.trim();
     final String inputPassword = passwordController.text.trim();
 
-    // --- 1. การตรวจสอบ Input พื้นฐาน (เหมือนเดิม) ---
     if (inputEmail.isEmpty || inputPassword.isEmpty) {
       Get.snackbar('System', 'กรุณากรอกข้อมูลให้ครบถ้วน');
       return;
@@ -200,20 +178,23 @@ class SplashController extends GetxController
     );
 
     if (userMap.isNotEmpty) {
+      if (rememberMe.value) {
+        box.write('email', inputEmail);
+      } else {
+        box.remove('email');
+      }
+
       final loggedInUser = UserModel.fromMap(userMap);
+      _authService.login(loggedInUser);
 
-      final authService = Get.find<AuthService>();
-
-      authService.login(loggedInUser);
-
-      emailController.clear();
+      if (!rememberMe.value) {
+        emailController.clear();
+      }
       passwordController.clear();
       FocusScope.of(Get.context!).unfocus();
 
-      // นำทางไปยังหน้าหลัก
       Get.offAllNamed(AppRoutes.NAVIGATION);
     } else {
-      // --- กรณี Login ไม่สำเร็จ ---
       Get.snackbar(
         'เกิดข้อผิดพลาด',
         'อีเมลหรือรหัสผ่านไม่ถูกต้อง',
@@ -224,9 +205,7 @@ class SplashController extends GetxController
     }
   }
 
-  var isPasswordVisible = false.obs;
-
   void togglePasswordVisibility() {
-    isPasswordVisible.value = !isPasswordVisible.value;
+    obscureText = !obscureText;
   }
 }

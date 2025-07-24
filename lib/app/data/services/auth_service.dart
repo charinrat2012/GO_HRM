@@ -1,13 +1,15 @@
 // GetxService จะถูกสร้างขึ้นครั้งเดียวและคงอยู่ตลอดการใช้งานแอป
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../routes/app_routes.dart';
 import '../models/user_model.dart';
 
 class AuthService extends GetxService {
-  // สร้างตัวแปร Observable `currentUser` เพื่อเก็บข้อมูลผู้ใช้ที่ล็อกอินอยู่
+  // สร้างตัวแปร Observable currentUser เพื่อเก็บข้อมูลผู้ใช้ที่ล็อกอินอยู่
   // เริ่มต้นเป็น null คือยังไม่มีใครล็อกอิน
   final Rx<UserModel?> currentUser = Rx(null);
+  final _box = GetStorage();
 
   // Getter สำหรับเช็คสถานะการล็อกอินได้อย่างง่ายๆ
   bool get isLoggedIn => currentUser.value != null;
@@ -20,6 +22,7 @@ class AuthService extends GetxService {
   // เมธอดสำหรับเคลียร์ข้อมูลผู้ใช้เมื่อล็อกเอาท์
   void logout() {
     currentUser.value = null;
+     _box.remove('email');
     Get.offAllNamed(AppRoutes.SPLASH);
   }
 

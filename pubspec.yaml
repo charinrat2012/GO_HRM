@@ -51,6 +51,7 @@ dependencies:
   path_provider: 
   audioplayers: 
   video_player:
+  flutter_switch:
   
 flutter_launcher_icons:
   android: "hrmlogo" # ตั้งชื่อไฟล์ไอคอนสำหรับ Android
@@ -84,6 +85,7 @@ flutter:
     - assets/imgs/
     - assets/ics/
     - assets/vids/
+    - assets/audios/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
