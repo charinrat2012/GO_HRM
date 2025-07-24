@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'document_controller.dart';
 import 'widgets/card_title.dart';
 import 'widgets/filter_section.dart';
-import 'widgets/head_leave.dart';
+import 'widgets/head_doc.dart';
 import 'widgets/history_card_list.dart';
 import 'widgets/request_button.dart';
 import 'widgets/segmented_control.dart';
@@ -18,7 +18,7 @@ class DocumentsPage extends GetView<DocumentsController> {
       child: Scaffold(
         body: CustomScrollView(
           slivers: [
-            HeadLeave(),
+            HeadDoc(),
 
             // const SliverToBoxAdapter(
             //   child: Divider(color: Colors.grey, thickness: 1),

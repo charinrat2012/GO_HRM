@@ -12,7 +12,7 @@ class TitleTextfield extends GetView<CreateAppealRequestController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'ชื่อเรื่องเอกสาร',
+          'ผู้ที่ต้องการเรียน',
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),

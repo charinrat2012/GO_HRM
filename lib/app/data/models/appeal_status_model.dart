@@ -1,18 +1,24 @@
+// lib/app/data/models/appeal_status_model.dart
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_hrm/app/config/my_colors.dart';
+
+import '../../ui/global_widgets/datalist.dart';
 
 enum AppealStatus { approved, pending, rejected }
 enum AppealTitle { request, report }
 
 class AppealHistoryModel {
   final String appealId;
-  // final String title ;
-  final AppealTitle appealTitle;
-  final String appealTypes;
+  final String title = 'Request';
+  // final AppealTitle appealTitle;
+  final String appealTypeId;
+
   final String employeeName;
-  final String appealCategory;
+  // final String appealCategory;
   final DateTime requestDateTime;
   final String? note;
   final AppealStatus status;
@@ -20,15 +26,24 @@ class AppealHistoryModel {
 
   AppealHistoryModel({
     required this.appealId,
-    required this.appealTitle,
-    required this.appealTypes,
+    // required this.title,
+    // required this.appealTitle,
+    required this.appealTypeId,
     required this.employeeName,
-    required this.appealCategory,
+    // required this.appealCategory,
     required this.requestDateTime,
     this.note,
     required this.status,
     this.attachedFiles,
   });
+ String get appealCategory {
+    // ใช้ firstWhereOrNull เพื่อค้นหา Map ที่ตรงกัน ถ้าไม่เจอจะคืนค่า null
+    final typeMap = DataList.appealTypes.firstWhereOrNull(
+      (element) => element['appealTypeId'] == appealTypeId,
+    );
+    // ถ้าเจอ Map (typeMap ไม่ใช่ null) ให้ดึงค่า 'type' ออกมา, ถ้าไม่เจอ ให้ใช้ค่าเริ่มต้น 'ไม่พบประเภท'
+    return typeMap?['type'] as String? ?? 'ไม่พบประเภท';
+  }
   factory AppealHistoryModel.fromMap(Map<String, dynamic> map) {
     //  ดึงข้อมูล List จาก map ออกมาเก็บในตัวแปรชั่วคราว
     final filesData = map['attachedFiles'];
@@ -40,10 +55,11 @@ class AppealHistoryModel {
 
     return AppealHistoryModel(
       appealId: map['appealId'] ?? '',
-      appealTitle: map['appealTitle'] ?? AppealTitle.request,
-      appealTypes: map['appealType'] ?? '',
+      // title: map['title'] ?? '',
+      // appealTitle: map['appealTitle'] ?? AppealTitle.request,
+      appealTypeId: map['appealTypeId'] ?? '', // <--- **แก้ไขจุดนี้**
       employeeName: map['employeeName'] ?? '',
-      appealCategory: map['appealCategory'] ?? '',
+      // appealCategory: map['appealCategory'] ?? '',
       requestDateTime: map['requestDateTime'] ?? DateTime.now(),
       note: map['note'] ?? '',
       status: map['status'] ?? AppealStatus.pending,
@@ -51,14 +67,14 @@ class AppealHistoryModel {
       attachedFiles: files ?? [],
     );
   }
-  String get titleText {
-    switch (appealTitle) {
-      case AppealTitle.request:
-        return 'ร้องเรียน';
-      case AppealTitle.report:
-        return 'ถูกร้องเรียน';
-    }
-  }
+  // String get titleText {
+  //   switch (appealTitle) {
+  //     case AppealTitle.request:
+  //       return 'ร้องเรียน';
+  //     case AppealTitle.report:
+  //       return 'ถูกร้องเรียน';
+  //   }
+  // }
   String get statusText {
     switch (status) {
       case AppealStatus.approved:

@@ -122,6 +122,20 @@ class DocumentsController extends GetxController {
         }).toList();
       }
     }
+     if (selectedDocTypes.value != null && selectedDocTypes.value != 'ทั้งหมด') {
+            final selectedTypeName = selectedDocTypes.value;
+            final typeMap = DataList.docTypes.firstWhere(
+                (type) => type['type'] == selectedTypeName,
+                orElse: () => {},
+            );
+
+            if (typeMap.isNotEmpty) {
+                final selectedTypeId = typeMap['docTypeId']; // <-- ใช้ Key ใหม่
+                filteredDocuments = filteredDocuments.where((doc) {
+                    return doc.docTypeId == selectedTypeId;
+                }).toList();
+            }
+        }
 
     // --- อัปเดต UI ด้วยข้อมูลที่กรองแล้ว ---
     docHistory.assignAll(filteredDocuments);

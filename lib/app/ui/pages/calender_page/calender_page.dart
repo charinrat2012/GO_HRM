@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_hrm/app/data/models/calender_model.dart';
+import 'package:go_hrm/app/routes/app_routes.dart';
 
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -133,7 +135,7 @@ class CalenderPage extends GetView<CalenderController> {
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Obx(
-                          () => TableCalendar<Event>(
+                          () => TableCalendar<CalenderEventModel>(
                             availableGestures:
                                 AvailableGestures.horizontalSwipe,
                             locale: 'th_TH',
@@ -229,30 +231,38 @@ class CalenderPage extends GetView<CalenderController> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final event = controller.selectedEvents[index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  elevation: 2,
-                  shadowColor: Colors.grey.withValues(alpha: 0.2),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.all(16.0),
-                    title: Text(
-                      event.title,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                
+                return GestureDetector(
+                  onTap: () => Get.toNamed(AppRoutes.ACTIVITYDETAIL, arguments: event),
+                  child: Card(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
-                    subtitle: event.description != null
-                        ? Padding(
-                            padding: const EdgeInsets.only(top: 4.0),
-                            child: Text(event.description!),
-                          )
-                        : null,
-                    trailing: Text(
-                      event.time,
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 12,
+                    elevation: 2,
+                    shadowColor: Colors.grey.withValues(alpha: 0.2),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.all(16.0),
+                      title: Text(
+                        event.title,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: event.description != null
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Text(event.description!),
+                            )
+                          : null,
+                      trailing: Container(
+                        padding: const EdgeInsets.only(bottom: 40.0),
+                        child: Text(
+                          event.time,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+
+                          ),
+                        ),
                       ),
                     ),
                   ),

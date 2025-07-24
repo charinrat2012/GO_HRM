@@ -84,6 +84,7 @@ class MenuForm extends GetView<MenuController> {
                       color: Colors.black,
                     ),
                     title: 'เงื่อนไขการใช้บริการ',
+                    trailing: true,
                   ),
                   const SizedBox(height: 12),
                   _buildListTile(
@@ -120,7 +121,7 @@ class MenuForm extends GetView<MenuController> {
                     },
                     leading: const Icon(Icons.login, color: Colors.black),
                     title: 'ออกจากระบบ',
-                    trailing: false,
+                    
                   ),
                   const SizedBox(height: 80),
                   const Text(
@@ -140,7 +141,7 @@ class MenuForm extends GetView<MenuController> {
     GestureTapCallback? onTap,
     Widget? leading,
     required String title,
-    bool trailing = true,
+    bool trailing = false,
   }) {
     return Container(
       decoration: BoxDecoration(

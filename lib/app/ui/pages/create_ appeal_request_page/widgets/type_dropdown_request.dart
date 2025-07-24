@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_hrm/app/data/models/appeal_model.dart';
 
 import '../../../../config/my_colors.dart';
-import '../../../../data/models/doc_model.dart';
+
 import '../create_appeal_request_controller.dart';
 
 class TypeDropdownRequest extends GetView<CreateAppealRequestController> {
@@ -14,12 +15,12 @@ class TypeDropdownRequest extends GetView<CreateAppealRequestController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'ประเภทเอกสาร',
+          'ประเภทการร้องเรียน',
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         Obx(
-          () => DropdownButtonFormField<DocModel>(
+          () => DropdownButtonFormField<AppealModel>(
             isDense: true,
             icon: const Icon(
               Icons.keyboard_arrow_down_rounded,
@@ -29,10 +30,10 @@ class TypeDropdownRequest extends GetView<CreateAppealRequestController> {
             iconEnabledColor: MyColors.blue2,
             iconDisabledColor: MyColors.blue2,
             // value คืออ็อบเจกต์ QuotaModel ที่ถูกเลือกอยู่
-            value: controller.selectedDoc.value,
+            value: controller.selectedAppeal.value,
             // items สร้างจาก List ของ Model ใน Controller
-            items: controller.docItems.map((DocModel model) {
-              return DropdownMenuItem<DocModel>(
+            items: controller.appealItems.map((AppealModel model) {
+              return DropdownMenuItem<AppealModel>(
                 value: model,
                 child: Text(model.type),
               );
@@ -40,7 +41,7 @@ class TypeDropdownRequest extends GetView<CreateAppealRequestController> {
             // เมื่อมีการเลือกค่าใหม่ ให้อัปเดต State ใน Controller
             onChanged: (newValue) {
               if (newValue != null) {
-                controller.selectedDoc.value = newValue;
+                controller.selectedAppeal.value = newValue;
               }
             },
           ),

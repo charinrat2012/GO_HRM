@@ -1,204 +1,47 @@
 import 'dart:collection';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../../../data/models/calender_model.dart'; 
+import '../../global_widgets/datalist.dart'; 
 
-// --- Event Model ---
-class Event {
-  final String title;
-  final String? description;
-  final String time;
 
-  const Event({required this.title, this.description, required this.time});
-
-  @override
-  String toString() => title;
-}
 
 class CalenderController extends GetxController {
-  // --- State Variables ---
+  
   final Rx<DateTime> focusedDay = DateTime.now().obs;
   final Rx<DateTime?> selectedDay = Rx(null);
   final Rx<CalendarFormat> calendarFormat = CalendarFormat.month.obs;
-  final RxList<Event> selectedEvents = <Event>[].obs;
+  final RxList<CalenderEventModel> selectedEvents = <CalenderEventModel>[].obs; 
 
-  // --- Event Data ---
-  late final LinkedHashMap<DateTime, List<Event>> kEvents;
+  
+  late final LinkedHashMap<DateTime, List<CalenderEventModel>> kEvents; 
 
   @override
   void onInit() {
     super.onInit();
-
-    // กำหนดวันเริ่มต้นที่ถูกเลือก
     selectedDay.value = focusedDay.value;
-
-    // --- สร้างข้อมูลกิจกรรมตัวอย่าง ---
     _initializeEvents();
-
-    // โหลดกิจกรรมสำหรับวันที่ถูกเลือก
     selectedEvents.value = getEventsForDay(selectedDay.value!);
   }
 
   void _initializeEvents() {
-    final events = {
-      // วันที่ 1 มกราคม 2025
-      DateTime.utc(2025, 1, 1): [
-        const Event(
-          title: 'วันขึ้นปีใหม่',
-          description: 'วันหยุดนักขัตฤกษ์',
-          time: 'ทั้งวัน',
-        ),
-      ],
-      // วันที่ 10 มกราคม 2025 (ตามรูปภาพ)
-      DateTime.utc(2025, 1, 10): [
-        const Event(
-          title: 'ประชุมกับผู้บริหาร',
-          description: 'ประชุมกับผู้บริหารระดับสูงเพื่อรายงานความคืบหน้าของงาน',
-          time: '10.30 - 11.30',
-        ),
-        const Event(
-          title: 'วันก่อตั้งบริษัท',
-          description:
-              'เป็นวันที่ก่อตั้งบริษัทเป็นมาวันแรก ให้เป็นวันหยุดงานทุกคน',
-          time: 'ทั้งวัน',
-        ),
-        const Event(
-          title: 'วันตรวจสุขภาพของบริษัท',
-          description:
-              'ตรวจสุขภาพประจำปีของพนักงาน มาตรา 3 โดยหมอผู้เชี่ยวชาญด้านต่างๆ',
-          time: 'ทั้งวัน',
-        ),
-        const Event(
-          title: 'วันเกิดเจ้านายตัวเอง',
-          description: 'วันนี้ต้องซื้อของขวัญ HBD เจ้านาย',
-          time: 'ทั้งวัน',
-        ),
-      ],
-      // วันที่ 30 มกราคม 2025
-      DateTime.utc(2025, 1, 30): [
-        const Event(
-          title: 'จ่ายเงินเดือน',
-          description: 'รอบจ่ายเงินเดือนมกราคม',
-          time: 'ทั้งวัน',
-        ),
-      ],
-      DateTime.utc(2025, 7, 4): [
-        const Event(
-          title: 'วันหยุดครึ่งปีธนาคาร',
-          description: 'ธนาคารหยุดทำการ',
-          time: 'ทั้งวัน',
-        ),
-      ],
+    
+     final events = DataList.calenderEventsData.map(
+      (date, eventList) => MapEntry(
+        date,
+        eventList.map((eventMap) => CalenderEventModel.fromMap(date, eventMap)).toList(),
+      ),
+    );
 
-      // --- วันที่ 17 กรกฎาคม 2025 (วันนี้) ---
-      DateTime.utc(2025, 7, 17): [
-        const Event(
-          title: 'ประชุมทีม Marketing',
-          description: 'ประชุมวางแผนแคมเปญไตรมาสที่ 3',
-          time: '14:00 - 15:30',
-        ),
-      ],
-
-      // --- วันที่ 25 กรกฎาคม 2025 ---
-      DateTime.utc(2025, 7, 25): [
-        const Event(
-          title: 'ส่งโปรเจกต์ลูกค้า',
-          description: 'เดดไลน์ส่งงานโปรเจกต์ ABC',
-          time: '17:00',
-        ),
-        const Event(
-          title: 'เลี้ยงปิดโปรเจกต์',
-          description: 'ที่ร้านอาหาร ABCDE',
-          time: '18:30',
-        ),
-      ],
-
-      // --- วันที่ 28 กรกฎาคม 2025 ---
-      DateTime.utc(2025, 7, 28): [
-        const Event(
-          title: 'วันเฉลิมพระชนมพรรษา',
-          description: 'วันหยุดนักขัตฤกษ์',
-          time: 'ทั้งวัน',
-        ),
-      ],
-
-      DateTime.utc(2025, 7, 28): [
-        const Event(
-          title: 'วันเฉลิมพระชนมพรรษา',
-          description: 'วันหยุดนักขัตฤกษ์',
-          time: 'ทั้งวัน',
-        ),
-      ],
-
-      // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 31 กรกฎาคม 2025 ---
-      DateTime.utc(2025, 7, 31): [
-        const Event(
-          title: 'จ่ายเงินเดือน',
-          description: 'รอบจ่ายเงินเดือนกรกฎาคม',
-          time: 'ทั้งวัน',
-        ),
-      ],
-
-      // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 1 สิงหาคม 2025 ---
-      DateTime.utc(2025, 8, 1): [
-        const Event(
-          title: 'ประชุมประจำเดือน',
-          description: 'ประชุมสรุปผลงานเดือนกรกฎาคมและวางแผนเดือนสิงหาคม',
-          time: '10:00 - 11:30',
-        ),
-      ],
-
-      // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 8 สิงหาคม 2025 ---
-      DateTime.utc(2025, 8, 8): [
-        const Event(
-          title: 'ส่งงานโปรเจกต์ "Phoenix"',
-          description: 'เดดไลน์ส่งมอบงานเฟสที่ 1 ให้กับลูกค้า',
-          time: '17:00',
-        ),
-      ],
-
-      // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 12 สิงหาคม 2025 ---
-      DateTime.utc(2025, 8, 12): [
-        const Event(
-          title: 'วันเฉลิมพระชนมพรรษา (วันแม่แห่งชาติ)',
-          description: 'วันหยุดนักขัตฤกษ์',
-          time: 'ทั้งวัน',
-        ),
-      ],
-
-      // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 19 สิงหาคม 2025 ---
-      DateTime.utc(2025, 8, 19): [
-        const Event(
-          title: 'อบรมการใช้งานระบบ HRM ใหม่',
-          description: 'อบรมสำหรับพนักงานทุกระดับ ณ ห้องประชุมใหญ่',
-          time: '13:30 - 16:30',
-        ),
-      ],
-
-      // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 29 สิงหาคม 2025 ---
-      DateTime.utc(2025, 8, 29): [
-        const Event(
-          title: 'Company Outing!',
-          description: 'ไปเที่ยวพักผ่อนประจำปีที่พัทยา',
-          time: 'ทั้งวัน',
-        ),
-        const Event(
-          title: 'จ่ายเงินเดือน',
-          description: 'รอบจ่ายเงินเดือนสิงหาคม',
-          time: 'ทั้งวัน',
-        ),
-      ],
-    };
-
-    kEvents = LinkedHashMap<DateTime, List<Event>>(
+    kEvents = LinkedHashMap<DateTime, List<CalenderEventModel>>(
       equals: isSameDay,
       hashCode: getHashCode,
     )..addAll(events);
   }
 
-  // --- Methods ---
+  
 
-  List<Event> getEventsForDay(DateTime day) {
-    // Implementation for fetching events
+  List<CalenderEventModel> getEventsForDay(DateTime day) { 
     return kEvents[day] ?? [];
   }
 
@@ -221,7 +64,7 @@ class CalenderController extends GetxController {
   }
 }
 
-/// Helper method to get the hash code for a DateTime object.
+
 int getHashCode(DateTime key) {
   return key.day * 1000000 + key.month * 10000 + key.year;
 }

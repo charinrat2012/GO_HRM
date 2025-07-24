@@ -28,4 +28,5 @@ class AppRoutes {
   static const EDIT_PROFILE = '/edit_profile';
   static const APPEAL = '/appeal';
   static const CHAT_DETAIL = '/chat_detail';
+  static const CREATE_APPEAL_REQUEST = '/create_appeal_request';
 }

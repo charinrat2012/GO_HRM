@@ -123,6 +123,7 @@ class FavouritePage extends GetView<FavouriteController> {
                   )
                 : null,
           ),
+          Divider(),
           const SizedBox(height: 8),
           isFavoriteSection
               ? Obx(() => _buildGridView(controller.favoriteItems, true))

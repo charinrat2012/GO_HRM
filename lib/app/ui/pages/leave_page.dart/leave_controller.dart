@@ -126,6 +126,20 @@ class LeavePageController extends GetxController {
         }).toList();
       }
     }
+    if (selectedLeaveTypes.value != null && selectedLeaveTypes.value != 'ทั้งหมด') {
+            final selectedTypeName = selectedLeaveTypes.value;
+            final typeMap = DataList.leaveTypes.firstWhere(
+                (type) => type['type'] == selectedTypeName,
+                orElse: () => {},
+            );
+
+            if (typeMap.isNotEmpty) {
+                final selectedTypeId = typeMap['leaveTypeId']; 
+                filteredLeaves = filteredLeaves.where((leave) {
+                    return leave.leaveTypeId == selectedTypeId;
+                }).toList();
+            }
+        }
 
     // --- อัปเดต UI ด้วยข้อมูลที่กรองแล้ว ---
     leaveHistory.assignAll(filteredLeaves);

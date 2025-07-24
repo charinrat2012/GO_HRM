@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_hrm/app/data/models/leave_status_model.dart';
 
+import '../../data/models/appeal_status_model.dart';
 import '../../data/models/document_status_model.dart';
 import '../../routes/app_routes.dart';
 
@@ -428,8 +429,7 @@ class DataList {
     {
       'userId': '1',
       // 'imgProfile': '',
-      'userName': 'ณัฐดนย์ ธวัชผ่องศรี',
-      'employeeId': '20500423546',
+      'userName': 'ณัฐดนย์ ธวัชผ่องศรี', 'employeeId': '20500423546',
       'idCard': '1102200213456',
       'section': 'ยูไอดีไซนเนอร์',
       'nameTitle': 'นาย',
@@ -441,8 +441,7 @@ class DataList {
       'sex': 'ชาย',
       'birthday': '09/09/2025',
       'birthplace': 'กรุงเทพ',
-      'age': '21 ปี',
-      'email': 'admin@gmail.com',
+      'age': '21 ปี', 'email': 'admin@gmail.com',
       'phone': '0888888888',
       'addressTH': '22 ซอย เพชรเกษม 47/2 แขวงบางแค บางแค กรุงเทพมหานคร 10160',
       'addressEN':
@@ -590,7 +589,23 @@ class DataList {
       'iconId': ['1', '2', '8', '4', '5', '13', '9', '14'],
       'documentId': ['1', '2', '3'],
       'leaveId': ['1', '2', '3'],
-      'salaryId': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'],
+      'salaryId': [
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+      ],
+      'appealId': ['1', '2', '3', '4', '5', '6'],
     },
     {
       'userId': '2',
@@ -598,6 +613,7 @@ class DataList {
       'documentId': ['4', '5', '6', '10'],
       'leaveId': ['4', '5', '6'],
       'salaryId': ['1', '2', '3'],
+      'appealId': ['7', '8', '9'],
     },
   ];
 
@@ -646,32 +662,32 @@ class DataList {
     {'monthId': '12', 'month': 'ธันวาคม'},
   ];
 
-static final List<Map<String, dynamic>> years = [
-  {'yearId': '1', 'year': '2020'},
-  {'yearId': '2', 'year': '2021'},
-  {'yearId': '3', 'year': '2022'},
-  {'yearId': '4', 'year': '2023'},
-  {'yearId': '5', 'year': '2024'},
-  {'yearId': '6', 'year': '2025'},
-];
+  static final List<Map<String, dynamic>> years = [
+    {'yearId': '1', 'year': '2020'},
+    {'yearId': '2', 'year': '2021'},
+    {'yearId': '3', 'year': '2022'},
+    {'yearId': '4', 'year': '2023'},
+    {'yearId': '5', 'year': '2024'},
+    {'yearId': '6', 'year': '2025'},
+  ];
 
   static final List<Map<String, dynamic>> leaveTypes = [
-    {'doctypeId': '1', 'type': 'ลากิจ'},
-    {'doctypeId': '2', 'type': 'ลาป่วย'},
-    {'doctypeId': '3', 'type': 'ลาพักร้อน'},
+    {'leaveTypeId': '1', 'type': 'ลากิจ'},
+    {'leaveTypeId': '2', 'type': 'ลาป่วย'},
+    {'leaveTypeId': '3', 'type': 'ลาพักร้อน'},
   ].obs;
 
   static final List<Map<String, dynamic>> docTypes = [
-    {'doctypeId': '1', 'type': 'ภาษี'},
-    {'doctypeId': '2', 'type': 'ประกันสังคม'},
-    {'doctypeId': '3', 'type': 'อื่นๆ'},
+    {'docTypeId': '1', 'type': 'ภาษี'},
+    {'docTypeId': '2', 'type': 'ประกันสังคม'},
+    {'docTypeId': '3', 'type': 'อื่นๆ'},
   ].obs;
 
   static final List<Map<String, dynamic>> appealTypes = [
-    {'doctypeId': '1', 'type': 'รบกวนการทํางาน'},
-    {'doctypeId': '2', 'type': 'การทำร้ายร่างกาย'},
-    {'doctypeId': '3', 'type': 'การขโมย'},
-    {'doctypeId': '4', 'type': 'ความประพฤติไม่เหมาะสม'},
+    {'appealTypeId': '1', 'type': 'รบกวนการทํางาน'},
+    {'appealTypeId': '2', 'type': 'การทำร้ายร่างกาย'},
+    {'appealTypeId': '3', 'type': 'การขโมย'},
+    {'appealTypeId': '4', 'type': 'ความประพฤติไม่เหมาะสม'},
   ].obs;
 
   // เพิ่มข้อมูลเงินเดือนพร้อมเดือนและวันที่จ่าย
@@ -747,35 +763,29 @@ static final List<Map<String, dynamic>> years = [
       'datePaid': '25/11/2024 เวลา 12.00 น.',
     },
   ].obs;
-
+  
   static final List<Map<String, dynamic>> leaveData = [
     {
       'leaveId': '1',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '1',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
-      'leaveCategory': 'ลากิจ',
       'requestDateTime': DateTime(2025, 6, 25, 12, 6),
-      // 'note': 'อนุมัติเรียบร้อย',
       'status': LeaveStatus.approved,
       'attachedFiles': [],
     },
     {
       'leaveId': '2',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '2',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
-      'leaveCategory': 'ลาป่วย',
       'requestDateTime': DateTime(2025, 6, 24, 10, 30),
-      // 'note': 'ไม่อนุมัติ',
       'status': LeaveStatus.rejected,
       'attachedFiles': [],
     },
     {
       'leaveId': '3',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '1',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
-      'leaveCategory': 'ลากิจ',
       'requestDateTime': DateTime(2025, 6, 25, 12, 6),
-      // 'note': 'อนุมัติเรียบร้อย',
       'status': LeaveStatus.approved,
       'attachedFiles': [
         File('/mock/path/ใบรับรองแพทย์.jpg'),
@@ -784,41 +794,33 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'leaveId': '4',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '2',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
-      'leaveCategory': 'ลาป่วย',
       'requestDateTime': DateTime(2025, 6, 24, 10, 30),
-      // 'note': 'ไม่อนุมัติ',
       'status': LeaveStatus.rejected,
       'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
     },
     {
       'leaveId': '5',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '2',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
-      'leaveCategory': 'ลากิจ',
       'requestDateTime': DateTime(2025, 6, 25, 12, 6),
-      // 'note': 'อนุมัติเรียบร้อย',
       'status': LeaveStatus.approved,
       'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
     },
     {
       'leaveId': '6',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '3',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
-      'leaveCategory': 'ลาป่วย',
       'requestDateTime': DateTime(2025, 6, 24, 10, 30),
-      // 'note': 'ไม่อนุมัติ',
       'status': LeaveStatus.rejected,
       'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
     },
     {
       'leaveId': '7',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '1',
       'employeeName': 'สมชาย ใจดี',
-      'leaveCategory': 'ลากิจ',
       'requestDateTime': DateTime(2025, 7, 1, 9, 0),
-      // 'note': 'รอการอนุมัติ',
       'status': LeaveStatus.pending,
       'attachedFiles': [
         File('/mock/path/ใบรับรองแพทย์.jpg'),
@@ -828,62 +830,159 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'leaveId': '8',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '2',
       'employeeName': 'สมหญิง มุ่งมั่น',
-      'leaveCategory': 'ลาป่วย',
       'requestDateTime': DateTime(2025, 6, 30, 14, 20),
-      // 'note': 'รอการอนุมัติ',
       'status': LeaveStatus.pending,
       'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
     },
     {
       'leaveId': '9',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '3',
       'employeeName': 'มานะ อดทน',
-      'leaveCategory': 'ลาพักร้อน',
       'requestDateTime': DateTime(2025, 6, 28, 16, 5),
-      // 'note': 'รอการอนุมัติ',
       'status': LeaveStatus.pending,
       'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
     },
     {
       'leaveId': '10',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '1',
       'employeeName': 'สมชาย ใจดี',
-      'leaveCategory': 'ลากิจ',
       'requestDateTime': DateTime(2025, 7, 1, 9, 0),
-      // 'note': 'รอการอนุมัติ',
       'status': LeaveStatus.pending,
       'attachedFiles': [],
     },
     {
       'leaveId': '11',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '2',
       'employeeName': 'สมหญิง มุ่งมั่น',
-      'leaveCategory': 'ลาป่วย',
       'requestDateTime': DateTime(2025, 6, 30, 14, 20),
-      // 'note': 'รอการอนุมัติ',
       'status': LeaveStatus.pending,
       'attachedFiles': [],
     },
     {
       'leaveId': '12',
-      'leaveType': 'ขอลาพักงาน',
+      'leaveTypeId': '3',
       'employeeName': 'มานะ อดทน',
-      'leaveCategory': 'ลาพักร้อน',
       'requestDateTime': DateTime(2025, 6, 28, 16, 5),
-      // 'note': 'รอการอนุมัติ',
       'status': LeaveStatus.pending,
       'attachedFiles': [],
     },
   ].obs;
 
+  static final List<Map<String, dynamic>> appealData = [
+    {
+      'appealId': '1',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'appealTypeId': '1',
+      'requestDateTime': DateTime(2025, 6, 25, 12, 6),
+      'note': 'ต้องการเงินล่วงหน้า',
+      'status': AppealStatus.approved,
+      'attachedFiles': [],
+    },
+    {
+      'appealId': '2',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'appealTypeId': '2',
+      'requestDateTime': DateTime(2025, 6, 24, 10, 30),
+      'note': 'เอกสารไม่ครบถ้วน',
+      'status': AppealStatus.rejected,
+      'attachedFiles': [],
+    },
+    {
+      'appealId': '3',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
+      'appealTypeId': '3',
+      'requestDateTime': DateTime(2025, 5, 20, 15, 0),
+      'note': 'สำหรับยื่นกู้',
+      'status': AppealStatus.approved,
+      'attachedFiles': [File('/mock/path/appeal.pdf')],
+    },
+    {
+      'appealId': '4',
+      'employeeName': 'สมชาย ใจดี',
+      'appealTypeId': '4',
+      'requestDateTime': DateTime(2025, 7, 1, 9, 0),
+      'note': 'ต้องการเงินล่วงหน้า',
+      'status': AppealStatus.pending,
+      'attachedFiles': [
+        File('/mock/path/appeal.pdf'),
+        File('/mock/path/ใบรับรองแพทย์.jpg'),
+      ],
+    },
+    {
+      'appealId': '5',
+      'employeeName': 'สมหญิง มุ่งมั่น',
+      'appealTypeId': '4',
+      'requestDateTime': DateTime(2025, 6, 30, 14, 20),
+      'note': 'อาหารเป็นพิษ',
+      'status': AppealStatus.pending,
+      'attachedFiles': [File('/mock/path/ใบรับรองแพทย์.jpg')],
+    },
+    {
+      'appealId': '6',
+      'employeeName': 'มานะ อดทน',
+      'appealTypeId': '4',
+      'requestDateTime': DateTime(2025, 6, 28, 16, 5),
+      'note': '',
+      'status': AppealStatus.pending,
+      'attachedFiles': [],
+    },
+    {
+      'appealId': '7',
+      'employeeName': 'จิตดี ศรีสวัสดิ์',
+      'appealTypeId': '4',
+      'requestDateTime': DateTime(2025, 7, 2, 11, 15),
+      'note': 'ใช้สำหรับทำธุรกรรม',
+      'status': AppealStatus.pending,
+      'attachedFiles': [],
+    },
+    {
+      'appealId': '8',
+      'employeeName': 'วิชัย มีชัย',
+      'appealTypeId': '4',
+      'requestDateTime': DateTime(2025, 7, 3, 8, 30),
+      'note': 'มีไข้สูง',
+      'status': AppealStatus.pending,
+      'attachedFiles': [File('/mock/path/ใบรับรองแพทย์_วิชัย.pdf')],
+    },
+    {
+      'appealId': '9',
+      'employeeName': 'สมศรี มีสุข',
+      'appealTypeId': '4',
+      'requestDateTime': DateTime(2025, 7, 4, 17, 0),
+      'note': 'ทำงานโปรเจกต์ด่วน',
+      'status': AppealStatus.pending,
+      'attachedFiles': [],
+    },
+    {
+      'appealId': '10',
+      'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข', // เอกสารนี้เป็นของ User 1
+      'appealTypeId': '4',
+      'requestDateTime': DateTime(2025, 7, 5, 10, 0),
+      'note': 'ไปเที่ยวต่างจังหวัด',
+      'status': AppealStatus.pending,
+      'attachedFiles': [],
+    },
+    {
+      'appealId': '11',
+      'employeeName': 'มานี รักไทย',
+      'appealTypeId': '4',
+      'requestDateTime': DateTime(2025, 7, 7, 14, 45),
+      'note': 'ใช้สำหรับยื่นวีซ่า',
+      'status': AppealStatus.pending,
+      'attachedFiles': [
+        File('/mock/path/สำเนาบัตรประชาชน.jpg'),
+        File('/mock/path/สำเนาทะเบียนบ้าน.jpg'),
+      ],
+    },
+  ];
+
   static final List<Map<String, dynamic>> documentData = [
     {
       'documentId': '1',
-      'docType': 'ขอลาพักงาน',
+      'documentTypeId': '3',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
-      'docCategory': 'โอทีล่วงหน้า',
       'requestDateTime': DateTime(2025, 6, 25, 12, 6),
       'note': 'ต้องการเงินล่วงหน้า',
       'status': DocumentStatus.approved,
@@ -891,9 +990,8 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'documentId': '2',
-      'doceType': 'ขอลาพักงาน',
+      'documentTypeId': '3',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
-      'docCategory': 'โอทีล่วงหน้า',
       'requestDateTime': DateTime(2025, 6, 24, 10, 30),
       'note': 'เอกสารไม่ครบถ้วน',
       'status': DocumentStatus.rejected,
@@ -901,9 +999,8 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'documentId': '3',
-      'docType': 'ขอเอกสาร',
+      'documentTypeId': '3',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข',
-      'docCategory': 'ขอใบรับรองเงินเดือน',
       'requestDateTime': DateTime(2025, 5, 20, 15, 0),
       'note': 'สำหรับยื่นกู้',
       'status': DocumentStatus.approved,
@@ -911,9 +1008,8 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'documentId': '4',
-      'docType': 'ขอลาพักงาน',
+      'documentTypeId': '3',
       'employeeName': 'สมชาย ใจดี',
-      'docCategory': 'โอทีล่วงหน้า',
       'requestDateTime': DateTime(2025, 7, 1, 9, 0),
       'note': 'ต้องการเงินล่วงหน้า',
       'status': DocumentStatus.pending,
@@ -921,9 +1017,8 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'documentId': '5',
-      'docType': 'ขอลาพักงาน',
+      'documentTypeId': '2',
       'employeeName': 'สมหญิง มุ่งมั่น',
-      'docCategory': 'ลาป่วย',
       'requestDateTime': DateTime(2025, 6, 30, 14, 20),
       'note': 'อาหารเป็นพิษ',
       'status': DocumentStatus.pending,
@@ -931,9 +1026,8 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'documentId': '6',
-      'docType': 'ขอลาพักงาน',
+      'documentTypeId': '3',
       'employeeName': 'มานะ อดทน',
-      'docCategory': 'ลาพักร้อน',
       'requestDateTime': DateTime(2025, 6, 28, 16, 5),
       'note': '',
       'status': DocumentStatus.pending,
@@ -941,9 +1035,8 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'documentId': '7',
-      'docType': 'ขอเอกสาร',
+      'documentTypeId': '3',
       'employeeName': 'จิตดี ศรีสวัสดิ์',
-      'docCategory': 'ขอใบรับรอง',
       'requestDateTime': DateTime(2025, 7, 2, 11, 15),
       'note': 'ใช้สำหรับทำธุรกรรม',
       'status': DocumentStatus.pending,
@@ -951,9 +1044,8 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'documentId': '8',
-      'docType': 'ขอลาพักงาน',
+      'documentTypeId': '2',
       'employeeName': 'วิชัย มีชัย',
-      'docCategory': 'ลาป่วย',
       'requestDateTime': DateTime(2025, 7, 3, 8, 30),
       'note': 'มีไข้สูง',
       'status': DocumentStatus.pending,
@@ -961,9 +1053,8 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'documentId': '9',
-      'docType': 'ขอเอกสาร',
+      'documentTypeId': '3',
       'employeeName': 'สมศรี มีสุข',
-      'docCategory': 'ขอโอทีล่วงหน้า',
       'requestDateTime': DateTime(2025, 7, 4, 17, 0),
       'note': 'ทำงานโปรเจกต์ด่วน',
       'status': DocumentStatus.pending,
@@ -971,9 +1062,8 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'documentId': '10',
-      'docType': 'ขอลาพักงาน',
+      'documentTypeId': '3',
       'employeeName': 'ณัฐดนย์ วัฒนวงศ์ศรีสุข', // เอกสารนี้เป็นของ User 1
-      'docCategory': 'ลาพักร้อน',
       'requestDateTime': DateTime(2025, 7, 5, 10, 0),
       'note': 'ไปเที่ยวต่างจังหวัด',
       'status': DocumentStatus.pending,
@@ -981,9 +1071,8 @@ static final List<Map<String, dynamic>> years = [
     },
     {
       'documentId': '11',
-      'docType': 'ขอเอกสาร',
+      'documentTypeId': '1',
       'employeeName': 'มานี รักไทย',
-      'docCategory': 'ขอใบรับรอง',
       'requestDateTime': DateTime(2025, 7, 7, 14, 45),
       'note': 'ใช้สำหรับยื่นวีซ่า',
       'status': DocumentStatus.pending,
@@ -993,4 +1082,164 @@ static final List<Map<String, dynamic>> years = [
       ],
     },
   ];
+
+static final Map<DateTime, List<Map<String, dynamic>>> calenderEventsData = {
+    // วันที่ 1 มกราคม 2025
+    DateTime.utc(2025, 1, 1): [
+      {
+        'title': 'วันขึ้นปีใหม่',
+        'description': 'วันหยุดนักขัตฤกษ์',
+        'time': 'ทั้งวัน',
+        'note': 'วันหยุดนักขัตฤกษ์',
+      },
+    ],
+    // วันที่ 10 มกราคม 2025 (ตามรูปภาพ)
+    DateTime.utc(2025, 1, 10): [
+      {
+        'title': 'ประชุมกับผู้บริหาร',
+        'description': 'ประชุมกับผู้บริหารระดับสูงเพื่อรายงานความคืบหน้าของงาน',
+        'time': '10.30 - 11.30',
+        'note': 'ประชุมกับผู้บริหารระดับสูง',
+      },
+      {
+        'title': 'วันก่อตั้งบริษัท',
+        'description':
+            'เป็นวันที่ก่อตั้งบริษัทเป็นมาวันแรก ให้เป็นวันหยุดงานทุกคน',
+        'time': 'ทั้งวัน',
+        'note': 'เป็นวันที่ก่อตั้งบริษัท',
+      },
+      {
+        'title': 'วันตรวจสุขภาพของบริษัท',
+        'description':
+            'ตรวจสุขภาพประจำปีของพนักงาน มาตรา 3 โดยหมอผู้เชี่ยวชาญด้านต่างๆ',
+        'time': 'ทั้งวัน',
+        'note': 'วันตรวจสุขภาพของบริษัท',
+      },
+      {
+        'title': 'วันเกิดเจ้านาย',
+        'description': 'วันนี้ต้องซื้อของขวัญ HBD เจ้านาย',
+        'time': 'ทั้งวัน',
+        'note': 'วันเกิดเจ้านาย',
+      },
+    ],
+    // วันที่ 30 มกราคม 2025
+    DateTime.utc(2025, 1, 30): [
+      {
+        'title': 'จ่ายเงินเดือน',
+        'description': 'รอบจ่ายเงินเดือนมกราคม',
+        'time': 'ทั้งวัน',
+        'note': 'จ่ายเงินเดือนมกราคม',
+      },
+    ],
+    DateTime.utc(2025, 7, 4): [
+      {
+        'title': 'วันหยุดครึ่งปีธนาคาร',
+        'description': 'ธนาคารหยุดทำการ',
+        'time': 'ทั้งวัน',
+        'note': 'วันหยุดครึ่งปีธนาคาร',
+      },
+    ],
+
+    // --- วันที่ 17 กรกฎาคม 2025 (วันนี้) ---
+    DateTime.utc(2025, 7, 17): [
+      {
+        'title': 'ประชุมทีม Marketing',
+        'description': 'ประชุมวางแผนแคมเปญไตรมาสที่ 3',
+        'time': '14:00 - 15:30',
+        'note': 'ประชุมทีม Marketing',
+      },
+    ],
+
+    // --- วันที่ 25 กรกฎาคม 2025 ---
+    DateTime.utc(2025, 7, 25): [
+      {
+        'title': 'ส่งโปรเจกต์ลูกค้า',
+        'description': 'เดดไลน์ส่งงานโปรเจกต์ ABC',
+        'time': '17:00',
+      },
+      {
+        'title': 'เลี้ยงปิดโปรเจกต์',
+        'description': 'ที่ร้านอาหาร ABCDE',
+        'time': '18:30',
+        'note': 'เลี้ยงปิดโปรเจกต์',
+      },
+    ],
+
+    // --- วันที่ 28 กรกฎาคม 2025 ---
+    DateTime.utc(2025, 7, 28): [
+      {
+        'title': 'วันเฉลิมพระชนมพรรษา',
+        'description': 'วันหยุดนักขัตฤกษ์',
+        'time': 'ทั้งวัน',
+        'note': 'วันเฉลิมพระชนมพรรษา',
+      },
+    ],
+
+    // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 31 กรกฎาคม 2025 ---
+    DateTime.utc(2025, 7, 31): [
+      {
+        'title': 'จ่ายเงินเดือน',
+        'description': 'รอบจ่ายเงินเดือนกรกฎาคม',
+        'time': 'ทั้งวัน',
+        'note': 'จ่ายเงินเดือนกรกฎาคม',
+      },
+    ],
+
+    // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 1 สิงหาคม 2025 ---
+    DateTime.utc(2025, 8, 1): [
+      {
+        'title': 'ประชุมประจำเดือน',
+        'description': 'ประชุมสรุปผลงานเดือนกรกฎาคมและวางแผนเดือนสิงหาคม',
+        'time': '10:00 - 11:30',
+        'note': 'ประชุมประจำเดือน',
+      },
+    ],
+
+    // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 8 สิงหาคม 2025 ---
+    DateTime.utc(2025, 8, 8): [
+      {
+        'title': 'ส่งงานโปรเจกต์ "Phoenix"',
+        'description': 'เดดไลน์ส่งมอบงานเฟสที่ 1 ให้กับลูกค้า',
+        'time': '17:00',
+        'note': 'ส่งงานโปรเจกต์ "Phoenix"',
+      },
+    ],
+
+    // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 12 สิงหาคม 2025 ---
+    DateTime.utc(2025, 8, 12): [
+      {
+        'title': 'วันเฉลิมพระชนมพรรษา (วันแม่แห่งชาติ)',
+        'description': 'วันหยุดนักขัตฤกษ์',
+        'time': 'ทั้งวัน',
+        'note': 'วันเฉลิมพระชนมพรรษา (วันแม่แห่งชาติ)',
+      },
+    ],
+
+    // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 19 สิงหาคม 2025 ---
+    DateTime.utc(2025, 8, 19): [
+      {
+        'title': 'อบรมการใช้งานระบบ HRM ใหม่',
+        'description': 'อบรมสำหรับพนักงานทุกระดับ ณ ห้องประชุมใหญ่',
+        'time': '13:30 - 16:30',
+        'note': 'อบรมการใช้งานระบบ HRM ใหม่',
+      },
+    ],
+
+    // --- [ข้อมูลที่เพิ่มใหม่] วันที่ 29 สิงหาคม 2025 ---
+    DateTime.utc(2025, 8, 29): [
+      {
+        'title': 'Company Outing!',
+        'description': 'ไปเที่ยวพักผ่อนประจำปีที่พัทยา',
+        'time': 'ทั้งวัน',
+        'note': 'Company Outing!',
+      },
+      {
+        'title': 'จ่ายเงินเดือน',
+        'description': 'รอบจ่ายเงินเดือนสิงหาคม',
+        'time': 'ทั้งวัน',
+        'note': 'จ่ายเงินเดือนสิงหาคม',
+      },
+    ],
+  };
+
 }
