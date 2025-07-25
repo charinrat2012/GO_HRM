@@ -47,8 +47,10 @@ class FavouritePage extends GetView<FavouriteController> {
                 delegate: SliverChildListDelegate([
                   _buildCategorySection(
                     title: 'รายการโปรด',
+
                     isFavoriteSection: true,
                   ),
+
                   const SizedBox(height: 16),
                   // ใช้ Obx หุ้ม Column ที่แสดงหมวดหมู่ทั้งหมด
                   Obx(
@@ -87,6 +89,7 @@ class FavouritePage extends GetView<FavouriteController> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.0),
       ),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -98,6 +101,7 @@ class FavouritePage extends GetView<FavouriteController> {
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             trailing: isFavoriteSection
+            
                 ? Obx(
                     () => GestureDetector(
                       onTap: controller.toggleEditMode,
@@ -112,6 +116,7 @@ class FavouritePage extends GetView<FavouriteController> {
                         ),
                         child: Text(
                           controller.isEditing.value ? 'บันทึก' : 'เพี่ม',
+
                           style: const TextStyle(
                             color: MyColors.blue2,
                             fontSize: 14,
@@ -123,6 +128,7 @@ class FavouritePage extends GetView<FavouriteController> {
                   )
                 : null,
           ),
+           Divider(),
           const SizedBox(height: 8),
           isFavoriteSection
               ? Obx(() => _buildGridView(controller.favoriteItems, true))

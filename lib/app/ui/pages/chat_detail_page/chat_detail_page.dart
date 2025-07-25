@@ -1,3 +1,4 @@
+// Path: lib/app/ui/pages/chat_detail_page/chat_detail_page.dart
 import 'dart:io';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
@@ -40,13 +41,14 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                             controller.chat.messages[index - 1].senderName !=
                                 message.senderName;
                         return _MessageBubble(
-                            message: message,
-                            showHeader: showHeader,
-                            isGroupChat: controller.chat.isGroup);
+                          message: message,
+                          showHeader: showHeader,
+                          isGroupChat: controller.chat.isGroup,
+                        );
                       },
                     ),
                   ),
-                ), 
+                ),
                 _buildMessageInputField(),
                 Obx(
                   () => Offstage(
@@ -56,7 +58,7 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                       child: EmojiPicker(
                         textEditingController: controller.messageController,
                         config: Config(
-                          height: 250,
+                          height: 200,
                           checkPlatformCompatibility: true,
                           emojiViewConfig: EmojiViewConfig(
                             emojiSizeMax:
@@ -109,7 +111,8 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                 color: MyColors.blue2,
                 size: 22,
               ),
-              onPressed: () => controller.pickImage(ImageSource.camera),
+              onPressed:
+                  controller.showCameraOptions, // Changed to showCameraOptions
               style: ButtonStyle(visualDensity: VisualDensity.compact),
             ),
             IconButton(
@@ -215,8 +218,9 @@ class _MessageBubble extends GetView<ChatDetailController> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4.0),
       child: Column(
-        crossAxisAlignment:
-            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isMe
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start,
         children: [
           if (showHeader && !isMe && isGroupChat)
             Padding(
@@ -224,16 +228,19 @@ class _MessageBubble extends GetView<ChatDetailController> {
               child: Text(
                 message.senderName,
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize:
+                      13, // Slightly increased font size for better readability of sender name
                   color: Colors.grey.shade600,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           Row(
-            mainAxisAlignment:
-                isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: isMe
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
             children: [
               if (!isMe)
                 Visibility(
@@ -248,9 +255,11 @@ class _MessageBubble extends GetView<ChatDetailController> {
                 ),
               if (!isMe) const SizedBox(width: 8),
               Flexible(
+                // ใช้ Flexible
                 child: Row(
-                  mainAxisAlignment:
-                      isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+                  mainAxisAlignment: isMe
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -304,17 +313,21 @@ class _MessageContent extends GetView<ChatDetailController> {
     final double imageMaxWidthFraction = 0.50;
     final double textMessageMaxWidthFraction = 0.7;
     final double documentFileMaxWidthFraction = 0.8;
-    final double audioFileFixedWidth =180.0; // Adjusted fixed width
+    final double audioFileFixedWidth = 70.0; // Adjusted fixed width for audio
     final double videoMessageFixedWidth = 250.0;
 
     if (message.imagePath != null) {
       return _buildImageMessageContent(
-          message, bubbleColor, imageMaxWidthFraction);
+        message,
+        bubbleColor,
+        imageMaxWidthFraction,
+      );
     } else if (message.filePath != null) {
-      final bool isAudio = message.filePath!.toLowerCase().endsWith('.mp4') || 
-          message.filePath!.toLowerCase().endsWith('.mp3');
-      final bool isVideo = message.filePath!.toLowerCase().endsWith('.mp4') ||
-          message.filePath!.toLowerCase().endsWith('.mov'); // เพิ่ม .mov
+      final bool isAudio = message.filePath!.toLowerCase().endsWith('.mp3');
+      final bool isVideo =
+          message.filePath!.toLowerCase().endsWith('.mp4') ||
+          message.filePath!.toLowerCase().endsWith('.mov') ||
+          message.filePath!.toLowerCase().endsWith('.webm');
 
       if (isAudio && !isVideo) {
         // โค้ดสำหรับไฟล์เสียง
@@ -326,26 +339,44 @@ class _MessageContent extends GetView<ChatDetailController> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
+            mainAxisSize:
+                MainAxisSize.min, // Ensure row only takes needed space
             children: [
-              Icon(Icons.audiotrack, color: textColor, size: 16),
-              const SizedBox(width: 8),
-              Flexible( // Changed from Expanded to Flexible
+              Icon(
+                Icons.audiotrack,
+                color: textColor,
+                size: 14,
+              ), // Reduced icon size
+              const SizedBox(width: 4), // Reduced SizedBox width
+              Flexible(
+                // Changed from Expanded to Flexible
                 child: Text(
                   message.fileName ?? 'ข้อความเสียง',
-                  style: TextStyle(color: textColor, fontSize: 10), // ลดขนาด font
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 10,
+                  ), // ลดขนาด font
                   overflow: TextOverflow.ellipsis,
+                  maxLines: 1, // Ensure text stays on one line
                 ),
               ),
               Obx(
-                () => IconButton(
-                  icon: Icon(
-                    message.isPlaying.value ? Icons.pause : Icons.play_arrow,
-                    size: 16, // ลดขนาด icon ปุ่มเล่น
-                    color: textColor,
-                  ),
-                  onPressed: () {
+                () => GestureDetector(
+                  // Replaced IconButton with GestureDetector
+                  onTap: () {
                     controller.playAudio(message);
                   },
+                  child: Padding(
+                    // Add padding for tap target, but control it manually
+                    padding: const EdgeInsets.all(
+                      4.0,
+                    ), // Small padding for tap area
+                    child: Icon(
+                      message.isPlaying.value ? Icons.pause : Icons.play_arrow,
+                      size: 14, // Keep icon small
+                      color: textColor,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -354,14 +385,17 @@ class _MessageContent extends GetView<ChatDetailController> {
       } else if (isVideo) {
         // โค้ดสำหรับวิดีโอ (ยังคงเป็น Widget แยก)
         return _VideoMessageContentWidget(
-            message: message,
-            bubbleColor: bubbleColor,
-            textColor: textColor,
-            fixedWidth: videoMessageFixedWidth);
+          message: message,
+          bubbleColor: bubbleColor,
+          textColor: textColor,
+          fixedWidth: videoMessageFixedWidth,
+        );
       } else {
         // โค้ดสำหรับไฟล์เอกสารทั่วไป
         return Container(
-          constraints: BoxConstraints(maxWidth: Get.width * documentFileMaxWidthFraction),
+          constraints: BoxConstraints(
+            maxWidth: Get.width * documentFileMaxWidthFraction,
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             color: bubbleColor,
@@ -372,7 +406,8 @@ class _MessageContent extends GetView<ChatDetailController> {
             children: [
               Icon(Icons.insert_drive_file, color: textColor, size: 20),
               const SizedBox(width: 8),
-              Flexible( // Also make this Flexible for consistency
+              Flexible(
+                // Also make this Flexible for consistency
                 child: Text(
                   message.fileName ?? 'ไฟล์เอกสาร',
                   style: TextStyle(color: textColor),
@@ -386,7 +421,9 @@ class _MessageContent extends GetView<ChatDetailController> {
     } else if (message.text != null) {
       // โค้ดสำหรับข้อความธรรมดา
       return Container(
-        constraints: BoxConstraints(maxWidth: Get.width * textMessageMaxWidthFraction),
+        constraints: BoxConstraints(
+          maxWidth: Get.width * textMessageMaxWidthFraction,
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: bubbleColor,
@@ -400,7 +437,10 @@ class _MessageContent extends GetView<ChatDetailController> {
   }
 
   Widget _buildImageMessageContent(
-      Message message, Color color, double maxWidthFraction) {
+    Message message,
+    Color color,
+    double maxWidthFraction,
+  ) {
     return Container(
       constraints: BoxConstraints(maxWidth: Get.width * maxWidthFraction),
       padding: const EdgeInsets.all(4),
@@ -418,7 +458,11 @@ class _MessageContent extends GetView<ChatDetailController> {
   }
 
   Widget _buildAudioMessageContent(
-      Message message, Color color, Color textColor, double fixedWidth) {
+    Message message,
+    Color color,
+    Color textColor,
+    double fixedWidth,
+  ) {
     return Container(
       width: fixedWidth,
       padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
@@ -428,25 +472,37 @@ class _MessageContent extends GetView<ChatDetailController> {
       ),
       child: Row(
         children: [
-          Icon(Icons.audiotrack, color: textColor, size: 16),
-          const SizedBox(width: 8),
+          Icon(
+            Icons.audiotrack,
+            color: textColor,
+            size: 14,
+          ), // Reduced icon size
+          const SizedBox(width: 4), // Reduced SizedBox width
           Flexible(
             child: Text(
               message.fileName ?? 'ข้อความเสียง',
               style: TextStyle(color: textColor, fontSize: 10), // ลดขนาด font
               overflow: TextOverflow.ellipsis,
+              maxLines: 1, // Ensure text stays on one line
             ),
           ),
           Obx(
-            () => IconButton(
-              icon: Icon(
-                message.isPlaying.value ? Icons.pause : Icons.play_arrow,
-                size: 16, // ลดขนาด icon ปุ่มเล่น
-                color: textColor,
-              ),
-              onPressed: () {
+            () => GestureDetector(
+              // Replaced IconButton with GestureDetector
+              onTap: () {
                 controller.playAudio(message);
               },
+              child: Padding(
+                // Add padding for tap target, but control it manually
+                padding: const EdgeInsets.all(
+                  4.0,
+                ), // Small padding for tap area
+                child: Icon(
+                  message.isPlaying.value ? Icons.pause : Icons.play_arrow,
+                  size: 14, // Keep icon small
+                  color: textColor,
+                ),
+              ),
             ),
           ),
         ],
@@ -455,7 +511,11 @@ class _MessageContent extends GetView<ChatDetailController> {
   }
 
   Widget _buildDocumentMessageContent(
-      Message message, Color color, Color textColor, double maxWidthFraction) {
+    Message message,
+    Color color,
+    Color textColor,
+    double maxWidthFraction,
+  ) {
     return Container(
       constraints: BoxConstraints(maxWidth: Get.width * maxWidthFraction),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -469,19 +529,23 @@ class _MessageContent extends GetView<ChatDetailController> {
           Icon(Icons.insert_drive_file, color: textColor, size: 20),
           const SizedBox(width: 8),
           Flexible(
-                child: Text(
-                  message.fileName ?? 'ไฟล์เอกสาร',
-                  style: TextStyle(color: textColor),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
+            child: Text(
+              message.fileName ?? 'ไฟล์เอกสาร',
+              style: TextStyle(color: textColor),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-        );
+        ],
+      ),
+    );
   }
 
   Widget _buildTextMessageContent(
-      Message message, Color color, Color textColor, double maxWidthFraction) {
+    Message message,
+    Color color,
+    Color textColor,
+    double maxWidthFraction,
+  ) {
     return Container(
       constraints: BoxConstraints(maxWidth: Get.width * maxWidthFraction),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -515,7 +579,7 @@ class _VideoMessageContentWidget extends StatefulWidget {
 
 class _VideoMessageContentWidgetState
     extends State<_VideoMessageContentWidget> {
-  late VideoPlayerController _videoController;
+  VideoPlayerController? _videoController;
   bool _isPlaying = false; // สถานะการเล่นภายใน Widget นี้
 
   @override
@@ -530,23 +594,26 @@ class _VideoMessageContentWidgetState
       );
     }
 
-    _videoController.initialize().then((_) {
+    _videoController?.initialize().then((_) {
       setState(() {}); // เมื่อ initialize เสร็จสิ้น ให้ rebuild UI
     });
 
     // Listener สำหรับอัปเดตสถานะปุ่ม Play/Pause
-    _videoController.addListener(() {
-      if (_isPlaying != _videoController.value.isPlaying) {
-        setState(() {
-          _isPlaying = _videoController.value.isPlaying;
-        });
+    _videoController?.addListener(() {
+      if (_isPlaying != _videoController!.value.isPlaying) {
+        if (mounted) {
+          // Check if the widget is still mounted before calling setState
+          setState(() {
+            _isPlaying = _videoController!.value.isPlaying;
+          });
+        }
       }
     });
   }
 
   @override
   void dispose() {
-    _videoController.dispose(); // สำคัญมาก: ต้อง dispose controller
+    _videoController?.dispose(); // สำคัญมาก: ต้อง dispose controller
     super.dispose();
   }
 
@@ -562,15 +629,16 @@ class _VideoMessageContentWidgetState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (_videoController.value.isInitialized)
+          if (_videoController != null && _videoController!.value.isInitialized)
             AspectRatio(
-              aspectRatio: _videoController.value.aspectRatio,
-              child: VideoPlayer(_videoController),
+              aspectRatio: _videoController!.value.aspectRatio,
+              child: VideoPlayer(_videoController!),
             )
           else
             Container(
               height: widget.fixedWidth * (9 / 16), // สัดส่วน 16:9 เป็นมาตรฐาน
-              color: Colors.black,
+              color:
+                  Colors.black54, // Changed from Colors.black for consistency
               child: Center(
                 child: CircularProgressIndicator(color: widget.textColor),
               ),
@@ -580,10 +648,17 @@ class _VideoMessageContentWidgetState
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  widget.message.fileName ?? 'วิดีโอ',
-                  style: TextStyle(color: widget.textColor, fontSize: 12),
-                  overflow: TextOverflow.ellipsis,
+                Flexible(
+                  // Added Flexible here
+                  child: Text(
+                    widget.message.fileName ?? 'วิดีโอ',
+                    style: TextStyle(
+                      color: widget.textColor,
+                      fontSize: 12,
+                    ), // Changed font size to 12
+                    overflow:
+                        TextOverflow.ellipsis, // Ensure ellipsis is applied
+                  ),
                 ),
                 IconButton(
                   icon: Icon(
@@ -594,12 +669,14 @@ class _VideoMessageContentWidgetState
                     size: 30,
                   ),
                   onPressed: () {
-                    if (_videoController.value.isPlaying) {
-                      _videoController.pause();
-                    } else {
-                      _videoController.play();
+                    if (_videoController != null) {
+                      // Added null check
+                      if (_videoController!.value.isPlaying) {
+                        _videoController!.pause();
+                      } else {
+                        _videoController!.play();
+                      }
                     }
-                    // ไม่ต้อง setState ตรงนี้ เพราะ listener จะเรียก setState เอง
                   },
                 ),
               ],

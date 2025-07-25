@@ -9,6 +9,7 @@ class ChatsController extends GetxController {
   final RxList<Chat> filteredChats = <Chat>[].obs;
   final RxInt selectedTabIndex = 0.obs;
   final TextEditingController searchController = TextEditingController();
+  
 
   @override
   void onInit() {
@@ -303,9 +304,8 @@ class ChatsController extends GetxController {
             senderName: 'กาญญา พาณิชวัฒนากูล',
             senderImageUrl: 'assets/imgs/pic8.jpg',
             text: null,
-            filePath:
-                'assets/audios/audio.mp4',
-            fileName: 'audio.mp4', 
+            filePath: 'assets/audios/audio.mp4',
+            fileName: 'audio.mp4',
             time: '12:04',
             isMe: false,
           ),
@@ -637,16 +637,119 @@ class ChatsController extends GetxController {
         id: '27',
         name: 'เมริสา วีระพงศ์ศาล',
         imageUrl: 'assets/imgs/profile5.jpg',
-        lastMessage: '[ข้อความเสียง]',
+        lastMessage: 'ทำไมวันนี้ไม่เจอกันที่ห้องทำงาน??',
         time: '7 ม.ค. 2566',
         unreadCount: 1,
         messages: [
           Message(
+            senderName: 'me',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'ทำไมวันนี้ไม่เจอกันที่ห้องทำงาน??',
+            time: '',
+            isMe: true,
+          ),
+          Message(
+            senderName: 'me',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'ทำไมวันนี้ไม่เจอกันที่ห้องทำงาน??',
+            time: '12:04',
+            isMe: true,
+          ),
+          Message(
             senderName: 'เมริสา วีระพงศ์ศาล',
             senderImageUrl: 'assets/imgs/profile5.jpg',
-            text: null,
-            filePath: 'assets/audios/audio.mp3',
-            fileName: 'audio.mp3',
+            text: 'พอดีไม่ค่อยว่างครับ',
+            time: '',
+            isMe: false,
+          ),
+           Message(
+            senderName: 'เมริสา วีระพงศ์ศาล',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'สามารถนัดเจอวันอื่นได้นะครับ',
+            time: '12:04',
+            isMe: false,
+          ),
+           Message(
+            senderName: 'me',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'พรุ่งนี้ไม่ค่อยว่างเลยมั้ง ทั้งวันอะ',
+            time: '',
+            isMe: true,
+          ),
+           Message(
+            senderName: 'me',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'มีไปทำธุระข้างนอก',
+            time: '',
+            isMe: true,
+          ),
+           Message(
+            senderName: 'me',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'ต้องการเจอวันนี้เท่านั้นเลย',
+            time: '12:04',
+            isMe: true,
+          ),
+           Message(
+            senderName: 'เมริสา วีระพงศ์ศาล',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'เดี๋ยวติดต่อเบอร์ไปก็ได้หนิ',
+            time: '12:04',
+            isMe: false,
+          ),
+           Message(
+            senderName: 'me',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'ก็ได้ ขอเลขเบอร์โทร',
+            time: '',
+            isMe: true,
+          ),
+           Message(
+            senderName: 'me',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'นัดเจอเวลาใหม่กันเถอะ',
+            time: '12:04',
+            isMe: true,
+          ),
+           Message(
+            senderName: 'เมริสา วีระพงศ์ศาล',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: '097-1238456 (คุณนุ๊ค)',
+            time: '',
+            isMe: false,
+          ),
+           Message(
+            senderName: 'เมริสา วีระพงศ์ศาล',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'โทรไปเเล้วบอกว่าจะมาติดต่อผมนะครับ',
+            time: '',
+            isMe: false,
+          ),
+           Message(
+            senderName: 'เมริสา วีระพงศ์ศาล',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'เเล้วไม่ต้องทักมาส่วนตัวอีก',
+            time: '',
+            isMe: false,
+          ),
+           Message(
+            senderName: 'เมริสา วีระพงศ์ศาล',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'รำคาญ เดี๋ยวจะไล่ออก',
+            time: '12:04',
+            isMe: false,
+          ),
+           Message(
+            senderName: 'me',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'ค่ะ อิอิ ไว้เจอกันนะคะ',
+            time: '12:04',
+            isMe: true,
+          ),
+           Message(
+            senderName: 'เมริสา วีระพงศ์ศาล',
+            senderImageUrl: 'assets/imgs/profile5.jpg',
+            text: 'ครับ อย่าเจอกันอีกเลยเถอะ',
             time: '12:04',
             isMe: false,
           ),

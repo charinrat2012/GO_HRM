@@ -1,4 +1,5 @@
-import 'package:file_picker/file_picker.dart'; // ตรวจสอบว่ามี import นี้แล้ว
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../../../data/models/chat_model.dart';
 import '../chats_page/chats_controller.dart';
+import 'dart:io'; // Import for File class
 
 class ChatDetailController extends GetxController {
   late final Chat chat;
@@ -31,7 +33,6 @@ class ChatDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // รับ chat object จาก arguments
     chat = Get.arguments as Chat;
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
@@ -74,11 +75,10 @@ class ChatDetailController extends GetxController {
   Future<bool> onWillPop() {
     if (isEmojiPickerVisible.value) {
       isEmojiPickerVisible.value = false;
-      return Future.value(true); // อนุญาตให้ย้อนกลับ
+      return Future.value(true);
     }
-    // เมื่อกดปุ่มย้อนกลับ ให้บันทึกการเปลี่ยนแปลงของ chat object กลับไปยัง ChatsController
     _chatsController.updateChatMessages(chat);
-    return Future.value(true); // อนุญาตให้ย้อนกลับ
+    return Future.value(true);
   }
 
   void sendTextMessage() {
@@ -99,37 +99,75 @@ class ChatDetailController extends GetxController {
 
   Future<void> pickImage(ImageSource source) async {
     try {
-      final XFile? image = await _picker.pickImage(
-        source: source,
-        imageQuality: 70,
-      );
-      if (image != null) {
-        _addMessage(
-          Message(
-            senderName: 'Me',
-            senderImageUrl: 'assets/imgs/profile.jpg',
-            imagePath: image.path,
-            time: _currentTime,
-            isMe: true,
-          ),
+      if (source == ImageSource.gallery) {
+        // Allow multiple image selection from gallery
+        final List<XFile> images = await _picker.pickMultiImage(
+          imageQuality: 70,
         );
+        if (images.isNotEmpty) {
+          for (final image in images) {
+            _addMessage(
+              Message(
+                senderName: 'Me',
+                senderImageUrl: 'assets/imgs/profile.jpg',
+                imagePath: image.path,
+                time: _currentTime,
+                isMe: true,
+              ),
+            );
+          }
+        }
+      } else if (source == ImageSource.camera) {
+        // For camera, still pick a single image
+        final XFile? image = await _picker.pickImage(
+          source: source,
+          imageQuality: 70,
+        );
+        if (image != null) {
+          _addMessage(
+            Message(
+              senderName: 'Me',
+              senderImageUrl: 'assets/imgs/profile.jpg',
+              imagePath: image.path,
+              time: _currentTime,
+              isMe: true,
+            ),
+          );
+        }
       }
     } catch (e) {
       Get.snackbar('เกิดข้อผิดพลาด', 'ไม่สามารถเลือกรูปภาพได้');
     }
   }
 
-  // *** เมธอดใหม่สำหรับเลือก/บันทึกวิดีโอ ***
   Future<void> pickVideo(ImageSource source) async {
     try {
       final XFile? video = await _picker.pickVideo(source: source);
       if (video != null) {
+        // --- ส่วนที่เพิ่มเข้ามา: ตรวจสอบขนาดไฟล์วิดีโอ ---
+        final File videoFile = File(video.path);
+        final int fileSizeInBytes = await videoFile.length();
+        final double fileSizeInMB = fileSizeInBytes / (1024 * 1024); // แปลงเป็น MB
+        const double maxAllowedSizeMB = 20.0; // กำหนดขนาดสูงสุดที่อนุญาต (เช่น 50 MB)
+
+        if (fileSizeInMB > maxAllowedSizeMB) {
+          Get.snackbar(
+            'วิดีโอมีขนาดใหญ่เกินไป',
+            'ไม่สามารถส่งวิดีโอที่มีขนาดเกิน ${maxAllowedSizeMB.toStringAsFixed(0)} MB ได้',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+          return; // หยุดการทำงานถ้าไฟล์ใหญ่เกิน
+        }
+        // --- สิ้นสุดส่วนที่เพิ่มเข้ามา ---
+
         _addMessage(
           Message(
             senderName: 'Me',
             senderImageUrl: 'assets/imgs/profile.jpg',
-            filePath: video.path, // ใช้ filePath สำหรับวิดีโอ
-            fileName: video.name, // ชื่อไฟล์วิดีโอ
+            filePath: video.path,
+            fileName: video.name,
             time: _currentTime,
             isMe: true,
           ),
@@ -140,16 +178,15 @@ class ChatDetailController extends GetxController {
     }
   }
 
-  // **** แก้ไขเมธอด pickFile() ที่นี่ ****
   Future<void> pickFile() async {
     try {
       final result = await FilePicker.platform.pickFiles(
-        allowMultiple: true, // เพิ่มบรรทัดนี้เพื่ออนุญาตให้เลือกหลายไฟล์
-        type: FileType.custom, // กำหนดประเภทไฟล์ (ถ้าต้องการ)
-        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xlsx', 'pptx'], // เพิ่มนามสกุลที่ต้องการ
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xlsx', 'pptx', 'mp4', 'mov', 'webm'],
       );
-      if (result != null && result.files.isNotEmpty) { // ตรวจสอบว่ามีไฟล์ถูกเลือกหรือไม่
-        for (final filePlatform in result.files) { // วนลูปเพื่อเพิ่มไฟล์แต่ละไฟล์
+      if (result != null && result.files.isNotEmpty) {
+        for (final filePlatform in result.files) {
           if (filePlatform.path != null) {
             _addMessage(
               Message(
@@ -180,7 +217,7 @@ class ChatDetailController extends GetxController {
               senderName: 'Me',
               senderImageUrl: 'assets/imgs/profile.jpg',
               filePath: path,
-              fileName: 'voice_5896559.mp3',
+              fileName: 'Sound_5896559.mp3',
               time: _currentTime,
               isMe: true,
             ),
@@ -256,14 +293,42 @@ class ChatDetailController extends GetxController {
               onTap: pickFile,
             ),
             _buildBottomSheetItem(
-              icon: Icons.location_on,
-              label: 'ตำแหน่ง',
-              onTap: () => Get.snackbar('ขออภัย', 'ฟังก์ชันยังไม่เปิดใช้งาน'),
+              icon: Icons.videocam, // นี่คือบรรทัดที่เพิ่มเข้ามาสำหรับปุ่มวิดีโอ
+              label: 'วิดีโอ', // นี่คือบรรทัดที่เพิ่มเข้ามาสำหรับปุ่มวิดีโอ
+              onTap: () => pickVideo(ImageSource.gallery), // นี่คือบรรทัดที่เพิ่มเข้ามาสำหรับปุ่มวิดีโอ
+            ),
+          
+          ],
+        ),
+      ),
+    );
+  }
+
+  void showCameraOptions() {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Wrap(
+          spacing: 20,
+          runSpacing: 20,
+          alignment: WrapAlignment.center,
+          children: [
+            _buildBottomSheetItem(
+              icon: Icons.camera_alt,
+              label: 'ถ่ายรูป',
+              onTap: () => pickImage(ImageSource.camera),
             ),
             _buildBottomSheetItem(
-              icon: Icons.contact_page,
-              label: 'รายชื่อ',
-              onTap: () => Get.snackbar('ขออภัย', 'ฟังก์ชันยังไม่เปิดใช้งาน'),
+              icon: Icons.videocam,
+              label: 'ถ่ายวิดีโอ',
+              onTap: () => pickVideo(ImageSource.camera),
             ),
           ],
         ),
@@ -297,10 +362,7 @@ class ChatDetailController extends GetxController {
   }
 
   void _addMessage(Message message) {
-    // เพิ่มข้อความลงใน List ใน Chat object ปัจจุบัน
     chat.messages.add(message);
-
-    // อัปเดต lastMessage และ time ใน Chat object
     chat.lastMessage.value =
         message.text ?? (message.imagePath != null ? '[รูปภาพ]' : '[ไฟล์]');
     chat.time.value = message.time;

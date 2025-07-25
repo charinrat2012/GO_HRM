@@ -1,6 +1,8 @@
+// Path: lib/app/ui/pages/chat_detail_page/widgets/chat_detail_head.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../routes/app_routes.dart';
 import '../chat_detail_controller.dart';
 
 class ChatDetailHead extends GetView<ChatDetailController>
@@ -27,7 +29,7 @@ class ChatDetailHead extends GetView<ChatDetailController>
       centerTitle: false,
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {Get.toNamed(AppRoutes.MENU_CHAT, arguments: controller.chat);}, // ส่งอ็อบเจกต์ chat ไปยัง MenuChatPage
           icon: const Icon(Icons.menu, color: Colors.black),
         ),
       ],

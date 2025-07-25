@@ -84,6 +84,7 @@ class MenuForm extends GetView<MenuController> {
                       color: Colors.black,
                     ),
                     title: 'เงื่อนไขการใช้บริการ',
+                    
                   ),
                   const SizedBox(height: 12),
                   _buildListTile(

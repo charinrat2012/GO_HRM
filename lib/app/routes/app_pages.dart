@@ -1,7 +1,11 @@
 import 'package:get/get.dart';
 
+
 import '../bindings/activity_detail_binding.dart';
+import '../bindings/all_albums_binding.dart';
+import '../bindings/all_media_binding.dart';
 import '../bindings/calender_binding.dart';
+
 import '../bindings/chat_detail_binding.dart';
 import '../bindings/chats_binding.dart';
 import '../bindings/create_document_request_binding.dart';
@@ -15,6 +19,7 @@ import '../bindings/leave_binding.dart';
 import '../bindings/login_binging.dart';
 import '../bindings/meeting_detail_binding.dart';
 import '../bindings/menu_binding.dart';
+import '../bindings/menu_char_binding.dart';
 import '../bindings/navigation_binding.dart';
 import '../bindings/news_binding.dart';
 import '../bindings/news_details_binding.dart';
@@ -29,7 +34,10 @@ import '../bindings/splash_binding.dart';
 import '../bindings/timetable_binding.dart';
 import '../data/models/news_card_model.dart';
 import '../ui/pages/activity_detail_page/activity_detail_page.dart';
+import '../ui/pages/all_albums_page/all_albums_page.dart';
+import '../ui/pages/all_media_page/all_media_page.dart';
 import '../ui/pages/calender_page/calender_page.dart';
+
 import '../ui/pages/chat_detail_page/chat_detail_page.dart';
 import '../ui/pages/chats_page/chats_page.dart';
 import '../ui/pages/create_documents_request_page/create_documents_request_page.dart';
@@ -42,6 +50,7 @@ import '../ui/pages/home_page/home_page.dart';
 import '../ui/pages/leave_page.dart/leave_page.dart';
 import '../ui/pages/login_page/login_page.dart';
 import '../ui/pages/meeting_detail_page/meeting_detail_page.dart';
+import '../ui/pages/menu_chat-page/menu_chat_page.dart';
 import '../ui/pages/menu_page/menu_page.dart';
 import '../ui/pages/navigation_page/navigation_page.dart';
 import '../ui/pages/news_details_page/news_details_page.dart';
@@ -245,5 +254,24 @@ class AppPages {
       binding: ChatDetailBinding(),
       transition: _defaultTransition,
     ),
+    GetPage(
+      name: AppRoutes.MENU_CHAT,
+      page: () => MenuChatPage(),
+      binding: MenuCharBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.ALL_MEDIA, 
+      page: () => const AllMediaPage(),
+      binding: AllMediaBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.ALL_ALBUMS, 
+      page: () => const AllAlbumsPage(),
+      binding: AllAlbumsBinding(),
+      transition: _defaultTransition,
+    ),
+    
   ];
 }
