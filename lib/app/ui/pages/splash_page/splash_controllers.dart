@@ -38,7 +38,7 @@ final isAutoLoginView = false.obs;
   @override
   void onReady() {
     super.onReady();
-    _autoLogin();
+    // _autoLogin();
   }
 
 
@@ -108,44 +108,45 @@ final isAutoLoginView = false.obs;
         curve: const Interval(0.7, 0.8, curve: Curves.linear),
       ),
     );
-  }
-
-  void _autoLogin() {
-    final rememberedEmail = box.read<String>('email');
-
-    if (rememberedEmail != null) {
-      final userMap = DataList.userData.firstWhere(
-        (user) => user['email'] == rememberedEmail,
-        orElse: () => <String, dynamic>{},
-      );
-
-      if (userMap.isNotEmpty) {
-        isAutoLoginView.value = true;
-
-        final userToLogin = UserModel.fromMap(userMap);
-        _authService.login(userToLogin);
-
-        // เมื่อล็อกอินสำเร็จ ให้ไปหน้าหลักเลย
-      7.seconds.delay().then((_) => Get.offAllNamed(AppRoutes.NAVIGATION));
-      //  Get.offAllNamed(AppRoutes.NAVIGATION);
-      } else {
-        // ถ้าไม่เจอข้อมูลผู้ใช้ ให้แสดงหน้าล็อกอินตามปกติ
-        _loadRememberedEmail();
-      }
-    } else {
-      // ถ้าไม่มีอีเมลที่บันทึกไว้ ให้แสดงหน้าล็อกอินตามปกติ
-      _loadRememberedEmail();
-    }
     animationController.forward();
   }
 
-  void _loadRememberedEmail() {
-    final rememberedEmail = box.read<String>('email');
-    if (rememberedEmail != null) {
-      emailController.text = rememberedEmail;
-      rememberMe.value = true;
-    }
-  }
+  // void _autoLogin() {
+  //   final rememberedEmail = box.read<String>('email');
+
+  //   if (rememberedEmail != null) {
+  //     final userMap = DataList.userData.firstWhere(
+  //       (user) => user['email'] == rememberedEmail,
+  //       orElse: () => <String, dynamic>{},
+  //     );
+
+  //     if (userMap.isNotEmpty) {
+  //       isAutoLoginView.value = true;
+
+  //       final userToLogin = UserModel.fromMap(userMap);
+  //       _authService.login(userToLogin);
+
+  //       // เมื่อล็อกอินสำเร็จ ให้ไปหน้าหลักเลย
+  //     7.seconds.delay().then((_) => Get.offAllNamed(AppRoutes.NAVIGATION));
+  //     //  Get.offAllNamed(AppRoutes.NAVIGATION);
+  //     } else {
+  //       // ถ้าไม่เจอข้อมูลผู้ใช้ ให้แสดงหน้าล็อกอินตามปกติ
+  //       _loadRememberedEmail();
+  //     }
+  //   } else {
+  //     // ถ้าไม่มีอีเมลที่บันทึกไว้ ให้แสดงหน้าล็อกอินตามปกติ
+  //     _loadRememberedEmail();
+  //   }
+  //   animationController.forward();
+  // }
+
+  // void _loadRememberedEmail() {
+  //   final rememberedEmail = box.read<String>('email');
+  //   if (rememberedEmail != null) {
+  //     emailController.text = rememberedEmail;
+  //     rememberMe.value = true;
+  //   }
+  // }
 
   @override
   void onClose() {

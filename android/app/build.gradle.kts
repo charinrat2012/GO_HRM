@@ -35,6 +35,14 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+             applicationVariants.all { variant ->
+            variant.outputs.all {
+                def appName = 'GoHrm'
+                def versionName = variant.versionName
+                def newName = "${appName}-v${versionName}.apk"
+                outputFileName = newName
+            }
+        }
         }
     }
 }
