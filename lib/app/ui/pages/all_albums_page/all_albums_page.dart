@@ -1,17 +1,16 @@
-// lib/app/ui/pages/all_albums_page/all_albums_page.dart
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart'; // เพิ่ม import video_player
 import 'package:open_filex/open_filex.dart'; // เพิ่ม import open_filex
 
-import '../../../config/my_colors.dart'; 
-import 'all_albums_controller.dart'; 
-import '../../../data/models/chat_model.dart'; 
-import 'package:url_launcher/url_launcher.dart'; 
+import '../../../config/my_colors.dart';
+import 'all_albums_controller.dart';
+import '../../../data/models/chat_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
-class AllAlbumsPage extends GetView<AllAlbumsController> { 
+class AllAlbumsPage extends GetView<AllAlbumsController> {
   const AllAlbumsPage({Key? key}) : super(key: key);
 
   @override
@@ -33,7 +32,7 @@ class AllAlbumsPage extends GetView<AllAlbumsController> {
               },
             ),
             title: const Text(
-              'รูปภาพ, วิดีโอ และไฟล์', 
+              'รูปภาพ, วิดีโอ และไฟล์',
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black,
@@ -43,7 +42,7 @@ class AllAlbumsPage extends GetView<AllAlbumsController> {
             centerTitle: true,
             backgroundColor: Colors.white,
             elevation: 1,
-            bottom: TabBar( 
+            bottom: TabBar(
               labelColor: MyColors.blue2, // สีของข้อความแท็บที่เลือก
               unselectedLabelColor: Colors.grey, // สีของข้อความแท็บที่ไม่ได้เลือก
               indicatorColor: MyColors.blue2, // สีของเส้นใต้แท็บ
@@ -59,7 +58,10 @@ class AllAlbumsPage extends GetView<AllAlbumsController> {
             children: [
               // แท็บ 1: รูปภาพและวิดีโอ
               Obx(() {
-                if (controller.allMediaPaths.isEmpty) {
+                final mediaPaths = [...controller.allMediaPaths, ...controller.allVideoPaths];
+                mediaPaths.sort(); // Sort for consistent display
+
+                if (mediaPaths.isEmpty) {
                   return const Center(
                     child: Text(
                       'ไม่มีรูปภาพหรือวิดีโอ',
@@ -73,11 +75,11 @@ class AllAlbumsPage extends GetView<AllAlbumsController> {
                     crossAxisCount: 3,
                     crossAxisSpacing: 4.0,
                     mainAxisSpacing: 4.0,
-                    childAspectRatio: 1.0, 
+                    childAspectRatio: 1.0,
                   ),
-                  itemCount: controller.allMediaPaths.length,
+                  itemCount: mediaPaths.length,
                   itemBuilder: (context, index) {
-                    final path = controller.allMediaPaths[index];
+                    final path = mediaPaths[index];
                     return _MediaGridItem(path: path);
                   },
                 );
@@ -173,7 +175,7 @@ class _MediaGridItemState extends State<_MediaGridItem> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isAsset = widget.path.startsWith('assets/'); // [เพิ่ม] ตรวจสอบว่าเป็น asset หรือไม่
+    final bool isAsset = widget.path.startsWith('assets/');
 
     return GestureDetector(
       onTap: () {
@@ -197,7 +199,7 @@ class _MediaGridItemState extends State<_MediaGridItem> {
                         ),
                       ),
                     ))
-            : (isAsset // [แก้ไข] ใช้ isAsset ในการเลือก Image.asset หรือ Image.file
+            : (isAsset
                 ? Image.asset(
                     widget.path,
                     fit: BoxFit.cover,

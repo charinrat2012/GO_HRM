@@ -181,8 +181,10 @@ class ChatMessageContent extends GetView<ChatDetailController> {
 
     return GestureDetector(
       onTap: () {
-        // เมื่อแตะอัลบั้ม ให้ไปหน้า AllAlbumsPage และส่ง Album object ของ Message นั้นไป
-        Get.toNamed(AppRoutes.ALL_ALBUMS, arguments: message.album); // <<< ส่ง message.album ที่นี่
+        // [แก้ไขโค้ดส่วนนี้] เปลี่ยนไปหน้า ALBUM_DETAIL และส่ง Album object ไป
+        if (message.album != null) {
+          Get.toNamed(AppRoutes.ALBUM_DETAIL, arguments: message.album); // ส่ง Album object ที่เฉพาะเจาะจง
+        }
       },
       child: Container(
         constraints: BoxConstraints(maxWidth: Get.width * maxWidthFraction),

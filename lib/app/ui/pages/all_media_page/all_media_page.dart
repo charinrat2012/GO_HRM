@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import 'all_media_controller.dart';
 
-class AllMediaAndFilesPage extends GetView<AllMediaController> {
-  const AllMediaAndFilesPage({Key? key}) : super(key: key);
+class AllMediaPage extends GetView<AllMediaController> {
+  const AllMediaPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

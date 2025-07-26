@@ -10,9 +10,9 @@ class MenuChatController extends GetxController {
   // [เพิ่ม] สร้าง getter สำหรับ albums เพื่อให้ MenuChatPage เข้าถึงได้ง่ายขึ้น
   RxList<Album> get albums => chat.value.albums;
 
-  // [เพิ่ม] สร้าง getter สำหรับ imagePaths และ videoPaths
-  List<String> get imagePaths => chat.value.imagePaths;
-  List<String> get videoPaths => chat.value.videoPaths;
+  // *** แก้ไขตรงนี้: เปลี่ยนประเภทการคืนค่าเป็น RxList<String> ***
+  RxList<String> get imagePaths => chat.value.imagePaths;
+  RxList<String> get videoPaths => chat.value.videoPaths;
 
   // [แก้ไข] Getter สำหรับ fileMessages โดยตรง
   RxList<Message> get fileMessages => chat.value.fileMessages; // [เพิ่ม] สำหรับไฟล์เอกสาร

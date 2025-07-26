@@ -103,10 +103,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: ['assets/imgs/chat_image1.jpg'], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [], // [แก้ไข] เปลี่ยนเป็น path รูปที่มีอยู่จริง
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '2',
@@ -195,10 +195,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: ['assets/vids/chat_video1.mp4'], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '3',
@@ -230,18 +230,18 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [ // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [
           Message(
-            senderName: 'แม่', // เปลี่ยนเป็น 'บุญนิสา' ถ้าต้องการให้ตรงกับผู้ส่ง
+            senderName: 'บุญนิสา', // เปลี่ยนเป็น 'บุญนิสา' ถ้าต้องการให้ตรงกับผู้ส่ง
             senderImageUrl: 'assets/imgs/pic3.jpg',
             filePath: 'assets/files/document.pdf',
             fileName: 'รายงานสรุป.pdf',
             time: 'เมื่อวาน',
           ),
         ],
-        links: [], // [แก้ไข] ลบ .obs
+        links: [],
       ),
       Chat(
         id: '4',
@@ -259,10 +259,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: ['https://www.google.com'], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '5',
@@ -280,32 +280,32 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '6',
         name: 'กาญจน์ นิธิวรสกุล',
         imageUrl: 'assets/imgs/pic6.jpg',
-        lastMessage: 'กาญจน์ ส่งรูปภาพ', // *** เปลี่ยนตรงนี้ ***
+        lastMessage: 'กาญจน์ ส่งรูปภาพ',
         time: '7 ม.ค. 2566',
         unreadCount: 1,
         messages: [
           Message(
             senderName: 'กาญจน์ นิธิวรสกุล',
             senderImageUrl: 'assets/imgs/pic6.jpg',
-            text: null, // *** เปลี่ยนตรงนี้เป็น null ***
-            imagePath: 'assets/imgs/pic6.jpg',
+            text: null,
+            imagePath: 'assets/imgs/pic6.jpg', 
             time: '12:04',
             isMe: false,
           ),
         ],
-        imagePaths: ['assets/imgs/pic6.jpg'], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: ['assets/imgs/pic6.jpg'], 
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '7',
@@ -324,10 +324,10 @@ class ChatsController extends GetxController {
             isMe: true,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '8',
@@ -347,9 +347,9 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [ // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [
           Message(
             senderName: 'กาญญา พาณิชวัฒนากูล',
             senderImageUrl: 'assets/imgs/pic8.jpg',
@@ -359,7 +359,7 @@ class ChatsController extends GetxController {
             isMe: false,
           )
         ],
-        links: [], // [แก้ไข] ลบ .obs
+        links: [],
       ),
       Chat(
         id: '9',
@@ -378,10 +378,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: ['assets/imgs/pic1.jpg'], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: ['assets/imgs/pic1.jpg'], 
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '10',
@@ -400,10 +400,10 @@ class ChatsController extends GetxController {
             isMe: true,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '11',
@@ -423,10 +423,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: ['assets/vids/video1.mp4'], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: ['assets/vids/video1.mp4'],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '12',
@@ -444,10 +444,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '13',
@@ -465,10 +465,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '14',
@@ -486,10 +486,10 @@ class ChatsController extends GetxController {
             isMe: true,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '15',
@@ -508,10 +508,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '16',
@@ -530,10 +530,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '17',
@@ -552,10 +552,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '18',
@@ -574,10 +574,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '19',
@@ -596,10 +596,10 @@ class ChatsController extends GetxController {
             isMe: true,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '20',
@@ -618,10 +618,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '21',
@@ -640,10 +640,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '22',
@@ -662,10 +662,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '23',
@@ -684,10 +684,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '24',
@@ -706,10 +706,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '25',
@@ -728,10 +728,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '26',
@@ -750,10 +750,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
       Chat(
         id: '27',
@@ -876,10 +876,10 @@ class ChatsController extends GetxController {
             isMe: false,
           ),
         ],
-        imagePaths: [], // [แก้ไข] ลบ .obs
-        videoPaths: [], // [แก้ไข] ลบ .obs
-        fileMessages: [], // [แก้ไข] ลบ .obs
-        links: [], // [แก้ไข] ลบ .obs
+        imagePaths: [],
+        videoPaths: [],
+        fileMessages: [],
+        links: [],
       ),
     ]);
     filterChats(selectedTabIndex.value);

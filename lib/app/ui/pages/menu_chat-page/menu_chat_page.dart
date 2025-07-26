@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io';
@@ -27,10 +26,8 @@ class MenuChatPage extends GetView<MenuChatController> {
                   Get.back();
                 },
               ),
-              // [แก้ไข] เข้าถึง chat.value.name
               title: Obx(
                 () => Text(
-                  // [เพิ่ม Obx] เพื่อให้ AppBar อัปเดตชื่อแชทได้หากมีการเปลี่ยนแปลง
                   controller.chat.value.name,
                   style: const TextStyle(
                     fontSize: 15,
@@ -60,7 +57,6 @@ class MenuChatPage extends GetView<MenuChatController> {
                         label: 'ปิดแจ้งเตือน',
                         onPressed: () {},
                       ),
-                      // [แก้ไข] เข้าถึง chat.value.isGroup
                       if (controller.chat.value.isGroup == true)
                         _buildActionColumn(
                           icon: Icons.group,
@@ -84,7 +80,6 @@ class MenuChatPage extends GetView<MenuChatController> {
               ),
             ),
 
-            // Combined "รูปภาพและวิดีโอ" section
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -99,23 +94,15 @@ class MenuChatPage extends GetView<MenuChatController> {
                     children: [
                       _buildSectionHeader('รูปภาพและวิดีโอ', () {
                         Get.toNamed(
-                          AppRoutes
-                              .ALL_ALBUMS, // [แก้ไข] เปลี่ยนเป็น ALL_ALBUMS
+                          AppRoutes.ALL_ALBUMS,
                           arguments: {
-                            // [แก้ไข] เข้าถึง controller.imagePaths และ controller.videoPaths
-                            'imagePaths': controller.imagePaths,
-                            'videoPaths': controller.videoPaths,
-                            'fileMessages': controller
-                                .fileMessages, // [เพิ่ม] ส่ง fileMessages ไป
-                            'links': controller.links, // [เพิ่ม] ส่ง links ไป
-                            'initialTab':
-                                0, // [เพิ่ม] กำหนดแท็บเริ่มต้นเป็น "รูป & วิดีโอ"
+                            'chat': controller.chat.value, // Pass the entire Chat object
+                            'initialTab': 0,
                           },
                         );
                       }),
                       const SizedBox(height: 12.0),
                       Obx(() {
-                        // [แก้ไข] เข้าถึง controller.imagePaths และ controller.videoPaths
                         final List<String> allMediaPaths = [
                           ...controller.imagePaths,
                           ...controller.videoPaths,
@@ -126,8 +113,7 @@ class MenuChatPage extends GetView<MenuChatController> {
                             .toList();
                         return _buildHorizontalMediaThumbnails(
                           displayMediaPaths,
-                          isSmall:
-                              true, // isSmall เป็น true สำหรับรูปภาพและวิดีโอทั่วไป
+                          isSmall: true,
                         );
                       }),
                     ],
@@ -137,7 +123,6 @@ class MenuChatPage extends GetView<MenuChatController> {
             ),
 
             const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
-            // "อัลบั้ม" section: ปรับปรุงส่วนนี้เพื่อแสดงรายการอัลบั้ม
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -150,20 +135,15 @@ class MenuChatPage extends GetView<MenuChatController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ส่วนหัว "อัลบั้ม" - นำทางไป AlbumsOverviewPage
                       _buildSectionHeader('อัลบั้ม', () {
-                        // เมื่อกด "อัลบั้ม" จะนำทางไปยังหน้าแสดงรายการอัลบั้มทั้งหมด
                         Get.toNamed(
                           AppRoutes.ALBUMS_OVERVIEW,
-                          // [แก้ไข] ส่ง controller.chat.value ไป
                           arguments: controller.chat.value,
                         );
                       }),
                       const SizedBox(height: 12.0),
 
-                      // แสดง Thumbnail ของอัลบั้ม (หรือข้อความ "ไม่มีอัลบั้ม")
                       Obx(() {
-                        // [แก้ไข] เข้าถึง controller.albums
                         if (controller.albums.isEmpty) {
                           return Container(
                             height: 120,
@@ -177,8 +157,6 @@ class MenuChatPage extends GetView<MenuChatController> {
                             ),
                           );
                         }
-                        // แสดงเฉพาะ 3 อัลบั้มแรก หรือน้อยกว่า (เพื่อใช้เป็น preview)
-                        // [แก้ไข] เข้าถึง controller.albums
                         final displayAlbums = controller.albums
                             .take(3)
                             .toList();
@@ -186,7 +164,6 @@ class MenuChatPage extends GetView<MenuChatController> {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: displayAlbums.map((album) {
-                              // ใช้รูปแรกของแต่ละอัลบั้มเป็น thumbnail
                               final String thumbnailPath =
                                   album.imagePaths.isNotEmpty
                                   ? album.imagePaths.first
@@ -196,18 +173,16 @@ class MenuChatPage extends GetView<MenuChatController> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
                                   child: GestureDetector(
-                                    // เมื่อแตะ thumbnail ของอัลบั้ม ให้ไปหน้า AlbumsOverviewPage
                                     onTap: () {
                                       Get.toNamed(
-                                        AppRoutes.ALBUMS_OVERVIEW,
-                                        // [แก้ไข] ส่ง controller.chat.value ไป
-                                        arguments: controller.chat.value,
+                                        AppRoutes.ALBUM_DETAIL,
+                                        arguments: album,
                                       );
                                     },
                                     child: _buildMediaWidget(
                                       thumbnailPath,
-                                      isSmall: true, // [แก้ไข] เปลี่ยนเป็น true
-                                    ), // isSmall เป็น false สำหรับ Thumbnail อัลบั้ม
+                                      isSmall: true,
+                                    ),
                                   ),
                                 ),
                               );
@@ -231,7 +206,6 @@ class MenuChatPage extends GetView<MenuChatController> {
                   }),
                   const SizedBox(height: 8.0),
                   _buildMenuItemTile('โน็ต', () {
-                    // [แก้ไข] ส่ง controller.chat.value ไป
                     Get.toNamed(
                       AppRoutes.NOTES,
                       arguments: controller.chat.value,
@@ -240,30 +214,20 @@ class MenuChatPage extends GetView<MenuChatController> {
                   const SizedBox(height: 8.0),
                   _buildMenuItemTile('ลิงก์', () {
                     Get.toNamed(
-                      // [เพิ่ม] นำทางไป AllAlbumsPage พร้อมส่งข้อมูล Link
                       AppRoutes.ALL_ALBUMS,
                       arguments: {
-                        'imagePaths': controller.imagePaths,
-                        'videoPaths': controller.videoPaths,
-                        'fileMessages': controller.fileMessages,
-                        'links': controller.links, // [เพิ่ม] ส่ง links ไป
-                        'initialTab':
-                            1, // [เพิ่ม] กำหนดแท็บเริ่มต้นเป็น "ลิงก์"
+                        'chat': controller.chat.value, // Pass the entire Chat object
+                        'initialTab': 1,
                       },
                     );
                   }),
                   const SizedBox(height: 8.0),
                   _buildMenuItemTile('ไฟล์', () {
                     Get.toNamed(
-                      // [แก้ไข] นำทางไป AllAlbumsPage พร้อมส่งข้อมูลไฟล์
                       AppRoutes.ALL_ALBUMS,
                       arguments: {
-                        'imagePaths': controller.imagePaths,
-                        'videoPaths': controller.videoPaths,
-                        'fileMessages': controller
-                            .fileMessages, // [เพิ่ม] ส่ง fileMessages ไป
-                        'links': controller.links, // [เพิ่ม] ส่ง links ไป
-                        'initialTab': 2, // [เพิ่ม] กำหนดแท็บเริ่มต้นเป็น "ไฟล์"
+                        'chat': controller.chat.value, // Pass the entire Chat object
+                        'initialTab': 2,
                       },
                     );
                   }),
@@ -281,7 +245,7 @@ class MenuChatPage extends GetView<MenuChatController> {
     );
   }
 
-  // Helper methods ของ MenuChatPage (ไม่มีการเปลี่ยนแปลงในส่วนนี้)
+  // Helper methods of MenuChatPage (no changes in these methods)
   Widget _buildActionColumn({
     required IconData icon,
     required String label,

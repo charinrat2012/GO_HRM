@@ -1,25 +1,24 @@
-// File: lib/app/ui/pages/create_album_page/create_album_controller.dart
+// lib/app/ui/pages/create_album_page/create_album_controller.dart
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart'; // Import for DateFormat
+import 'package:intl/intl.dart'; 
 
 import '../../../data/models/album_model.dart';
-import '../../../data/models/chat_model.dart'; // Import Chat model
-import '../../../data/services/auth_service.dart'; // Import AuthService
-import '../../../ui/utils/assets.dart'; // Import Assets
+import '../../../data/models/chat_model.dart'; 
+import '../../../data/services/auth_service.dart'; 
+import '../../../ui/utils/assets.dart'; 
 
 class CreateAlbumController extends GetxController {
   final TextEditingController albumNameController = TextEditingController();
   final RxList<String> pickedImagePaths = <String>[].obs;
 
-  late final Chat chat; // เก็บ Chat object ที่ส่งมา
+  late final Chat chat;
 
   @override
   void onInit() {
     super.onInit();
-    // รับ Chat object จาก arguments
     if (Get.arguments is Chat) {
       chat = Get.arguments as Chat;
     } else {
@@ -73,23 +72,30 @@ class CreateAlbumController extends GetxController {
     // เพิ่มอัลบั้มใหม่เข้าสู่ chat.albums โดยตรง
     chat.albums.add(newAlbum);
 
+    // [แก้ไขโค้ดส่วนนี้] เพื่อนำรูปภาพทุกรูปจากอัลบั้มไปเพิ่มใน chat.imagePaths
+    for (String path in newAlbum.imagePaths) {
+      if (!chat.imagePaths.contains(path)) { // ตรวจสอบเพื่อหลีกเลี่ยงการเพิ่มซ้ำ
+        chat.imagePaths.add(path);
+      }
+    }
+
     // สร้าง Message สำหรับอัลบั้มและเพิ่มเข้าสู่ chat.messages
     final currentUser = Get.find<AuthService>().currentUser.value;
     final newMessage = Message(
       senderName: currentUser?.userName ?? 'Me',
       senderImageUrl: currentUser?.imgProfile ?? Assets.assetsImgsProfile,
-      text: 'อัลบั้ม: $albumName', // [แก้ไข] แสดงชื่ออัลบั้มเป็นข้อความ
-      // เพิ่ม imagePath โดยใช้รูปภาพแรกของอัลบั้มเป็น thumbnail
-      imagePath: pickedImagePaths.isNotEmpty ? pickedImagePaths.first : null, // [แก้ไข] เพิ่ม imagePath ตรงนี้
-      time: DateFormat('HH:mm').format(DateTime.now()), // เวลาปัจจุบัน
+      text: 'อัลบั้ม: $albumName', // แสดงชื่ออัลบั้มเป็นข้อความ
+      // imagePath ของ Message ควรเป็นรูปเดียว (รูปแรกของอัลบั้ม) สำหรับ thumbnail ใน chat bubble
+      imagePath: pickedImagePaths.isNotEmpty ? pickedImagePaths.first : null,
+      time: DateFormat('HH:mm').format(DateTime.now()),
       isMe: true,
-      album: newAlbum, // แนบ AlbumModel เข้าไปใน Message
+      album: newAlbum,
     );
     chat.messages.add(newMessage);
-    chat.lastMessage.value = 'สร้างอัลบั้ม: "$albumName"'; // อัปเดตข้อความล่าสุด
-    chat.time.value = DateFormat('HH:mm').format(DateTime.now()); // อัปเดตเวลาล่าสุด
+    chat.lastMessage.value = 'สร้างอัลบั้ม: "$albumName"';
+    chat.time.value = DateFormat('HH:mm').format(DateTime.now());
 
-    Get.back(); // ปิดหน้าสร้างอัลบั้ม
+    Get.back();
     Get.snackbar('สำเร็จ', 'สร้างอัลบั้ม "$albumName" เรียบร้อยแล้ว!');
   }
 }

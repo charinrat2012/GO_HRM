@@ -1,11 +1,10 @@
 // lib/app/ui/pages/albums_overview_page/albums_overview_page.dart
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:io';
-
 import '../../../routes/app_routes.dart';
 import 'albums_overview_controller.dart';
-import '../../../config/my_colors.dart'; // Import MyColors เพื่อใช้สี
+import '../../../config/my_colors.dart'; 
 
 class AlbumsOverviewPage extends GetView<AlbumsOverviewController> {
   const AlbumsOverviewPage({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class AlbumsOverviewPage extends GetView<AlbumsOverviewController> {
           elevation: 1,
         ),
         body: Obx(() {
-          if (controller.chat.albums.isEmpty) { // [แก้ไข] ใช้ controller.chat.albums
+          if (controller.chat.albums.isEmpty) { 
             return const Center(
               child: Text(
                 'ไม่มีอัลบั้มที่สร้างไว้',
@@ -49,22 +48,24 @@ class AlbumsOverviewPage extends GetView<AlbumsOverviewController> {
           return GridView.builder(
             padding: const EdgeInsets.all(8.0),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // แสดง 2 อัลบั้มต่อแถว
-              crossAxisSpacing: 8.0, // ระยะห่างแนวนอน
-              mainAxisSpacing: 8.0, // ระยะห่างแนวตั้ง
-              childAspectRatio:
-                  1.0, // [แก้ไข] ปรับสัดส่วนเป็น 1.0 (สี่เหลี่ยมจัตุรัส)
+              crossAxisCount: 2, 
+              crossAxisSpacing: 8.0, 
+              mainAxisSpacing: 8.0, 
+              childAspectRatio: 1.0, 
             ),
-            itemCount: controller.chat.albums.length, // [แก้ไข] ใช้ controller.chat.albums.length
+            itemCount: controller.chat.albums.length, 
             itemBuilder: (context, index) {
-              final album = controller.chat.albums[index]; // [แก้ไข] ใช้ controller.chat.albums[index]
+              final album = controller.chat.albums[index]; 
               final String thumbnailPath = album.imagePaths.isNotEmpty
                   ? album.imagePaths.first
-                  : ''; // ใช้รูปแรกเป็น thumbnail
+                  : ''; 
               return GestureDetector(
                 onTap: () {
-                  // เมื่อแตะที่อัลบั้ม ให้ไปหน้า AllAlbumsPage พร้อมส่ง Album object ไป
-                 Get.toNamed(AppRoutes.ALL_ALBUMS, arguments: album);
+                  // [แก้ไข] เมื่อแตะที่อัลบั้ม ให้ไปหน้า AllAlbumsPage พร้อมส่ง Chat object และตั้งค่า initialTab
+                  Get.toNamed(
+                    AppRoutes.ALBUM_DETAIL,
+                    arguments: album, // ส่ง Album object ที่เลือกไป
+                  );
                 },
                 child: Card(
                   elevation: 2,
@@ -114,13 +115,12 @@ class AlbumsOverviewPage extends GetView<AlbumsOverviewController> {
             },
           );
         }),
-        floatingActionButton: FloatingActionButton( // [เพิ่ม] FloatingActionButton ใน AlbumsOverviewPage
+        floatingActionButton: FloatingActionButton( 
           onPressed: () {
-            // [แก้ไข] เปลี่ยนไปนำทางไปยัง CreateAlbumPage พร้อมส่ง chat object ไป
             Get.toNamed(AppRoutes.CREATE_ALBUM, arguments: controller.chat);
           },
           child: const Icon(Icons.add),
-          backgroundColor: MyColors.blue2, // ใช้สีจาก MyColors.blue2
+          backgroundColor: MyColors.blue2, 
           foregroundColor: Colors.white,
         ),
       ),

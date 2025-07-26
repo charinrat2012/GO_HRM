@@ -4,6 +4,7 @@ import 'package:go_hrm/app/bindings/create_note_binding.dart';
 import 'package:go_hrm/app/bindings/note_detail_binding.dart';
 
 import '../bindings/activity_detail_binding.dart';
+import '../bindings/album_detail_binding.dart';
 import '../bindings/albums_overview_binding.dart';
 import '../bindings/all_albums_binding.dart';
 import '../bindings/all_media_binding.dart';
@@ -41,6 +42,7 @@ import '../bindings/splash_binding.dart';
 import '../bindings/timetable_binding.dart';
 import '../data/models/news_card_model.dart';
 import '../ui/pages/activity_detail_page/activity_detail_page.dart';
+import '../ui/pages/album_detail_page/album_detail_page.dart';
 import '../ui/pages/albums_overview_page/albums_overview_page.dart';
 import '../ui/pages/all_albums_page/all_albums_page.dart';
 import '../ui/pages/all_media_page/all_media_page.dart';
@@ -325,6 +327,12 @@ class AppPages {
       name: AppRoutes.CREATE_ALBUM,
       page: () => const CreateAlbumPage(),
       binding: CreateAlbumBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.ALBUM_DETAIL,
+      page: () => const AlbumDetailPage(),
+      binding: AlbumDetailBinding(),
       transition: _defaultTransition,
     ),
   ];

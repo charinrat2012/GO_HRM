@@ -38,4 +38,5 @@ class AppRoutes {
   static const EDIT_NOTE = '/edit-note';
   static const NOTE_DETAIL = '/note_detail'; 
   static const CREATE_ALBUM = '/create_album';
+  static const ALBUM_DETAIL = '/album_detail';
 }

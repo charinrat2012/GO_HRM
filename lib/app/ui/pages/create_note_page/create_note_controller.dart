@@ -9,6 +9,7 @@ import '../../../data/models/note_model.dart';
 import '../../../data/services/auth_service.dart';
 import '../../../data/models/chat_model.dart';
 import '../../../ui/utils/assets.dart';
+import '../chat_detail_page/chat_detail_controller.dart'; // Import ChatDetailController
 
 class CreateNoteController extends GetxController {
   final TextEditingController titleController = TextEditingController();
@@ -17,12 +18,16 @@ class CreateNoteController extends GetxController {
 
   final AuthService _authService = Get.find<AuthService>();
   late final Chat chat;
+  late final ChatDetailController _chatDetailController; // Add this
 
   @override
   void onInit() {
     super.onInit();
     if (Get.arguments is Chat) {
       chat = Get.arguments as Chat;
+      // Find the existing ChatDetailController instance
+      // This assumes ChatDetailController is already on the GetX dependency tree (which it should be if user navigated from ChatDetailPage)
+      _chatDetailController = Get.find<ChatDetailController>();
     } else {
       Get.snackbar('ข้อผิดพลาด', 'ไม่พบข้อมูลแชทสำหรับสร้างโน้ต');
       Get.back();
@@ -82,20 +87,23 @@ class CreateNoteController extends GetxController {
       imagePaths: pickedImagePaths.toList(),
     );
 
-    // [แก้ไข] เพิ่มโน้ตเข้าสู่รายการโน้ตของแชท (ให้โน้ตล่าสุดอยู่บนสุด)
+    // เพิ่มโน้ตเข้าสู่รายการโน้ตของแชท (ให้โน้ตล่าสุดอยู่บนสุด)
     chat.notes.insert(0, newNote);
 
-    // [เพิ่ม] สร้าง Message ใหม่สำหรับโน้ตและเพิ่มเข้าสู่รายการข้อความของแชท
+    // สร้าง Message ใหม่สำหรับโน้ต
     final newMessage = Message(
       senderName: senderName,
       senderImageUrl: senderImageUrl,
       text: null, // Note messages don't have direct text content, it's in the note object
+      // *** ลบบรรทัดนี้ออก: imagePath: pickedImagePaths.isNotEmpty ? pickedImagePaths.first : null, ***
       time: DateFormat('HH:mm').format(DateTime.now()), // เวลาปัจจุบัน
       isMe: true, // หรือกำหนดตามผู้ใช้ปัจจุบัน
       note: newNote, // แนบ NoteModel เข้าไปใน Message
     );
 
-    chat.messages.add(newMessage); // เพิ่มข้อความโน้ตเข้าสู่ chat.messages
+    // *** [แก้ไข]: เรียกใช้ addMessage จาก ChatDetailController เพื่อให้ logic การอัปเดต chat.imagePaths ทำงาน ***
+    _chatDetailController.addMessage(newMessage);
+
     chat.lastMessage.value = 'สร้างโน้ต: "$title"'; // อัปเดตข้อความล่าสุด
     chat.time.value = DateFormat('HH:mm').format(DateTime.now()); // อัปเดตเวลาล่าสุด
 

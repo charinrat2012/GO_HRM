@@ -96,7 +96,7 @@ class ChatDetailController extends GetxController {
   void sendTextMessage() {
     final text = messageController.text.trim();
     if (text.isNotEmpty) {
-      _addMessage(
+      addMessage( // เปลี่ยนจาก _addMessage เป็น addMessage
         Message(
           senderName: 'Me',
           senderImageUrl: 'assets/imgs/profile.jpg',
@@ -117,7 +117,7 @@ class ChatDetailController extends GetxController {
         );
         if (images.isNotEmpty) {
           for (final image in images) {
-            _addMessage(
+            addMessage( // เปลี่ยนจาก _addMessage เป็น addMessage
               Message(
                 senderName: 'Me',
                 senderImageUrl: 'assets/imgs/profile.jpg',
@@ -134,7 +134,7 @@ class ChatDetailController extends GetxController {
           imageQuality: 70,
         );
         if (image != null) {
-          _addMessage(
+          addMessage( // เปลี่ยนจาก _addMessage เป็น addMessage
             Message(
               senderName: 'Me',
               senderImageUrl: 'assets/imgs/profile.jpg',
@@ -170,7 +170,7 @@ class ChatDetailController extends GetxController {
           return;
         }
 
-        _addMessage(
+        addMessage( // เปลี่ยนจาก _addMessage เป็น addMessage
           Message(
             senderName: 'Me',
             senderImageUrl: 'assets/imgs/profile.jpg',
@@ -208,7 +208,7 @@ class ChatDetailController extends GetxController {
       if (result != null && result.files.isNotEmpty) {
         for (final filePlatform in result.files) {
           if (filePlatform.path != null) {
-            _addMessage(
+            addMessage( // เปลี่ยนจาก _addMessage เป็น addMessage
               Message(
                 senderName: 'Me',
                 senderImageUrl: 'assets/imgs/profile.jpg',
@@ -232,7 +232,7 @@ class ChatDetailController extends GetxController {
         final path = await _audioRecorder.stop();
         isRecording.value = false;
         if (path != null) {
-          _addMessage(
+          addMessage( // เปลี่ยนจาก _addMessage เป็น addMessage
             Message(
               senderName: 'Me',
               senderImageUrl: 'assets/imgs/profile.jpg',
@@ -416,11 +416,27 @@ class ChatDetailController extends GetxController {
   }
 
   // แก้ไข _addMessage ให้รองรับ Album และเพิ่มรูปภาพ/วิดีโอ/ไฟล์ใน chat.imagePaths/videoPaths/fileMessages
-  void _addMessage(Message message, {album_model.Album? album}) { // Correctly reference Album
+  // เปลี่ยนชื่อเมธอดจาก _addMessage เป็น addMessage เพื่อให้สามารถเรียกใช้จากภายนอกได้
+  void addMessage(Message message, {album_model.Album? album}) { // Correctly reference Album
     chat.messages.add(message);
 
-    // [New Logic] Add image/video paths to chat's dedicated lists
-    if (message.imagePath != null && !chat.imagePaths.contains(message.imagePath)) { // Avoid duplicates
+    // [New Logic] Add image/video/file paths from notes/albums/messages to chat's dedicated lists
+    if (album != null) { // existing album handling
+      for (final imagePath in album.imagePaths) {
+        if (!chat.imagePaths.contains(imagePath)) { // Avoid duplicates
+          chat.imagePaths.add(imagePath);
+        }
+      }
+    } else if (message.note != null) { // *** NEW BLOCK FOR NOTES ***
+      // ถ้า Message มี NoteModel ให้เพิ่มทุกรูปภาพจาก NoteModel.imagePaths
+      for (final imagePath in message.note!.imagePaths) {
+        if (!chat.imagePaths.contains(imagePath)) { // หลีกเลี่ยงการเพิ่มรูปภาพซ้ำ
+          chat.imagePaths.add(imagePath);
+        }
+      }
+    }
+    // existing logic for single image or file path:
+    else if (message.imagePath != null && !chat.imagePaths.contains(message.imagePath)) { // Avoid duplicates
       chat.imagePaths.add(message.imagePath!);
     } else if (message.filePath != null) {
       final bool isAudio = message.filePath!.toLowerCase().endsWith('.mp3');
@@ -451,6 +467,8 @@ class ChatDetailController extends GetxController {
     // อัปเดต lastMessage ตามประเภทของข้อความ
     if (album != null) {
       chat.lastMessage.value = '[อัลบั้ม: ${album.name}]';
+    } else if (message.note != null) { // เพิ่มเงื่อนไขสำหรับโน้ต
+      chat.lastMessage.value = '[โน้ต: ${message.note!.title}]';
     } else if (message.text != null && message.text!.isNotEmpty) {
       chat.lastMessage.value = message.text!;
     } else if (message.imagePath != null) {
@@ -546,7 +564,7 @@ class ChatDetailController extends GetxController {
         chat.albums.add(newAlbum);
 
         // เพิ่มข้อความอัลบั้มลงในแชท
-        _addMessage(
+        addMessage( // เปลี่ยนจาก _addMessage เป็น addMessage
           Message(
             senderName: 'Me',
             senderImageUrl: 'assets/imgs/profile.jpg',
