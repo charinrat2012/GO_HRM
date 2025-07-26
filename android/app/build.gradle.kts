@@ -28,13 +28,29 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-         
     }
+
+    // --- เพิ่มโค้ดบล็อกนี้เข้าไป ---
+    applicationVariants.all {
+        val variant = this
+        variant.outputs.forEach { output ->
+            val outputImpl = output as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            
+            val appName = "GoHrm"
+            val versionName = variant.versionName
+            val buildType = variant.buildType.name // จะได้ค่าเป็น 'debug' หรือ 'release'
+            
+            val newName = "${appName}-${buildType}-v${versionName}.apk"
+            
+            outputImpl.outputFileName = newName
+        }
+    }
+    // --- สิ้นสุดส่วนที่เพิ่ม ---
 
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            // Signing with the debug keys for now, so flutter run --release works.
             signingConfig = signingConfigs.getByName("debug")
         }
     }

@@ -29,7 +29,13 @@ class AppRoutes {
   static const APPEAL = '/appeal';
   static const CHAT_DETAIL = '/chat_detail';
   static const MENU_CHAT = '/menu_chat';
-  static const ALL_MEDIA = '/all_media'; 
+  static const ALL_MEDIA = '/all_media';
   static const ALL_ALBUMS = '/all_albums';
-  
+  static const ALBUMS_OVERVIEW = '/albums_overview';
+  static const CREATE_APPEAL_REQUEST = '/create_appeal_request';
+  static const NOTES = '/notes'; 
+  static const CREATE_NOTE = '/create_note';
+  static const EDIT_NOTE = '/edit-note';
+  static const NOTE_DETAIL = '/note_detail'; 
+  static const CREATE_ALBUM = '/create_album';
 }

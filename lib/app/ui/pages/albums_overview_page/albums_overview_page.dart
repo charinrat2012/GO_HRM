@@ -1,0 +1,174 @@
+// lib/app/ui/pages/albums_overview_page/albums_overview_page.dart
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'dart:io';
+
+import '../../../routes/app_routes.dart';
+import 'albums_overview_controller.dart';
+import '../../../config/my_colors.dart'; // Import MyColors เพื่อใช้สี
+
+class AlbumsOverviewPage extends GetView<AlbumsOverviewController> {
+  const AlbumsOverviewPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 14.0,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+          title: const Text(
+            'อัลบั้มทั้งหมด',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          elevation: 1,
+        ),
+        body: Obx(() {
+          if (controller.chat.albums.isEmpty) { // [แก้ไข] ใช้ controller.chat.albums
+            return const Center(
+              child: Text(
+                'ไม่มีอัลบั้มที่สร้างไว้',
+                style: TextStyle(color: Colors.grey, fontSize: 16),
+              ),
+            );
+          }
+          return GridView.builder(
+            padding: const EdgeInsets.all(8.0),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // แสดง 2 อัลบั้มต่อแถว
+              crossAxisSpacing: 8.0, // ระยะห่างแนวนอน
+              mainAxisSpacing: 8.0, // ระยะห่างแนวตั้ง
+              childAspectRatio:
+                  1.0, // [แก้ไข] ปรับสัดส่วนเป็น 1.0 (สี่เหลี่ยมจัตุรัส)
+            ),
+            itemCount: controller.chat.albums.length, // [แก้ไข] ใช้ controller.chat.albums.length
+            itemBuilder: (context, index) {
+              final album = controller.chat.albums[index]; // [แก้ไข] ใช้ controller.chat.albums[index]
+              final String thumbnailPath = album.imagePaths.isNotEmpty
+                  ? album.imagePaths.first
+                  : ''; // ใช้รูปแรกเป็น thumbnail
+              return GestureDetector(
+                onTap: () {
+                  // เมื่อแตะที่อัลบั้ม ให้ไปหน้า AllAlbumsPage พร้อมส่ง Album object ไป
+                 Get.toNamed(AppRoutes.ALL_ALBUMS, arguments: album);
+                },
+                child: Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(8.0),
+                          ),
+                          child: _buildThumbnailWidget(thumbnailPath),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          album.name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 4.0,
+                        ),
+                        child: Text(
+                          '${album.imagePaths.length} รูปภาพ',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        }),
+        floatingActionButton: FloatingActionButton( // [เพิ่ม] FloatingActionButton ใน AlbumsOverviewPage
+          onPressed: () {
+            // [แก้ไข] เปลี่ยนไปนำทางไปยัง CreateAlbumPage พร้อมส่ง chat object ไป
+            Get.toNamed(AppRoutes.CREATE_ALBUM, arguments: controller.chat);
+          },
+          child: const Icon(Icons.add),
+          backgroundColor: MyColors.blue2, // ใช้สีจาก MyColors.blue2
+          foregroundColor: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildThumbnailWidget(String path) {
+    if (path.isEmpty) {
+      return Container(
+        color: Colors.grey[200],
+        child: const Center(
+          child: Icon(Icons.photo_library, color: Colors.grey, size: 40),
+        ),
+      );
+    }
+    final bool isAsset = path.startsWith('assets/');
+    if (isAsset) {
+      return Image.asset(
+        path,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            color: Colors.grey[200],
+            child: const Icon(Icons.broken_image, color: Colors.grey),
+          );
+        },
+      );
+    } else {
+      final File file = File(path);
+      if (file.existsSync()) {
+        return Image.file(
+          file,
+          fit: BoxFit.cover,
+          width: double.infinity,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              color: Colors.grey[200],
+              child: const Icon(Icons.broken_image, color: Colors.grey),
+            );
+          },
+        );
+      } else {
+        return Container(
+          color: Colors.grey[200],
+          child: const Icon(Icons.broken_image, color: Colors.grey),
+        );
+      }
+    }
+  }
+}

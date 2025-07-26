@@ -1,16 +1,19 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_hrm/app/config/my_colors.dart';
+
+import '../../ui/global_widgets/datalist.dart';
 
 enum LeaveStatus { approved, pending, rejected }
 
 class LeaveHistoryModel {
   final String leaveId;
   final String title = 'ออกใบลา';
-  final String leaveType;
+  final String leaveTypeId;
   final String employeeName;
-  final String leaveCategory;
+  // final String leaveCategory;
   final DateTime requestDateTime;
   // final String? note;
   final LeaveStatus status;
@@ -18,14 +21,21 @@ class LeaveHistoryModel {
 
   LeaveHistoryModel({
     required this.leaveId,
-    required this.leaveType,
+    required this.leaveTypeId,
     required this.employeeName,
-    required this.leaveCategory,
+    // required this.leaveCategory,
     required this.requestDateTime,
     // this.note,
     required this.status,
     this.attachedFiles,
   });
+  String get leaveCategory {
+    final typeMap = DataList.leaveTypes.firstWhereOrNull(
+      (element) => element['leaveTypeId'] == leaveTypeId,
+    );
+    return typeMap?['type'] as String? ?? 'ไม่พบประเภท';
+  }
+
   factory LeaveHistoryModel.fromMap(Map<String, dynamic> map) {
     //  ดึงข้อมูล List จาก map ออกมาเก็บในตัวแปรชั่วคราว
     final filesData = map['attachedFiles'];
@@ -37,9 +47,9 @@ class LeaveHistoryModel {
 
     return LeaveHistoryModel(
       leaveId: map['leaveId'] ?? '',
-      leaveType: map['leaveType'] ?? '',
+      leaveTypeId: map['leaveTypeId'] ?? '',
       employeeName: map['employeeName'] ?? '',
-      leaveCategory: map['leaveCategory'] ?? '',
+      // leaveCategory: map['leaveCategory'] ?? '',
       requestDateTime: map['requestDateTime'] ?? DateTime.now(),
       // note: map['note'] ?? '',
       status: map['status'] ?? LeaveStatus.pending,

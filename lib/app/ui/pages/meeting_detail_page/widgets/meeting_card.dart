@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-class MeetingCard extends StatelessWidget {
+import '../meeting_detail_controller.dart';
+
+class MeetingCard extends GetView<MeetingDetailController> {
   const MeetingCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return
-    // 1. ประชุมกับผู้บริหาร
-    SliverPadding(
+     final formattedDate = DateFormat('d MMMM yyyy', 'th_TH').format(controller.event.date);
+    return SliverPadding(
       padding: const EdgeInsets.all(16.0),
       sliver: SliverToBoxAdapter(
         child: Container(
@@ -24,23 +27,26 @@ class MeetingCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'ประชุมกับผู้บริหาร',
+                   Text(
+                    // 'ประชุมกับผู้บริหาร',
+                    controller.event.title,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
 
-                  const Text(
-                    '10.30 - 11.00 ',
+                   Text(
+                    // '10.30 - 11.00 ',
+                    controller.event.time,
                     style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                 ],
               ),
               const SizedBox(height: 8),
-              const Text(
-                'วันศุกร์ที่ 25/06/2025',
+               Text(
+                // 'วันศุกร์ที่ 25/06/2025',
+                formattedDate,
                 style: TextStyle(fontSize: 12, color: Colors.black),
               ),
               const SizedBox(height: 10),
@@ -55,8 +61,11 @@ class MeetingCard extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  const Text(
-                    'นัดประชุมกสำคัญ',
+                   Text(
+                    // 'นัดประชุมกสำคัญ',
+                     controller.event.note ?? "-",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                 ],

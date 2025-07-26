@@ -9,6 +9,7 @@ import 'file_picker_request.dart';
 import 'title_textfield.dart';
 import 'type_dropdown_request.dart';
 
+
 class BodyRequest extends GetView<CreateAppealRequestController> {
   const BodyRequest({super.key});
 
@@ -28,12 +29,12 @@ class BodyRequest extends GetView<CreateAppealRequestController> {
             children: [
               TypeDropdownRequest(),
               const SizedBox(height: 24),
-              TitleTextfield(),
-              const SizedBox(height: 24),
               DatetimePicker(
                 label: 'วันที่/เวลา',
                 textController: controller.DateController,
               ),
+              const SizedBox(height: 24),
+              TitleTextfield(),
 
               const SizedBox(height: 24),
               FilePickerRequest(),

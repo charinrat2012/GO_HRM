@@ -25,16 +25,16 @@ class NewsPage extends GetView<NewsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //  Divider(color: Colors.grey, thickness: 1),
-                  SwitchLayout(),
+                  // SwitchLayout(),
                   TitleBar(),
                   const SizedBox(height: 16),
                   SlideImage(),
-                  controller.isSwitchedOn.value == true 
-                  ? const SizedBox(height: 24)
-                  : const SizedBox.shrink(),
+                  // controller.isSwitchedOn.value == true 
+                  // ? const SizedBox(height: 24)
+                  // : const SizedBox.shrink(),
 
                  
-                  // const SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   ImageDots(),
                   
                   const SizedBox(height: 16),

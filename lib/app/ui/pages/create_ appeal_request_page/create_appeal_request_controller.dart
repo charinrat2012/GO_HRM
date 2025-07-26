@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../../data/models/doc_model.dart';
+import '../../../data/models/appeal_model.dart';
 import '../../global_widgets/datalist.dart';
 
 class CreateAppealRequestController extends GetxController {
-  final RxList<DocModel> docItems = <DocModel>[].obs;
-  final Rx<DocModel?> selectedDoc = Rx(null);
+  final RxList<AppealModel> appealItems = <AppealModel>[].obs;
+  final Rx<AppealModel?> selectedAppeal = Rx(null);
   // สำหรับเก็บข้อมูลวันที่และเวลาที่เลือก
   final TextEditingController DateController = TextEditingController();
   final TextEditingController detailsController = TextEditingController();
@@ -21,16 +21,16 @@ class CreateAppealRequestController extends GetxController {
   }
 
   void loadDataType() {
-    final List<DocModel> docTypes = DataList.docTypes.map((map) {
-      return DocModel.fromMap(map);
+    final List<AppealModel> appealTypes = DataList.appealTypes.map((map) {
+      return AppealModel.fromMap(map);
     }).toList();
 
     // นำข้อมูลที่แปลงแล้วมาใส่ใน List ที่เป็น .obs
-    docItems.assignAll(docTypes);
+    appealItems.assignAll(appealTypes);
 
     // ตรวจสอบว่ามีข้อมูลใน List หรือไม่ แล้วกำหนดให้ตัวแรกเป็นค่าที่ถูกเลือกไว้
-    if (docItems.isNotEmpty) {
-      selectedDoc.value = docItems.first;
+    if (appealItems.isNotEmpty) {
+      selectedAppeal.value = appealItems.first;
     }
   }
 
@@ -80,7 +80,7 @@ class CreateAppealRequestController extends GetxController {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
         type: FileType.custom,
-        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'],
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'appeal', 'appealx'],
       );
 
       if (result != null) {

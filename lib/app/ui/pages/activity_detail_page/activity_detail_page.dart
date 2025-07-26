@@ -6,6 +6,7 @@ import 'widgets/activity_detail_box.dart';
 import 'widgets/activity_detail_head.dart';
 
 class ActivityDetailPage extends GetView<ActivityDetailController> {
+
   const ActivityDetailPage({super.key});
 
   @override

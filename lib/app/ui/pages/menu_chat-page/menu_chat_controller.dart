@@ -1,47 +1,38 @@
-// Path: lib/app/ui/pages/menu_chat-page/menu_chat_controller.dart
+// lib/app/ui/pages/menu_chat-page/menu_chat_controller.dart
 import 'package:get/get.dart';
-import '../../../data/models/chat_model.dart'; // Import Chat model
+import '../../../data/models/chat_model.dart';
+import '../../../data/models/album_model.dart'; // ตรวจสอบว่า import ถูกต้อง
 
 class MenuChatController extends GetxController {
-  late final Chat chat; // ตัวแปรสำหรับเก็บอ็อบเจกต์ chat ที่ส่งมาจาก ChatDetailPage
+  // [แก้ไข] เปลี่ยนเป็น Rx<Chat>
+  late final Rx<Chat> chat;
 
-  // ลิสต์ที่เป็น Reactive สำหรับเก็บเส้นทางของรูปภาพและวิดีโอ
-  final RxList<String> imagePaths = <String>[].obs;
-  final RxList<String> videoPaths = <String>[].obs;
+  // [เพิ่ม] สร้าง getter สำหรับ albums เพื่อให้ MenuChatPage เข้าถึงได้ง่ายขึ้น
+  RxList<Album> get albums => chat.value.albums;
+
+  // [เพิ่ม] สร้าง getter สำหรับ imagePaths และ videoPaths
+  List<String> get imagePaths => chat.value.imagePaths;
+  List<String> get videoPaths => chat.value.videoPaths;
+
+  // [แก้ไข] Getter สำหรับ fileMessages โดยตรง
+  RxList<Message> get fileMessages => chat.value.fileMessages; // [เพิ่ม] สำหรับไฟล์เอกสาร
+
+  // [เพิ่ม] Getter สำหรับ links
+  RxList<String> get links => chat.value.links;
+
 
   @override
   void onInit() {
     super.onInit();
-    // ดึงอ็อบเจกต์ chat จาก arguments ที่ส่งมา
-    if (Get.arguments is Chat) {
-      chat = Get.arguments as Chat;
-      _extractMediaPaths(); // เรียกเมธอดเพื่อแยกสื่อ
+    if (Get.arguments != null && Get.arguments is Chat) {
+      // [แก้ไข] ห่อ Chat object ด้วย .obs เพื่อให้เป็น Reactive
+      chat = (Get.arguments as Chat).obs;
     } else {
-      // จัดการข้อผิดพลาดหากไม่พบอ็อบเจกต์ chat
       Get.snackbar('ข้อผิดพลาด', 'ไม่พบข้อมูลแชท');
-      // คุณอาจต้องการนำทางกลับหรือแสดงหน้าข้อผิดพลาด
+      Get.back();
     }
   }
 
-  // เมธอดสำหรับแยกเส้นทางของรูปภาพและวิดีโอออกจากข้อความในแชท
-  void _extractMediaPaths() {
-    // เคลียร์ข้อมูลเก่า
-    imagePaths.clear();
-    videoPaths.clear();
-
-    for (var message in chat.messages) {
-      if (message.imagePath != null && message.imagePath!.isNotEmpty) {
-        imagePaths.add(message.imagePath!);
-      } else if (message.filePath != null && message.filePath!.isNotEmpty) {
-        final lowerCasePath = message.filePath!.toLowerCase();
-        // ตรวจสอบนามสกุลไฟล์ว่าเป็นวิดีโอหรือไม่
-        if (lowerCasePath.endsWith('.mp4') || lowerCasePath.endsWith('.mov') || lowerCasePath.endsWith('.webm')) {
-          videoPaths.add(lowerCasePath); // เพิ่มเส้นทางวิดีโอ
-        }
-      }
-    }
-    // เรียงลำดับเพื่อให้สื่อที่ส่งล่าสุดอยู่ด้านบนสุด (หากต้องการ)
-    imagePaths.sort((a, b) => b.compareTo(a));
-    videoPaths.sort((a, b) => b.compareTo(a));
-  }
+  // หากมี method อื่นๆ ที่เข้าถึง chat.name, chat.isGroup, chat.messages
+  // ต้องเปลี่ยนเป็น chat.value.name, chat.value.isGroup, chat.value.messages ด้วย
 }

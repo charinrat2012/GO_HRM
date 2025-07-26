@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HeadLeave extends StatelessWidget {
-  const HeadLeave({super.key});
+class HeadAppeal extends StatelessWidget {
+  const HeadAppeal({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class HeadLeave extends StatelessWidget {
                 onPressed: () => Get.back(),
               ),
               title: const Text(
-                'ขอเอกสาร',
+                'ร้องเรียน',
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               backgroundColor: Theme.of(context).appBarTheme.backgroundColor,

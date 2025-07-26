@@ -1,16 +1,22 @@
+// lib/app/routes/app_pages.dart
 import 'package:get/get.dart';
-
+import 'package:go_hrm/app/bindings/create_note_binding.dart';
+import 'package:go_hrm/app/bindings/note_detail_binding.dart';
 
 import '../bindings/activity_detail_binding.dart';
+import '../bindings/albums_overview_binding.dart';
 import '../bindings/all_albums_binding.dart';
 import '../bindings/all_media_binding.dart';
+import '../bindings/appeal_binding.dart';
 import '../bindings/calender_binding.dart';
-
 import '../bindings/chat_detail_binding.dart';
 import '../bindings/chats_binding.dart';
+import '../bindings/create_album_binding.dart';
+import '../bindings/create_appeal_request_binding.dart';
 import '../bindings/create_document_request_binding.dart';
 import '../bindings/create_leave_request_binding.dart';
 import '../bindings/documents_binding.dart';
+import '../bindings/edit_note_binding.dart';
 import '../bindings/edit_profile_binding.dart';
 import '../bindings/favourite_binding.dart';
 import '../bindings/help_binding.dart';
@@ -23,6 +29,7 @@ import '../bindings/menu_char_binding.dart';
 import '../bindings/navigation_binding.dart';
 import '../bindings/news_binding.dart';
 import '../bindings/news_details_binding.dart';
+import '../bindings/notes_binding.dart';
 import '../bindings/notification_binding.dart';
 import '../bindings/privacy_policy_binding.dart';
 import '../bindings/profile_binding.dart';
@@ -34,14 +41,19 @@ import '../bindings/splash_binding.dart';
 import '../bindings/timetable_binding.dart';
 import '../data/models/news_card_model.dart';
 import '../ui/pages/activity_detail_page/activity_detail_page.dart';
+import '../ui/pages/albums_overview_page/albums_overview_page.dart';
 import '../ui/pages/all_albums_page/all_albums_page.dart';
 import '../ui/pages/all_media_page/all_media_page.dart';
+import '../ui/pages/appeal_page/appeal_page.dart';
 import '../ui/pages/calender_page/calender_page.dart';
-
 import '../ui/pages/chat_detail_page/chat_detail_page.dart';
 import '../ui/pages/chats_page/chats_page.dart';
+import '../ui/pages/create_ appeal_request_page/create_appeal_request_page.dart';
+import '../ui/pages/create_album_page/create_album_page.dart';
 import '../ui/pages/create_documents_request_page/create_documents_request_page.dart';
 import '../ui/pages/create_leave_request_page/create_leave_request_page.dart';
+import '../ui/pages/create_note_page/create_note_page.dart';
+import '../ui/pages/edit_note_page/edit_note_page.dart';
 import '../ui/pages/edit_profile_page/edit_profile_page.dart';
 import '../ui/pages/document_page/document_page.dart';
 import '../ui/pages/favourite_page/favourite_page.dart';
@@ -55,6 +67,8 @@ import '../ui/pages/menu_page/menu_page.dart';
 import '../ui/pages/navigation_page/navigation_page.dart';
 import '../ui/pages/news_details_page/news_details_page.dart';
 import '../ui/pages/news_page/news_page.dart';
+import '../ui/pages/note_detail_page/note_detail_page.dart';
+import '../ui/pages/notes_page/notes_page.dart';
 import '../ui/pages/notification_page/notification_page.dart';
 import '../ui/pages/privacy_policy_page/privacy_policy_page.dart';
 import '../ui/pages/profile_page/profile_page.dart';
@@ -206,12 +220,18 @@ class AppPages {
       binding: FavouriteBinding(),
       transition: _defaultTransition,
     ),
-    // GetPage(
-    //   name: AppRoutes.APPEAL,
-    //   page: () => AppealPage(),
-    //   binding: AppealBinding(),
-    //   transition: _defaultTransition,
-    // ),
+    GetPage(
+      name: AppRoutes.APPEAL,
+      page: () => AppealPage(),
+      binding: AppealBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.CREATE_APPEAL_REQUEST,
+      page: () => CreateAppealRequestPage(),
+      binding: CreateAppealRequestBinding(),
+      transition: _defaultTransition,
+    ),
     GetPage(
       name: AppRoutes.CREATE_DOCUMENT_REQUEST,
       page: () => CreateDocumentsRequestPage(),
@@ -261,17 +281,51 @@ class AppPages {
       transition: _defaultTransition,
     ),
     GetPage(
-      name: AppRoutes.ALL_MEDIA, 
-      page: () => const AllMediaPage(),
-      binding: AllMediaBinding(),
+      name: AppRoutes.ALL_MEDIA,
+      page: () => const AllAlbumsPage(), // [แก้ไข] เปลี่ยนเป็น ALL_ALBUMS
+      binding: AllAlbumsBinding(), // [แก้ไข] ใช้ AllAlbumsBinding
       transition: _defaultTransition,
     ),
     GetPage(
-      name: AppRoutes.ALL_ALBUMS, 
+      name: AppRoutes.ALL_ALBUMS,
       page: () => const AllAlbumsPage(),
       binding: AllAlbumsBinding(),
       transition: _defaultTransition,
     ),
-    
+    GetPage(
+      name: AppRoutes.ALBUMS_OVERVIEW,
+      page: () => const AlbumsOverviewPage(),
+      binding: AlbumsOverviewBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.NOTES, 
+      page: () => const NotesPage(),
+      binding: NotesBinding(),
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.CREATE_NOTE, 
+      page: () => const CreateNotePage(),
+      binding: CreateNoteBinding(), 
+      transition: _defaultTransition,
+    ),
+    GetPage(
+      name: AppRoutes.EDIT_NOTE, // [เพิ่ม] GetPage สำหรับแก้ไขโน้ต
+      page: () => EditNotePage(),
+      binding: EditNoteBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.NOTE_DETAIL, // เส้นทางใหม่
+      page: () => NoteDetailPage(), // หน้าใหม่
+      binding: NoteDetailBinding(), 
+       transition: _defaultTransition,
+    ),
+    GetPage( // [เพิ่ม] GetPage สำหรับ CREATE_ALBUM
+      name: AppRoutes.CREATE_ALBUM,
+      page: () => const CreateAlbumPage(),
+      binding: CreateAlbumBinding(),
+      transition: _defaultTransition,
+    ),
   ];
 }

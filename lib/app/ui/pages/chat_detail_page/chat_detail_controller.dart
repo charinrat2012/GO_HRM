@@ -1,3 +1,4 @@
+// lib/app/ui/pages/chat_detail_page/chat_detail_controller.dart
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,14 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
+import '../../../data/models/album_model.dart' as album_model show Album;
 import '../../../data/models/chat_model.dart';
+
+
 import '../chats_page/chats_controller.dart';
-import 'dart:io'; // Import for File class
+import 'package:intl/intl.dart'; // เพิ่ม import นี้
+import '../../../data/services/auth_service.dart'; // เพิ่ม import นี้
+import '../../../ui/utils/assets.dart'; // เพิ่ม import นี้
 
 class ChatDetailController extends GetxController {
   late final Chat chat;
@@ -27,8 +33,14 @@ class ChatDetailController extends GetxController {
   final RxBool isEmojiPickerVisible = false.obs;
   final RxBool isRecording = false.obs;
 
-  // เพิ่มตัวแปรสำหรับ ChatsController
   final ChatsController _chatsController = Get.find<ChatsController>();
+
+  // [เพิ่ม] RegExp สำหรับตรวจจับ URL
+  final RegExp _linkRegex = RegExp(
+    r'http[s]?:\/\/(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
+    caseSensitive: false,
+    multiLine: true,
+  );
 
   @override
   void onInit() {
@@ -100,7 +112,6 @@ class ChatDetailController extends GetxController {
   Future<void> pickImage(ImageSource source) async {
     try {
       if (source == ImageSource.gallery) {
-        // Allow multiple image selection from gallery
         final List<XFile> images = await _picker.pickMultiImage(
           imageQuality: 70,
         );
@@ -118,7 +129,6 @@ class ChatDetailController extends GetxController {
           }
         }
       } else if (source == ImageSource.camera) {
-        // For camera, still pick a single image
         final XFile? image = await _picker.pickImage(
           source: source,
           imageQuality: 70,
@@ -144,11 +154,10 @@ class ChatDetailController extends GetxController {
     try {
       final XFile? video = await _picker.pickVideo(source: source);
       if (video != null) {
-        // --- ส่วนที่เพิ่มเข้ามา: ตรวจสอบขนาดไฟล์วิดีโอ ---
         final File videoFile = File(video.path);
         final int fileSizeInBytes = await videoFile.length();
-        final double fileSizeInMB = fileSizeInBytes / (1024 * 1024); // แปลงเป็น MB
-        const double maxAllowedSizeMB = 20.0; // กำหนดขนาดสูงสุดที่อนุญาต (เช่น 50 MB)
+        final double fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+        const double maxAllowedSizeMB = 20.0;
 
         if (fileSizeInMB > maxAllowedSizeMB) {
           Get.snackbar(
@@ -158,9 +167,8 @@ class ChatDetailController extends GetxController {
             backgroundColor: Colors.red,
             colorText: Colors.white,
           );
-          return; // หยุดการทำงานถ้าไฟล์ใหญ่เกิน
+          return;
         }
-        // --- สิ้นสุดส่วนที่เพิ่มเข้ามา ---
 
         _addMessage(
           Message(
@@ -183,7 +191,19 @@ class ChatDetailController extends GetxController {
       final result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
         type: FileType.custom,
-        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'xlsx', 'pptx', 'mp4', 'mov', 'webm'],
+        allowedExtensions: [
+          'jpg',
+          'jpeg',
+          'png',
+          'pdf',
+          'doc',
+          'docx',
+          'xlsx',
+          'pptx',
+          'mp4',
+          'mov',
+          'webm',
+        ],
       );
       if (result != null && result.files.isNotEmpty) {
         for (final filePlatform in result.files) {
@@ -273,32 +293,46 @@ class ChatDetailController extends GetxController {
 
   void showAttachmentOptions() {
     Get.bottomSheet(
-      Container(
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+      SafeArea(
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
           ),
-        ),
-        child: Wrap(
-          spacing: 20,
-          runSpacing: 20,
-          alignment: WrapAlignment.center,
-          children: [
-            _buildBottomSheetItem(
-              icon: Icons.description,
-              label: 'ไฟล์',
-              onTap: pickFile,
-            ),
-            _buildBottomSheetItem(
-              icon: Icons.videocam, // นี่คือบรรทัดที่เพิ่มเข้ามาสำหรับปุ่มวิดีโอ
-              label: 'วิดีโอ', // นี่คือบรรทัดที่เพิ่มเข้ามาสำหรับปุ่มวิดีโอ
-              onTap: () => pickVideo(ImageSource.gallery), // นี่คือบรรทัดที่เพิ่มเข้ามาสำหรับปุ่มวิดีโอ
-            ),
-          
-          ],
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildListTileItem(
+                icon: Icons.description,
+                label: 'ไฟล์',
+                onTap: () {
+                  Get.back();
+                  pickFile();
+                },
+              ),
+              _buildListTileItem(
+                icon: Icons.videocam,
+                label: 'วิดีโอ',
+                onTap: () {
+                  Get.back();
+                  pickVideo(ImageSource.gallery);
+                },
+              ),
+              _buildListTileItem(
+                icon: Icons.photo_album,
+                label: 'สร้างอัลบั้ม',
+                onTap: () {
+                  Get.back();
+                  showCreateAlbumDialog();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -306,33 +340,53 @@ class ChatDetailController extends GetxController {
 
   void showCameraOptions() {
     Get.bottomSheet(
-      Container(
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+      SafeArea(
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildListTileItem(
+                icon: Icons.camera_alt,
+                label: 'ถ่ายรูป',
+                onTap: () {
+                  Get.back();
+                  pickImage(ImageSource.camera);
+                },
+              ),
+              _buildListTileItem(
+                icon: Icons.videocam,
+                label: 'ถ่ายวิดีโอ',
+                onTap: () {
+                  Get.back();
+                  pickVideo(ImageSource.camera);
+                },
+              ),
+            ],
           ),
         ),
-        child: Wrap(
-          spacing: 20,
-          runSpacing: 20,
-          alignment: WrapAlignment.center,
-          children: [
-            _buildBottomSheetItem(
-              icon: Icons.camera_alt,
-              label: 'ถ่ายรูป',
-              onTap: () => pickImage(ImageSource.camera),
-            ),
-            _buildBottomSheetItem(
-              icon: Icons.videocam,
-              label: 'ถ่ายวิดีโอ',
-              onTap: () => pickVideo(ImageSource.camera),
-            ),
-          ],
-        ),
       ),
+    );
+  }
+
+  // New helper method for ListTile style
+  Widget _buildListTileItem({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      leading: Icon(icon, size: 24, color: Colors.grey.shade700),
+      title: Text(label),
+      onTap: onTap, // onTap already includes Get.back() and action
     );
   }
 
@@ -361,11 +415,61 @@ class ChatDetailController extends GetxController {
     );
   }
 
-  void _addMessage(Message message) {
+  // แก้ไข _addMessage ให้รองรับ Album และเพิ่มรูปภาพ/วิดีโอ/ไฟล์ใน chat.imagePaths/videoPaths/fileMessages
+  void _addMessage(Message message, {album_model.Album? album}) { // Correctly reference Album
     chat.messages.add(message);
-    chat.lastMessage.value =
-        message.text ?? (message.imagePath != null ? '[รูปภาพ]' : '[ไฟล์]');
-    chat.time.value = message.time;
+
+    // [New Logic] Add image/video paths to chat's dedicated lists
+    if (message.imagePath != null && !chat.imagePaths.contains(message.imagePath)) { // Avoid duplicates
+      chat.imagePaths.add(message.imagePath!);
+    } else if (message.filePath != null) {
+      final bool isAudio = message.filePath!.toLowerCase().endsWith('.mp3');
+      final bool isVideo = message.filePath!.toLowerCase().endsWith('.mp4') ||
+                           message.filePath!.toLowerCase().endsWith('.mov') ||
+                           message.filePath!.toLowerCase().endsWith('.webm');
+
+      if (isVideo && !chat.videoPaths.contains(message.filePath)) { // Avoid duplicates
+        chat.videoPaths.add(message.filePath!);
+      } else {
+        // [แก้ไข] สำหรับไฟล์ทั่วไปและไฟล์เสียงที่ไม่ได้เป็นวิดีโอ ให้เพิ่ม Message object ลงใน fileMessages
+        // ตรวจสอบเพื่อหลีกเลี่ยงการเพิ่มซ้ำ
+        if (!chat.fileMessages.any((msg) => msg.filePath == message.filePath)) {
+          chat.fileMessages.add(message);
+        }
+      }
+    }
+    // [เพิ่ม] ตรวจสอบ Link ในข้อความที่เป็น text และเพิ่มลงใน chat.links
+    if (message.text != null && message.text!.isNotEmpty) {
+      _linkRegex.allMatches(message.text!).forEach((match) {
+        final link = match.group(0)!;
+        if (!chat.links.contains(link)) {
+          chat.links.add(link);
+        }
+      });
+    }
+
+    // อัปเดต lastMessage ตามประเภทของข้อความ
+    if (album != null) {
+      chat.lastMessage.value = '[อัลบั้ม: ${album.name}]';
+    } else if (message.text != null && message.text!.isNotEmpty) {
+      chat.lastMessage.value = message.text!;
+    } else if (message.imagePath != null) {
+      chat.lastMessage.value = '[รูปภาพ]';
+    } else if (message.filePath != null) {
+      final String extension = message.fileName?.split('.').last.toLowerCase() ?? '';
+      if (extension == 'mp4' || extension == 'mov' || extension == 'webm') {
+         chat.lastMessage.value = '[วิดีโอ]';
+      } else if (extension == 'mp3') {
+         chat.lastMessage.value = '[ไฟล์เสียง]';
+      } else if (extension == 'pdf') {
+         chat.lastMessage.value = '[PDF]';
+      } else if (extension == 'doc' || extension == 'docx') {
+         chat.lastMessage.value = '[เอกสาร]';
+      } else {
+         chat.lastMessage.value = '[ไฟล์]';
+      }
+    }
+    chat.time.value = DateFormat('HH:mm').format(DateTime.now()); // อัปเดตเวลาล่าสุด
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (scrollController.hasClients) {
@@ -381,5 +485,87 @@ class ChatDetailController extends GetxController {
   String get _currentTime {
     final now = TimeOfDay.now();
     return '${now.hour}:${now.minute.toString().padLeft(2, '0')}';
+  }
+
+  // เมธอดสำหรับแสดง Dialog เพื่อตั้งชื่ออัลบั้มใหม่
+  void showCreateAlbumDialog() {
+    final albumNameController = TextEditingController();
+    // สร้าง FocusNode สำหรับ TextField
+    final FocusNode albumNameFocusNode = FocusNode();
+
+    Get.dialog(
+      AlertDialog(
+        title: const Text('สร้างอัลบั้มใหม่'),
+        content: TextField(
+          controller: albumNameController,
+          focusNode: albumNameFocusNode, // กำหนด FocusNode ให้ TextField
+          decoration: const InputDecoration(hintText: 'ชื่ออัลบั้ม'),
+        ),
+        actions: [
+          TextButton(onPressed: () => Get.back(), child: const Text('ยกเลิก')),
+          ElevatedButton(
+            onPressed: () {
+              final albumName = albumNameController.text.trim();
+              if (albumName.isNotEmpty) {
+                Get.back(); // ปิด dialog ตั้งชื่อ
+                pickImagesAndCreateAlbum(albumName); // เรียกฟังก์ชันเลือกรูปภาพ
+              } else {
+                Get.snackbar('ข้อผิดพลาด', 'กรุณาใส่ชื่ออัลบั้ม');
+              }
+            },
+            child: const Text('สร้าง'),
+          ),
+        ],
+      ),
+    ).then((_) {
+      // หลังจาก Dialog ปิดแล้ว ให้ dispose FocusNode เพื่อป้องกัน memory leak
+      albumNameFocusNode.dispose();
+    });
+
+    // เพิ่มคำสั่งให้โฟกัสที่ TextField หลังจาก Dialog แสดงผล
+    // ใช้ Future.delayed เพื่อให้แน่ใจว่า Dialog ได้ render ขึ้นมาก่อน
+    Future.delayed(const Duration(milliseconds: 50), () {
+      albumNameFocusNode.requestFocus();
+    });
+  }
+
+  // เมธอดสำหรับเลือกรูปภาพจากแกลเลอรีและสร้างอัลบั้ม
+  Future<void> pickImagesAndCreateAlbum(String albumName) async {
+    try {
+      final List<XFile> selectedImages = await _picker.pickMultiImage(
+        imageQuality: 80, // คุณภาพรูปภาพ
+      );
+
+      if (selectedImages.isNotEmpty) {
+        final List<String> imagePaths = selectedImages
+            .map((xFile) => xFile.path)
+            .toList();
+
+        // สร้างอัลบั้มใหม่และเพิ่มเข้าไปใน chat.albums
+        final newAlbum = album_model.Album(name: albumName, imagePaths: imagePaths); // Use aliased Album
+        chat.albums.add(newAlbum);
+
+        // เพิ่มข้อความอัลบั้มลงในแชท
+        _addMessage(
+          Message(
+            senderName: 'Me',
+            senderImageUrl: 'assets/imgs/profile.jpg',
+            // ใช้รูปแรกของอัลบั้มเป็นภาพพรีวิว
+            imagePath: imagePaths.isNotEmpty ? imagePaths.first : null,
+            text: 'อัลบั้ม: $albumName', // แสดงชื่ออัลบั้มเป็นข้อความ
+            time: _currentTime,
+            isMe: true,
+            album: newAlbum, // *** ส่ง object อัลบั้มไปด้วย ***
+          ),
+          album: newAlbum, // ส่ง object อัลบั้มไปด้วย
+        );
+
+        // Get.snackbar('สำเร็จ', 'สร้างอัลบั้ม "$albumName" และเพิ่มรูปภาพแล้ว!');
+      } else {
+        Get.snackbar('ข้อมูล', 'ไม่ได้เลือกรูปภาพใดๆ สำหรับอัลบั้ม');
+      }
+    } catch (e) {
+      Get.snackbar('เกิดข้อผิดพลาด', 'ไม่สามารถเลือกรูปภาพได้: $e');
+    }
   }
 }

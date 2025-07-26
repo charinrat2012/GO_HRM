@@ -1,16 +1,19 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_hrm/app/config/my_colors.dart';
+
+import '../../ui/global_widgets/datalist.dart';
 
 enum DocumentStatus { approved, pending, rejected }
 
 class DocumentHistoryModel {
   final String documentId;
   final String title = 'ขอเอกสาร';
-  final String docTypes;
+  final String documentTypeId;
   final String employeeName;
-  final String docCategory;
+  // final String docCategory;
   final DateTime requestDateTime;
   final String? note;
   final DocumentStatus status;
@@ -18,26 +21,36 @@ class DocumentHistoryModel {
 
   DocumentHistoryModel({
     required this.documentId,
-    required this.docTypes,
+    required this.documentTypeId,
     required this.employeeName,
-    required this.docCategory,
+    // required this.docCategory,
     required this.requestDateTime,
     this.note,
     required this.status,
     this.attachedFiles,
   });
+
+  String get docCategory {
+    final typeMap = DataList.docTypes.firstWhereOrNull(
+      (element) => element['documentTypeId'] == documentTypeId,
+    );
+    return typeMap?['type'] as String? ?? 'ไม่พบประเภท';
+  }
+
   factory DocumentHistoryModel.fromMap(Map<String, dynamic> map) {
     //  ดึงข้อมูล List จาก map ออกมาเก็บในตัวแปรชั่วคราว
     final filesData = map['attachedFiles'];
     //  ตรวจสอบว่า `filesData` เป็น `List` หรือไม่ ถ้าใช่ ให้แปลงเป็น `List<File>`
     //    ถ้าไม่ใช่ (เช่นเป็น null) ให้ `files` เป็น null
-    final List<File>? files = filesData is List ? List<File>.from(filesData) : null;
+    final List<File>? files = filesData is List
+        ? List<File>.from(filesData)
+        : null;
 
     return DocumentHistoryModel(
       documentId: map['documentId'] ?? '',
-      docTypes: map['leaveType'] ?? '',
+      documentTypeId: map['documentTypeId'] ?? '',
       employeeName: map['employeeName'] ?? '',
-      docCategory: map['leaveCategory'] ?? '',
+      // docCategory: map['leaveCategory'] ?? '',
       requestDateTime: map['requestDateTime'] ?? DateTime.now(),
       note: map['note'] ?? '',
       status: map['status'] ?? DocumentStatus.pending,
